@@ -13,7 +13,7 @@
       <div>
         <img id="xray" src="xray.png" />
         <!---- <button onclick="selectLabel('Cancer')">Cancer</button>
-    --->~
+    --->
       </div>
     </div>
     <script>
@@ -46,10 +46,9 @@
             {
               type: "TextualBody",
               purpose: "tagging",
-              value: label,
+              value: "label",
             },
           ];
-          console.log(label);
           await anno.updateSelected(selection);
           anno.saveSelected();
         });
