@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="annotorious.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="annotorious.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-toolbar@latest/dist/annotorious-toolbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
+  </head>
+
+  <body>
+    <div id="content">
+      <div id="my-toolbar-container"></div>
+      <div>
+        <img id="xray" src="xray.png" />
+        <!---- <button onclick="selectLabel('Cancer')">Cancer</button>
+    --->~
+      </div>
+    </div>
+    <script>
+      /*
+      var label = "";
+      function selectLabel(l) {
+        label = l;
+      }
+      */
+      (function () {
+        var anno = Annotorious.init({
+          image: "xray", // image element or ID
+          locale: "auto",
+          disableEditor: true,
+        });
+        anno.setAuthInfo({
+          id: "0einstein0",
+          displayName: "einstein",
+        });
+        Annotorious.SelectorPack(anno, {
+          tools: ["freehand", "rect", "ellipse", "polygon", "point"],
+        });
+        Annotorious.Toolbar(
+          anno,
+          document.getElementById("my-toolbar-container")
+        );
+
+        anno.on("createSelection", async function (selection) {
+          selection.body = [
+            {
+              type: "TextualBody",
+              purpose: "tagging",
+              value: label,
+            },
+          ];
+          console.log(label);
+          await anno.updateSelected(selection);
+          anno.saveSelected();
+        });
+      })();
+    </script>
+
+    <script type="text/javascript" src="annotorious.min.js"></script>
+  </body>
+</html>
