@@ -6,9 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   var anno = Annotorious.init(config);
   initAnnon(anno);
-  var images = ["xray_1.png", "xray_2.png", "xray_3.png"];
+
+  var images = [
+    "./Assets/xray_1.png",
+    "./Assets/xray_2.png",
+    "./Assets/xray_3.png",
+  ];
   var currentImage = 0;
 
+  ////////////
   function goNext() {
     anno.destroy();
     currentImage += 1;
@@ -36,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("activeImg").src = images[currentImage];
   }
-
+  ////////////
   document.onkeydown = function (e) {
     console.log(e.key);
     if (e.key === "ArrowRight") {
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       goPrev();
     }
   };
-
+  ////////////
   document.getElementById("arrow-next").onclick = function () {
     goNext();
   };
@@ -53,14 +59,31 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("arrow-prev").onclick = function () {
     goPrev();
   };
+  ////////////
+  document.getElementById("ellipse").onclick = function () {
+    anno.setDrawingTool("ellipse");
+  };
+  document.getElementById("freehand").onclick = function () {
+    anno.setDrawingTool("freehand");
+  };
+  document.getElementById("polygon").onclick = function () {
+    anno.setDrawingTool("polygon");
+  };
+
+  document.getElementById("square").onclick = function () {
+    anno.setDrawingTool("rect");
+  };
+  document.getElementById("point").onclick = function () {
+    anno.setDrawingTool("point");
+  };
+
+  ////////////
 
   function initAnnon(anno) {
     /////////////////
     Annotorious.SelectorPack(anno, {
       tools: ["rect", "freehand", "ellipse", "polygon", "point"],
     });
-    anno.setDrawingTool("freehand");
-    Annotorious.Toolbar(anno, document.getElementById("toolbar"));
 
     ////////////////
 
@@ -86,10 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
       ];
 
       const annotations = anno.getAnnotations();
-      // console.log(selection.target.selector.value);
-      //console.log(selection.target.source);
+      console.log(selection.target.selector.value);
+      console.log(selection.target.source);
 
-      //console.log(annotations);
+      console.log(annotations);
       await anno.updateSelected(selection);
       anno.saveSelected();
     });

@@ -71,8 +71,8 @@ function initAnnon(anno, toolbar) {
     ];
 
     const annotations = anno.getAnnotations();
-    // console.log(selection.target.selector.value);
-    //console.log(selection.target.source);
+    console.log(selection.target.selector.value);
+    console.log(selection.target.source);
 
     //console.log(annotations);
     await anno.updateSelected(selection);

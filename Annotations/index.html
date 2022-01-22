@@ -2,15 +2,38 @@
   <head>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="annotorious.min.css" />
-    <script src="annotorious.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-toolbar@latest/dist/annotorious-toolbar.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
   </head>
 
   <body>
     <div id="content">
-      <div id="toolbar"></div>
+      <div id="toolbar">
+        <button id="freehand">Freehand</button>
+        <button id="rect"></button>
+        <button id="point">Point</button>
+        <button id="polygon">Polygon</button>
+        <button id="ellipse">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="35"
+            height="35"
+            viewBox="0 0 60 60"
+            style="fill: #000000"
+          >
+            <path
+              fill="#333"
+              d="M59,25h-3.50195C53.48065,14.60278,45.39722,6.51935,35,4.50195V1c0-0.55225-0.44775-1-1-1h-8	c-0.55225,0-1,0.44775-1,1v3.50195C14.60278,6.51935,6.51935,14.60278,4.50195,25H1c-0.55225,0-1,0.44775-1,1v8	c0,0.55225,0.44775,1,1,1h3.50195C6.51935,45.39722,14.60278,53.48065,25,55.49805V59c0,0.55225,0.44775,1,1,1h8	c0.55225,0,1-0.44775,1-1v-3.50195C45.39722,53.48065,53.48065,45.39722,55.49805,35H59c0.55225,0,1-0.44775,1-1v-8	C60,25.44775,59.55225,25,59,25z M27,2h6v6h-6V2z M2,27h6v6H2V27z M33,58h-6v-6h6V58z M35,53.45966V51c0-0.55225-0.44775-1-1-1h-8	c-0.55225,0-1,0.44775-1,1v2.45966C15.71497,51.50262,8.49738,44.28503,6.54034,35H9c0.55225,0,1-0.44775,1-1v-8	c0-0.55225-0.44775-1-1-1H6.54034C8.49738,15.71497,15.71497,8.49738,25,6.54034V9c0,0.55225,0.44775,1,1,1h8	c0.55225,0,1-0.44775,1-1V6.54034C44.28503,8.49738,51.50262,15.71497,53.45966,25H51c-0.55225,0-1,0.44775-1,1v8	c0,0.55225,0.44775,1,1,1h2.45966C51.50262,44.28503,44.28503,51.50262,35,53.45966z M58,33h-6v-6h6V33z"
+            ></path>
+          </svg>
+        </button>
+      </div>
       <div id="image-slider" class="splide">
         <div class="arrow" id="arrow-prev">
           <svg
@@ -51,7 +74,7 @@
             </g>
           </svg>
         </div>
-        <img id="activeImg" src="xray_1.png" />
+        <img id="activeImg" src="./Assets/xray_1.png" />
         <div class="arrow" id="arrow-next">
           <svg
             xmlns="http://www.w3.org/2000/svg"
