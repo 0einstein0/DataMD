@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   var anno = Annotorious.init(config);
   initAnnon(anno);
-
+  anno.setDrawingTool("freehand");
+  document.getElementById("freehand").style.backgroundColor = "#999999";
   var images = [
     "./Assets/xray_1.png",
     "./Assets/xray_2.png",
@@ -61,20 +62,45 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   ////////////
   document.getElementById("ellipse").onclick = function () {
+    elements = document.getElementsByClassName("btnIcon");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.backgroundColor = "#d5d5d5";
+    }
     anno.setDrawingTool("ellipse");
+    this.style.backgroundColor = "#999999";
   };
   document.getElementById("freehand").onclick = function () {
+    elements = document.getElementsByClassName("btnIcon");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.backgroundColor = "#d5d5d5";
+    }
     anno.setDrawingTool("freehand");
+    this.style.backgroundColor = "#999999";
   };
   document.getElementById("polygon").onclick = function () {
+    elements = document.getElementsByClassName("btnIcon");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.backgroundColor = "#d5d5d5";
+    }
     anno.setDrawingTool("polygon");
+    this.style.backgroundColor = "#999999";
   };
 
-  document.getElementById("square").onclick = function () {
+  document.getElementById("rect").onclick = function () {
+    elements = document.getElementsByClassName("btnIcon");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.backgroundColor = "#d5d5d5";
+    }
     anno.setDrawingTool("rect");
+    this.style.backgroundColor = "#999999";
   };
   document.getElementById("point").onclick = function () {
+    elements = document.getElementsByClassName("btnIcon");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.backgroundColor = "#d5d5d5";
+    }
     anno.setDrawingTool("point");
+    this.style.backgroundColor = "#999999";
   };
 
   ////////////
