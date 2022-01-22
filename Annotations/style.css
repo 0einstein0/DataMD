@@ -1,26 +1,23 @@
-#my-toolbar-container {
+#toolbar {
   display: flex;
   justify-content: center;
-  padding: 30px;
 }
 .splide {
   width: 50%;
   margin: 0 auto;
   max-height: 70vh;
-  top: 15%;
-}
-.splide__slide {
+  margin-top: 5%;
   display: flex;
   justify-content: center;
 }
 
-.splide__slide img {
-  max-height: 70vh;
+img {
+  min-width: 70vh;
+  max-width: 70vh;
+  min-height: 70vh;
 }
-.splide__arrow--prev {
-  left: -10%;
-}
-
-.splide__arrow--next {
-  right: -10%;
+.arrow {
+  display: flex;
+  padding: 30px;
+  align-items: center;
 }

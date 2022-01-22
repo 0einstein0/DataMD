@@ -1,82 +1,98 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var splide = new Splide("#image-slider", {
-    drag: false,
-    dragAngleThreshold: 0,
-    isNavigation: false,
-  }).mount();
-
-  ////////////
-
-  var activeImg =
-    document.getElementsByClassName("is-visible")[0].childNodes[3];
-  var tool = document.getElementsByClassName("is-visible")[0].childNodes[1];
-  console.log(activeImg);
   var config = {
-    image: activeImg,
+    image: document.getElementById("activeImg"),
     locale: "auto",
     disableEditor: true,
   };
   var anno = Annotorious.init(config);
-  initAnnon(anno, tool);
+  initAnnon(anno);
+  var images = ["xray_1.png", "xray_2.png", "xray_3.png"];
+  var currentImage = 0;
 
-  ////////////////////////
+  function goNext() {
+    anno.destroy();
+    currentImage += 1;
+    if (currentImage >= images.length) {
+      currentImage = 0;
+    }
 
-  splide.on("moved", function () {
-    activeImg = document.getElementsByClassName("is-visible")[0].childNodes[3];
-    tool = document.getElementsByClassName("is-visible")[0].childNodes[1];
-    console.log(activeImg);
+    document.getElementById("activeImg").src = images[currentImage];
+
     config = {
-      image: activeImg,
+      image: document.getElementById("activeImg"),
       locale: "auto",
       disableEditor: true,
     };
     anno = Annotorious.init(config);
-    initAnnon(anno, tool);
-  });
 
-  splide.on("hidden", function () {
-    anno.destroy();
-  });
-});
+    initAnnon(anno);
+  }
 
-function initAnnon(anno, toolbar) {
-  /////////////////
-  Annotorious.SelectorPack(anno, {
-    tools: ["rect", "freehand", "ellipse", "polygon", "point"],
-  });
-  anno.setDrawingTool("freehand");
-  Annotorious.Toolbar(anno, toolbar);
+  function goPrev() {
+    currentImage -= 1;
+    if (currentImage < 0) {
+      currentImage = images.length - 1;
+    }
 
-  ////////////////
+    document.getElementById("activeImg").src = images[currentImage];
+  }
 
-  anno.setAuthInfo({
-    id: "0einstein0",
-    displayName: "einstein",
-  });
+  document.onkeydown = function (e) {
+    console.log(e.key);
+    if (e.key === "ArrowRight") {
+      goNext();
+    } else if (e.key === "ArrowLeft") {
+      goPrev();
+    }
+  };
 
-  ////////////////
+  document.getElementById("arrow-next").onclick = function () {
+    goNext();
+  };
 
-  anno.on("createSelection", async function (selection) {
-    selection.body = [
-      {
-        type: "TextualBody",
-        purpose: "tagging",
-        value: "label",
-        created: "2020-05-18T09:39:47.582Z",
-        creator: {
-          id: "http://recogito.example.com/rainer",
-          name: "rainer",
+  document.getElementById("arrow-prev").onclick = function () {
+    goPrev();
+  };
+
+  function initAnnon(anno) {
+    /////////////////
+    Annotorious.SelectorPack(anno, {
+      tools: ["rect", "freehand", "ellipse", "polygon", "point"],
+    });
+    anno.setDrawingTool("freehand");
+    Annotorious.Toolbar(anno, document.getElementById("toolbar"));
+
+    ////////////////
+
+    anno.setAuthInfo({
+      id: "0einstein0",
+      displayName: "einstein",
+    });
+
+    ////////////////
+
+    anno.on("createSelection", async function (selection) {
+      selection.body = [
+        {
+          type: "TextualBody",
+          purpose: "tagging",
+          value: "label",
+          created: "2020-05-18T09:39:47.582Z",
+          creator: {
+            id: "http://recogito.example.com/rainer",
+            name: "rainer",
+          },
         },
-      },
-    ];
+      ];
 
-    const annotations = anno.getAnnotations();
-    // console.log(selection.target.selector.value);
-    //console.log(selection.target.source);
+      const annotations = anno.getAnnotations();
+      // console.log(selection.target.selector.value);
+      //console.log(selection.target.source);
 
-    //console.log(annotations);
-    await anno.updateSelected(selection);
-    anno.saveSelected();
-  });
-  ////////////////////
-}
+      //console.log(annotations);
+      await anno.updateSelected(selection);
+      anno.saveSelected();
+    });
+    ////////////////////
+  }
+});

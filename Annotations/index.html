@@ -1,14 +1,5 @@
 <html>
   <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/css/splide.min.css"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/js/splide.min.js"
-      integrity="sha256-pfZnm8h7uPHeFifmWXCn45NtyE0UfdAZSblKEN6v4Jo="
-      crossorigin="anonymous"
-    ></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="annotorious.min.css" />
@@ -19,26 +10,87 @@
 
   <body>
     <div id="content">
+      <div id="toolbar"></div>
       <div id="image-slider" class="splide">
-        <div class="splide__track">
-          <ul class="splide__list">
-            <li class="splide__slide">
-              <div id="my-toolbar-container"></div>
-              <img class="viewImg 1" src="xray_1.png" />
-            </li>
-            <li class="splide__slide">
-              <div id="my-toolbar-container"></div>
-              <img class="viewImg 2" src="xray_2.png" />
-            </li>
-            <li class="splide__slide">
-              <div id="my-toolbar-container"></div>
-              <img class="viewImg 3" src="xray_3.png" />
-            </li>
-          </ul>
+        <div class="arrow" id="arrow-prev">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="24"
+            height="24"
+            viewBox="0 0 172 172"
+            style="fill: #000000"
+          >
+            <g
+              fill="none"
+              fill-rule="nonzero"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="butt"
+              stroke-linejoin="miter"
+              stroke-miterlimit="10"
+              stroke-dasharray=""
+              stroke-dashoffset="0"
+              font-family="none"
+              font-weight="none"
+              font-size="none"
+              text-anchor="none"
+              style="mix-blend-mode: normal"
+            >
+              <path d="M0,172v-172h172v172z" fill="none"></path>
+              <path
+                d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
+                fill="#cccccc"
+              ></path>
+              <g fill="#666666">
+                <path
+                  d="M70.101,86l32.61037,-32.61037c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177v0c-3.53329,-3.53329 -9.26848,-3.53329 -12.80177,0l-39.37824,39.37824c-3.33699,3.33699 -3.33699,8.73934 0,12.0678l39.37824,39.37824c3.53329,3.53329 9.26848,3.53329 12.80177,0v0c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177z"
+                ></path>
+              </g>
+            </g>
+          </svg>
         </div>
-
-        <!---- <button onclick="selectLabel('Cancer')">Cancer</button>
-    --->
+        <img id="activeImg" src="xray_1.png" />
+        <div class="arrow" id="arrow-next">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="24"
+            height="24"
+            viewBox="0 0 172 172"
+            style="fill: #000000"
+          >
+            <g
+              fill="none"
+              fill-rule="nonzero"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="butt"
+              stroke-linejoin="miter"
+              stroke-miterlimit="10"
+              stroke-dasharray=""
+              stroke-dashoffset="0"
+              font-family="none"
+              font-weight="none"
+              font-size="none"
+              text-anchor="none"
+              style="mix-blend-mode: normal"
+            >
+              <path d="M0,172v-172h172v172z" fill="none"></path>
+              <path
+                d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
+                fill="#cccccc"
+              ></path>
+              <g fill="#666666">
+                <path
+                  d="M94.73233,86l-32.61037,-32.61037c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177v0c3.53329,-3.53329 9.26848,-3.53329 12.80177,0l39.37824,39.37824c3.33699,3.33699 3.33699,8.73934 0,12.0678l-39.37824,39.37824c-3.53329,3.53329 -9.26848,3.53329 -12.80177,0v0c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </div>
       </div>
     </div>
   </body>
