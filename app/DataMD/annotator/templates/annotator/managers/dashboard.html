@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Dashboard</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <h3>Welcome to your Dashboard, {{ user.first_name }} {{ user.last_name }}</h3>
+                    <p>Over here you can manage your projects and recieve annotations from your annotators.
+                    </p>
+                    <!-- [ ROW 1 ] start -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="mb-3">Projects</h5>
+                            <hr>
+                            {% if projects == None %}
+                            <p> You dont seem to own any projects. <a href="{% url 'create_project' %}">Create one.</a></p>
+                            {% else %}
+                            <div class="accordion" id="projectAccordian">
+                                {% for project in projects %}
+                                <div class="card">
+                                    <div class="card-header" id="{{ project.id }}">
+                                        <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapse{{ project.id }}" aria-expanded="false" aria-controls="collapse{{ project.id }}">{{ project.name }}</a></h5>
+                                        <form style="display: inline;" action="{% url 'manage_project' project.id %}" >
+                                        <button type="submit" class="btn btn-outline-primary" title="Edit project details, images, and annotators" data-toggle="tooltip">Manage Project</button>
+                                        </form>
+                                    </div>
+                                    <div id="collapse{{ project.id }}" class=" card-body collapse" aria-labelledby="heading{{ project.id }}" data-parent="#projectAccordian">
+                                        {{ project.description }}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <h1>{{ the_image.image.url }}</h1>
+                    </div>
+                    <!-- [ ROW 1 ] start -->
+                    <!-- [ Main Content ] end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

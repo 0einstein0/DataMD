@@ -1,6 +1,9 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+
+{% if request.user.is_authenticated %}
 <h1>Dashboard</h1>
 <a href="/annotator/canvas/X-Ray">
     <h2>X-Ray Dataset</h2>
@@ -10,5 +13,10 @@
 </a>
 <hr>
 <a href="{% url 'create_project' %}">Create New Project</a>
+{% else %}
+<h1>Welcome to DataMD, Please Login</h1>
+{% endif %}
+
+
 
 {% endblock content %}

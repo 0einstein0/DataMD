@@ -1,0 +1,89 @@
+<div class="col-sm-12">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="background: #eee">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-current-tab" data-toggle="pill" href="#pills-current" role="tab" aria-controls="pills-current" aria-selected="true">Current Annotators</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-pending-tab" data-toggle="pill" href="#pills-pending" role="tab" aria-controls="pills-pending" aria-selected="false">Pending Invites</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-send-tab" data-toggle="pill" href="#pills-send" role="tab" aria-controls="pills-send" aria-selected="false">Send New Invite</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent" style="border: 2px solid #ddd">
+        <!-- CURRENT ANNOTATORS -->
+        <div class="tab-pane fade show active" id="pills-current" role="tabpanel" aria-labelledby="pills-current-tab">
+            {% if project.annotators.count == 0 %}
+                <p> You dont seem to have any annotators. Send some invites.</p>
+            {% else %}
+            <!-- TABLE -->
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for annotator in project.annotators.all %}
+                            <tr>
+                                <td>{{ annotator.first_name }} {{ annotator.last_name }}</td>
+                                <td>@{{ annotator.username }}</td>
+                                <td><form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="annotator_id" name="annotator_id" value="{{ annotator.id }}">
+                                    <button type="submit" class="btn btn-danger" title="Remove this annotator from the project" data-toggle="tooltip" name="btn_remove">Remove</button>
+                                </form></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+            <!-- END TABLE -->  
+            {% endif %}
+        </div>
+        <!-- PENDING INVITES -->
+        <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+            {% if pending_invites.count == 0 %}
+                <p> You have no invites pending. Send some invites.</p>
+            {% else %}
+            <!-- TABLE -->
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for invitee in pending_invites.all %}
+                            <tr>
+                                <td>{{ invitee.recipient_annotator.first_name }} {{ invitee.recipient_annotator.last_name }}</td>
+                                <td>@{{ invitee.recipient_annotator.username }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+            <!-- END TABLE -->  
+            {% endif %}
+        </div>
+        <!-- SEND NEW INVITES -->
+        <div class="tab-pane fade" id="pills-send" role="tabpanel" aria-labelledby="pills-send-tab">
+            <form method="POST">
+                {% csrf_token %}
+                {{ addAnnotatorsForm.as_p }}
+
+                <button type="submit" name="addAnnotatorsButton" class="btn btn-primary">
+                    Send Invites
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

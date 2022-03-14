@@ -1,0 +1,16 @@
+<form method="POST">
+  {% csrf_token %}
+  
+  <!-- FORM RENDER -->
+  {% for field in editInfoForm %}
+  <p>
+    {% if field.field.required %} <font color="red">*</font> {% endif %}
+    {{field.label}}: {{field}}
+  </p>
+  {% endfor %}
+  <!-- END FORM RENDER -->
+
+  <button type="submit" name="editInfoButton" class="btn btn-primary">
+    Save Changes
+  </button>
+</form>

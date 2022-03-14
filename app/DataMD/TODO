@@ -1,7 +1,6 @@
 [ ] - Enforce constraints to ensure no breaks in relationships 
     e.g a project cannot exist without a team which cannot exist without at least one manager
     also: an annotator must be part of project of the same team they are part of 
-
-
-Things to add:
+[ ] - model for project's annotation classes, for notifications that a user has
+[ ] - Find templates
 [ ] - 

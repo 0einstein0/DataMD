@@ -1,0 +1,94 @@
+{% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %} {% endblock stylesheets %} {% block content %}
+
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Dashboard</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}"
+                  ><i class="feather icon-home"></i
+                ></a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:">Projects</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:">Project Invites</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <div class="main-body">
+      <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <h3>Project Invites</h3>
+        <p>Accept and Reject requests to be a part of annotating projects.</p>
+        <hr />
+        <!-- [ ROW 1 ] start -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Pending Invites</h5>
+              </div>
+              <div class="card-body">
+                {% if pending_invites == None %}
+                <p> You don't have any pending invites. </p> 
+                {% else %}
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Project Name</th>
+                              <th>Manager Username</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for invite in pending_invites %}
+                          <tr>
+                              <td>{{ invite.project.name }}</td>
+                              <td>@{{ invite.project.manager.username }}</td>
+                              <td>
+                                <form method="POST">
+                                  {% csrf_token %}
+                                  <input type="hidden" id="invite_id" name="invite_id" value="{{ invite.id }}"> <!-- TODO: Make this more secure -->
+                                  <button type="submit" class="btn btn-success" title="Only accept if you know this project" data-toggle="tooltip" name="btn_accept">Accept</button>
+                                  <button type="submit" class="btn btn-danger" title="Reject your addition into this project" data-toggle="tooltip" name="btn_reject">Reject</button>
+                                </form>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                      
+                  </table>
+              </div>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ ROW 1 ] start -->
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

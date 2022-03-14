@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'annotator.apps.AnnotatorConfig'
+    'annotator.apps.AnnotatorConfig',
+    'django_cleanup.apps.CleanupConfig' # 3rd party app to delete files from server when it is deleted from db
 ]
 
 MIDDLEWARE = [
@@ -114,11 +115,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_URL = 'login'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'server'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

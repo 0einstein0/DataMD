@@ -1,0 +1,82 @@
+{% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %} {% endblock stylesheets %} {% block content %}
+
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Dashboard</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}"
+                  ><i class="feather icon-home"></i
+                ></a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:">Projects</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:">Create New Project</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <div class="main-body">
+      <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <h3>Create New Project</h3>
+        <p>Create new annotation projects and close the data gap!</p>
+        <hr />
+        <!-- [ ROW 1 ] start -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Basic Details</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST" action="">
+                  {% csrf_token %} 
+
+                  <!-- FORM RENDER -->
+                  {% for field in form %} 
+                  <p>{% if field.field.required %} <font color="red">*</font> {% endif %} {{field.label}}: 
+                  {{field}}
+                  </p>
+                  {% endfor %}
+                  <!-- END FORM RENDER -->
+
+                  <!--<select class="select2-multiple form-control" name="states[]" multiple="multiple">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                  </select>-->
+
+                  <button type="submit" class="btn btn-outline-primary">
+                    Create
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ ROW 1 ] start -->
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
