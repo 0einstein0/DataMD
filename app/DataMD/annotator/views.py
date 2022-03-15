@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
-from .models import Project, AnnotationType, ProjectInvite, Image
+from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
 from django.db import IntegrityError
 
 
@@ -168,6 +168,8 @@ def dashboard(request):
 # annotation canvas for bounding boxes, keypoints, classification etc
 @login_required
 def canvas(request, project_id):
+    # retrive all image paths 
+
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + '/canvas.html' 
@@ -186,7 +188,7 @@ def create_project(request):
 
     if request.method == 'POST':
 
-        # Create Record
+        # Create Project Record
         project_instance = Project(
             name = request.POST.get('name'),
             description = request.POST.get('description'),
@@ -197,13 +199,20 @@ def create_project(request):
         # Commit Record to DB
         project_instance.save()
 
-        return redirect('manage_project', project_id = project_instance.id) # redirect to the project's manage page for further configuration
+        # Create AnnotationClass records
+        annotation_classes = request.POST.getlist('class')
         
+        for annotation_class in annotation_classes:
+            annotation_class_instance = AnnotationClass(name = annotation_class, project=project_instance)
+            # Commit Record to DB
+            annotation_class_instance.save()
+
+        return redirect('manage_project', project_id = project_instance.id) # redirect to the project's manage page for further configuration
 
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[MANAGER]['directory'] + '/create_project.html' 
-    context = {'form': ProjectForm(), 'form2': AddAnnotatorsForm()} # all the variables you want to pass to context
+    context = {'form': ProjectForm()} # all the variables you want to pass to context
     # --- --- ---
 
     return render(
@@ -277,17 +286,28 @@ def manage_project(request, project_id):
                     elif invite.status == 'Rejected':
                         invite.status = 'Pending'
                         invite.save()
-                        warning_messages.append("@" + annotator_to_invite.username + " has rejected an invite. Invite Resent")
+                        warning_messages.append("@" + annotator_to_invite.username + " has previously rejected an invite. Invite Resent")
                     elif invite.status == 'Accepted':
                         error_messages.append("@"+ annotator_to_invite.username + " is already an annotator on this project.")
 
     # Prepare Edit Info Form ----
     editInfoForm = ProjectForm(instance = project)
     editInfoForm.fields['annotation_type'].disabled = True
+    annotation_classes = AnnotationClass.objects.filter(project = project)
+    print(annotation_classes) # -- DEBUG
     # ---
 
     # Prepare Add Annotators Form ----
     addAnnotatorsForm = AddAnnotatorsForm()
+    # ---
+
+    # Prepare Images ---
+    images = Image.objects.filter(project = project)
+    print(images) # -- DEBUG
+    annotated_images = images.exclude(annotation_class__isnull = True)
+    unannotated_images = images.exclude(annotation_class__isnull = False)
+    print("annotated: ", annotated_images) # -- DEBUG 
+    print("unannotated: ", unannotated_images) # -- DEBUG
     # ---
 
     # --- RENDER VARIABLES ---
@@ -295,6 +315,7 @@ def manage_project(request, project_id):
     template = APP_NAME + USER_GROUP_INFO[MANAGER]['directory'] + '/manage_project.html'
     context = { 'project': project, 
         'editInfoForm': editInfoForm, 
+        'annotation_classes': annotation_classes,
         'pending_invites': pending_invites,
         'addAnnotatorsForm': addAnnotatorsForm,
         'error_messages': error_messages,

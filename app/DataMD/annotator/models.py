@@ -41,7 +41,6 @@ class Project(models.Model):
     annotation = models.FileField(null=True, blank=True, upload_to=annotation_path)
     createdAt = models.DateTimeField(auto_now_add = True)
     config = models.TextField(blank=True) # might switch to JSONField() if deemeded preferable
-    # classes
 
     # Relationship Fields
     annotation_type = models.ForeignKey(AnnotationType, null=True, on_delete=models.PROTECT) # dont delete type if project exists of said type
@@ -50,6 +49,16 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
+
+class AnnotationClass(models.Model):
+    name = models.CharField(max_length = 100)
+    description = models.TextField(blank=True)
+
+    # Relationship Field
+    project = models.ForeignKey(Project, on_delete=models.CASCADE) # if Project deleted, class is deleted
+
+    def __str__(self):
+        return self.name + " <-- " + self.project.name
 
 
 class Image(models.Model):
@@ -62,22 +71,13 @@ class Image(models.Model):
 
     name = models.CharField(max_length = 200)
     image = models.ImageField(null=True, blank=True, upload_to=image_path)
-    isAnnotated = models.BooleanField(default=False)
+    # isAnnotated = models.BooleanField(default=False) # probably not needed as one can tell annotation through whether annotation_class is blank or not
     createdAt = models.DateTimeField(auto_now_add = True) 
 
     # Relationship Field
     project = models.ForeignKey(Project, on_delete=models.CASCADE) # if Project deleted, image is deleted
-
-    def __str__(self):
-        return self.name + " <-- " + self.project.name
-
-
-class AnnotationClass(models.Model):
-    name = models.CharField(max_length = 100)
-    description = models.TextField(blank=True)
-
-    # Relationship Field
-    project = models.ForeignKey(Project, on_delete=models.CASCADE) # if Project deleted, class is deleted
+    annotation_class = models.ForeignKey(AnnotationClass, null=True, blank=True, on_delete=models.SET_NULL) 
+    # BUSINESS RULE: annotation class chosen must have the same project as the current Image Instance
 
     def __str__(self):
         return self.name + " <-- " + self.project.name

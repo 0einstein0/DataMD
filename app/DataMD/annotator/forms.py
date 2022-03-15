@@ -71,6 +71,14 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['name', 'description', 'annotation_type']
 
+
+class AddAnnotationClassesForm(forms.Form):
+    classfield = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        super(AddAnnotationClassesForm, self).__init__(*args, **kwargs)
+        self.fields['classfield'].widget.attrs['class'] = 'form-control'
+
 class AddAnnotatorsForm(forms.Form):
     annotators = forms.ModelChoiceField(label = 'Annotators to Invite', widget=forms.SelectMultiple, queryset=User.objects.filter(groups__name='annotator_user_group'))
     # TODO: MAKE A PROPER ASYNC SEARCH, NOT THIS SEARCHABLE SELECT BOX WORK AROUND

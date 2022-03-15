@@ -8,7 +8,22 @@
     {{field.label}}: {{field}}
   </p>
   {% endfor %}
+
+  <font color="red">*</font> Class(es):
+  {% for annotation_class in annotation_classes %}
+  <div id="new_chq">
+    <div class="input-group input-group-sm mb-3" id="new_{{ forloop.counter }}">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-sm{{ forloop.counter }}">Class Name #{{ forloop.counter }}</span>
+      </div>
+        <input type="text" value="{{ annotation_class.name }}"class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm{{ forloop.counter }}" name = "class" maxlength="200" disabled/>
+    </div>
+  </div>
+  {% endfor %}
+
   <!-- END FORM RENDER -->
+
+
 
   <button type="submit" name="editInfoButton" class="btn btn-primary">
     Save Changes

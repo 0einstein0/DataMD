@@ -46,25 +46,46 @@
               </div>
               <div class="card-body">
                 <form method="POST" action="">
-                  {% csrf_token %} 
-
-                  <!-- FORM RENDER -->
-                  {% for field in form %} 
-                  <p>{% if field.field.required %} <font color="red">*</font> {% endif %} {{field.label}}: 
-                  {{field}}
+                  {% csrf_token %}
+                  <h4>Project Details</h4>
+                  <hr />
+                  <!-- FORM FIELDS RENDER -->
+                  {% for field in form %}
+                  <p>
+                    {% if field.field.required %} <font color="red">*</font> {% endif %} 
+                    {{field.label}}: {{field}}
                   </p>
                   {% endfor %}
-                  <!-- END FORM RENDER -->
 
-                  <!--<select class="select2-multiple form-control" name="states[]" multiple="multiple">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                  </select>-->
-
-                  <button type="submit" class="btn btn-outline-primary">
-                    Create
+                  <br />
+                  <h4>Annotation Classes</h4>
+                  <hr />
+                  <button type="button" class="btn btn-success add" title="Add a new field to add another class" data-toggle="tooltip">
+                      Add Class
                   </button>
-                </form>
+                  <button type="button" class="btn btn-danger remove" title="Remove the last field" data-toggle="tooltip">
+                      Remove Class
+                  </button>
+                  <br />
+                   <br />
+                   <font color="red">*</font> Class(es):
+                    <div id="new_chq">
+                      <div class="input-group input-group-sm mb-3" id="new_1">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-sm1">Class Name #1</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm1" name = "class" maxlength="200" required />
+                      </div>
+                    </div>
+
+                    <input type="hidden" value="1" name="total" id="total_chq" />
+                    <!-- END FORM FIELDS RENDER -->
+
+                    <button type="submit" class="btn btn-outline-primary">
+                      Create Project
+                    </button>
+                    
+                  </form>
               </div>
             </div>
           </div>
@@ -79,4 +100,41 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+  jQuery(".add").on("click", add);
+  jQuery(".remove").on("click", remove);
+
+  function add() {
+    var new_chq_no = parseInt(jQuery("#total_chq").val()) + 1;
+    var new_input =
+      "<div class='input-group input-group-sm mb-3' id='new_" +
+      new_chq_no +
+      "''>" +
+      "<div class='input-group-prepend'>" +
+      "<span class='input-group-text' id='inputGroup-sizing-sm" +
+      new_chq_no +
+      "'>Class Name #" +
+      new_chq_no +
+      "</span>" +
+      "</div>" +
+      "<input type='text' class='form-control' aria-label='Small' aria-describedby='inputGroup-sizing-sm" +
+      new_chq_no +
+      "' name = 'class' maxlength = '200' required>" +
+      "</div>";
+
+    jQuery("#new_chq").append(new_input);
+
+    jQuery("#total_chq").val(new_chq_no);
+  }
+
+  function remove() {
+    var last_chq_no = jQuery("#total_chq").val();
+
+    if (last_chq_no > 1) {
+      jQuery("#new_" + last_chq_no).remove();
+      jQuery("#total_chq").val(last_chq_no - 1);
+    }
+  }
+</script>
+{% endblock javascripts %}
