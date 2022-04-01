@@ -1,0 +1,124 @@
+/* =================================== */
+/*  Start Banner Area CSS
+/* =================================== */
+
+//--------- Start Home Banner Area -------------//
+.home-banner-area {
+	background: url(../img/home-banner-bg.png) no-repeat center;
+	background-size: cover;
+	.fullscreen {
+		@media (max-width: 1440px) {
+			height: 750px !important;
+		}
+		@media (max-width: 768px) {
+			height: 700px !important;
+		}
+	}
+}
+
+.home-banner-left {
+	@media (max-width: 768px) {
+		text-align: center;
+	}
+
+	h1 {
+		color: $black;
+		font-size: 48px;
+		margin-bottom: 25px;
+		span {
+			color: $primary-color;
+		}
+		br {
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
+
+		@media (max-width: 992px) {
+			font-size: 45px;
+		}
+		@media (max-width: 768px) {
+			font-size: 36px;
+		}
+		@media (max-width: 414px) {
+			font-size: 30px;
+		}
+	}
+
+	@media (max-width: 800px) {
+		margin-top: 30px;
+	}
+}
+
+.home-banner-right {
+	@media (max-width: 991px) {
+		display: none !important;
+		// img {
+		// 	width: 55%;
+		// 	margin-right: auto !important;
+		// 	margin-left: auto !important;
+		// 	display: block;
+		// }
+	}
+}
+
+//--------- End Home Banner Area -------------//
+
+//--------- Start Common Banner Area -------------//
+.banner_area {
+	position: relative;
+	z-index: 1;
+	min-height: 420px;
+	.banner_inner {
+		position: relative;
+		background: url(../img/common-banner.png) no-repeat center center;
+		background-size: cover;
+		background-position: right;
+		width: 100%;
+		min-height: 420px;
+		z-index: 1;
+		.banner_content {
+			h2 {
+				color: $title-color;
+				font-size: 48px;
+				margin-bottom: 0px;
+				font-weight: 700;
+				@media (max-width: 767px) {
+					font-size: 30px;
+				}
+			}
+			.page_link {
+				a {
+					font-size: 14px;
+					color: $title-color;
+					font-family: $text-font;
+					font-weight: 400;
+					margin-right: 30px;
+					position: relative;
+					text-transform: capitalize;
+
+					&:before {
+						content: "\f178";
+						font: normal normal normal 14px/1 FontAwesome;
+						position: absolute;
+						right: -25px;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+					&:last-child {
+						margin-right: 0px;
+						&:before {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//--------- End Common Banner Area -------------//
+
+/* =================================== */
+/*  End Banner Area CSS
+/* =================================== */

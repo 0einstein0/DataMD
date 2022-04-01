@@ -1,0 +1,16 @@
+// including variables and mixins
+@import "theme/variables";
+@import "theme/mixins";
+@import "theme/flexbox";
+@import "theme/reset";
+@import "theme/predefined";
+
+// Custom Scss
+@import "theme/elements";
+@import "theme/header";
+@import "theme/banner";
+@import "theme/home";
+@import "theme/elements";
+@import "theme/blog";
+@import "theme/contact";
+@import "theme/footer";

@@ -1,570 +1,541 @@
-<!doctype html>
-<html class="no-js" lang="zxx">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <!-- Mobile Specific Meta -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png" />
+    <!-- Author Meta -->
+    <meta name="author" content="fzS" />
+    <!-- Meta Description -->
+    <meta name="description" content="" />
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="" />
+    <!-- meta character set -->
+    <meta charset="UTF-8" />
+    <!-- Site Title -->
     <title>DataMD</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="static/landing_assets/img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!--
+			CSS
+			============================================= -->
+    <link rel="stylesheet" href="static/landing_assets/css/linearicons.css" />
+    <link
+      rel="stylesheet"
+      href="static/landing_assets/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="static/landing_assets/css/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      href="static/landing_assets/css/magnific-popup.css"
+    />
+    <link rel="stylesheet" href="static/landing_assets/css/owl.carousel.css" />
+    <link rel="stylesheet" href="static/landing_assets/css/hexagons.min.css" />
+    <link rel="stylesheet" href="static/landing_assets/css/nice-select.css" />
+    <link rel="stylesheet" href="static/landing_assets/css/main.css" />
+    <style>
+      body,
+      h1,
+      h2,h3,h4,h5,h6 {
+        font-family: "Montserrat", Tahoma, Geneva, Verdana, sans-serif !important;
+      }
+    </style>
+  </head>
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="static/landing_assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/landing_assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="static/landing_assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="static/landing_assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/landing_assets/css/themify-icons.css">
-    <link rel="stylesheet" href="static/landing_assets/css/nice-select.css">
-    <link rel="stylesheet" href="static/landing_assets/css/flaticon.css">
-    <link rel="stylesheet" href="static/landing_assets/css/gijgo.css">
-    <link rel="stylesheet" href="static/landing_assets/css/animate.css">
-    <link rel="stylesheet" href="static/landing_assets/css/slicknav.css">
-    <link rel="stylesheet" href="static/landing_assets/css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
-</head>
+  <body>
+    <!--================ Offcanvus Menu Area =================-->
+    <div class="side_menu">
+      <ul class="list menu-left">
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#services">Service</a>
+        </li>
 
-<body>
-    <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-
-    <!-- header-start -->
-    <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid p-0">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="logo-img">
-                                <a href="index.html">
-                                    <img src="static/landing_assets/img/logo.png" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-lg-7">
-                            <div class="main-menu  d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="about.html">About</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="log_chat_area d-flex align-items-center">
-                                {% if request.user.is_authenticated %}
-                                <a href="{% url 'logout' %}" class="login popup-with-form">
-                                    <i class="flaticon-user"></i>
-                                    <span>Logout</span>
-                                </a>
-                                {% else %}
-                                <a href="{% url 'login' %}" class="login popup-with-form">
-                                    <i class="flaticon-user"></i>
-                                    <span>Login</span>
-                                </a>
-                                {% endif %}
-                                <div class="live_chat_btn">
-                                    <a class="boxed_btn_orange" href="#">
-                                        <i class="fa fa-phone"></i>
-                                        <span>+92 345 6789</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- header-end -->
-
-    <!-- slider_area_start -->
-    <div class="slider_area ">
-        <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-xl-6 col-md-6">
-                        <div class="illastrator_png">
-                            <img src="static/landing_assets/img/banner/edu_ilastration.png" alt="">
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-md-6">
-                        <div class="slider_info">
-                            <h3>Speed Up <br>
-                                Annotations <br>
-                                Efficiently</h3>
-                            <a href="{% url 'dashboard' %}" class="boxed_btn">Get Started</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <li>
+          <a href="#contact">Contact</a>
+        </li>
+      </ul>
     </div>
-    <!-- slider_area_end -->
 
-    <!-- about_area_start -->
-    <div class="about_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-5 col-lg-6">
-                    <div class="single_about_info">
-                        <h3>Using Active Learning <br>
-                            to manage annotations</h3>
-                        <p>Our state of the art user-interface and team management system will
-                        return results better than any other software...guaranteed! </p>
-                        <a href="#" class="boxed_btn">Enroll a Course</a>
-                    </div>
-                </div>
-                <div class="col-xl-6 offset-xl-1 col-lg-6">
-                    <div class="about_tutorials">
-                        <div class="courses">
-                            <div class="inner_courses">
-                                <div class="text_info">
-                                    <span>4+</span>
-                                    <p>Annotation Types</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="courses-blue">
-                            <div class="inner_courses">
-                                <div class="text_info">
-                                    <span>Unlimited</span>
-                                    <p> Projects</p>
-                                </div>
+    <!--================ End Offcanvus Menu Area =================-->
 
-                            </div>
-                        </div>
-                        <div class="courses-sky">
-                            <div class="inner_courses">
-                                <div class="text_info">
-                                    <span>3000+</span>
-                                    <p> Images Annotated Per Day</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!--================ Canvus Menu Area =================-->
+    <div class="canvus_menu">
+      <div class="container d-flex justify-content-between">
+        <div class="">
+          <div class="toggle_icon" title="Menu Bar">
+            <span></span>
+          </div>
         </div>
-    </div>
-    <!-- about_area_end -->
-
-    <!-- testimonial_area_start -->
-    <div class="testimonial_area testimonial_bg_1 overlay">
-        <div class="testmonial_active owl-carousel">
-            <div class="single_testmoial">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="testmonial_text text-center">
-                                <div class="author_img">
-                                    <img src="img/testmonial/author_img.png" alt="">
-                                </div>
-                                <p>
-                                    "Working in conjunction with humanitarian aid <br> agencies we have supported
-                                    programmes to <br>
-                                    alleviate.
-                                    human suffering.
-
-                                </p>
-                                <span>- Jquileen</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="single_testmoial">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="testmonial_text text-center">
-                                <div class="author_img">
-                                    <img src="img/testmonial/author_img.png" alt="">
-                                </div>
-                                <p>
-                                    "Working in conjunction with humanitarian aid <br> agencies we have supported
-                                    programmes to <br>
-                                    alleviate.
-                                    human suffering.
-
-                                </p>
-                                <span>- Jquileen</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="">
+          <div class="pt-2">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="login generic-btn info">
+              <span>Logout</span>
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="login genric-btn info">
+              <span>Login</span>
+            </a>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </div>
-    <!-- testimonial_area_end -->
+    <!--================ End Canvus Menu Area =================-->
 
-    <!-- our_courses_start -->
-    <div class="our_courses">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="section_title text-center mb-100">
-                        <h3>Our Course Speciality</h3>
-                        <p>Your domain control panel is designed for ease-of-use and <br>
-                            allows for all aspects of your domains.
-                        </p>
-                    </div>
+    <!--================ start banner Area =================-->
+    <section class="home-banner-area">
+      <div class="container">
+        <div class="row justify-content-end fullscreen">
+          <div
+            class="col-lg-6 col-md-12 home-banner-left d-flex fullscreen align-items-center"
+          >
+            <div>
+              <h1 class="">
+                Data<span>MD</span> specifically designed <br />
+                for <span>Biomedical</span> Professionals
+              </h1>
+              <p class="mx-auto mb-40">
+                An online collaborative tool specialized for use by teams of
+                medical professionals to ensure that the process is easy and
+                less time-consuming while also preserving the accuracy of the
+                data.
+              </p>
+
+              <div class="d-flex align-items-center mt-40">
+                <a
+                  id="play-home-video"
+                  class="video-play-button"
+                  href="https://www.youtube.com/watch?v=ovqjB_tS5OY"
+                >
+                  <span></span>
+                </a>
+                <div class="watch_video">
+                  <p>Watch Our Video</p>
                 </div>
+              </div>
             </div>
-            <div class="row">
-                <div class="col-xl-3 col-md-6 col-lg-6">
-                    <div class="single_course text-center">
-                        <div class="icon">
-                            <i class="flaticon-art-and-design"></i>
-                        </div>
-                        <h3>Premium Quality</h3>
-                        <p>
-                            Your domain control panel is designed for ease-of-use <br> and <br>
-                            allows for all aspects of
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 col-lg-6">
-                    <div class="single_course text-center">
-                        <div class="icon blue">
-                            <i class="flaticon-business-and-finance"></i>
-                        </div>
-                        <h3>Premium Quality</h3>
-                        <p>
-                            Your domain control panel is designed for ease-of-use <br> and <br>
-                            allows for all aspects of
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 col-lg-6">
-                    <div class="single_course text-center">
-                        <div class="icon">
-                            <i class="flaticon-premium"></i>
-                        </div>
-                        <h3>Premium Quality</h3>
-                        <p>
-                            Your domain control panel is designed for ease-of-use <br> and <br>
-                            allows for all aspects of
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 col-lg-6">
-                    <div class="single_course text-center">
-                        <div class="icon gradient">
-                            <i class="flaticon-crown"></i>
-                        </div>
-                        <h3>Premium Quality</h3>
-                        <p>
-                            Your domain control panel is designed for ease-of-use <br> and <br>
-                            allows for all aspects of
-                        </p>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div
+            class="col-lg-6 col-md-12 no-padding home-banner-right d-flex fullscreen align-items-end"
+          > <img
+              class="img-fluid"
+              src="static/landing_assets/img/header-img.png"
+              alt=""
+            />
+          </div>
         </div>
-    </div>
-    <!-- our_courses_end -->
+      </div>
+    </section>
+    <!--================ End banner Area =================-->
 
-    <!-- subscribe_newsletter_Start -->
-    <div class="subscribe_newsletter">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="newsletter_text">
-                        <h3>Subscribe Newsletter</h3>
-                        <p>Your domain control panel is designed for ease-of-use and allows for all aspects of your</p>
-                    </div>
+    <!--================ Start Video Area =================-->
+    <section id="about" class="section-gap">
+      <div class="container">
+        <div
+          class="text-center col-lg-12 justify-content-start align-items-center"
+        >
+          <div class="justify-content-center align-items-center d-flex">
+            <div class="overlay overlay-bg"></div>
+            <div class="section-title">
+              <h1 class="">About <span>Us</span></h1>
+           
+              <p class="px-5 py-4">
+                Medical institutions generate large volumes of biomedical image
+                data. This can be used to train supervised models for valuable
+                AI-assisted diagnosis in healthcare. However, annotating
+                biomedical images is a laborious process that also needs input
+                from professionals. With DataMD users can smoothly complete
+                annotations with an optimized user interface, and an active
+                learning architecture built upon a pre-trained machine learning
+                model will use uncertainty and diversity sampling strategies
+                alongside annotation predictions to substantially reduce the
+                labor.
+              </p>
+            
+
+              <div class="counter_area" id="project_counter">
+                <!-- single counter -->
+                <div class="single_counter">
+                  <div class="info-content">
+                    <h4><span class="counter">500</span>+</h4>
+                    <p>Qualified Annotators</p>
+                  </div>
                 </div>
-                <div class="col-xl-5 offset-xl-1 col-lg-6">
-                    <div class="newsletter_form">
-                        <h4>Your domain control panel is</h4>
-                        <form action="#" class="newsletter_form">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit">Sign Up</button>
-                        </form>
-                    </div>
+                <!-- single counter -->
+                <div class="single_counter">
+                  <div class="info-content">
+                    <h4><span class="counter">20,650</span>+</h4>
+                    <p>Annotated Images</p>
+                  </div>
                 </div>
+                <!-- single counter -->
+                <div class="single_counter">
+                  <div class="info-content">
+                    <h4><span class="counter">20</span>k+</h4>
+                    <p>Ongoing Projects</p>
+                  </div>
+                </div>
+                <!-- single counter -->
+                <div class="single_counter">
+                  <div class="info-content">
+                    <h4><span class="counter">50</span>+</h4>
+                    <p>Achievements</p>
+                  </div>
+                </div>
+              </div>
             </div>
+            </div>
+          </div>
         </div>
-    </div>
-    <!-- subscribe_newsletter_end -->
+      </div>
+    </section>
+    <!--================ End video Area =================-->
 
-    <!-- our_latest_blog_start -->
-    <div class="our_latest_blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="section_title text-center mb-100">
-                        <h3>Our Latest Blog</h3>
-                    </div>
-                </div>
+    <!--================ Start Service Area =================-->
+    <section id="services" class="service-area section-gap">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-12 text-center">
+            <div class="section-title">
+            
+              <h1>
+                Our <span>Services</span>
+              </h1>
+              <p class="py-4">We Are Providing these services</p>
             </div>
-            <div class="row">
-                <div class="col-xl-4 col-md-4">
-                    <div class="single_latest_blog">
-                        <div class="thumb">
-                            <img src="img/latest_blog/1.png" alt="">
-                        </div>
-                        <div class="content_blog">
-                            <div class="date">
-                                <p>12 Jun, 2019 in <a href="#">Design tips</a></p>
-                            </div>
-                            <div class="blog_meta">
-                                <h3><a href="#">Commitment to dedicated Support</a></h3>
-                            </div>
-                            <p class="blog_text">
-                                Firmament morning sixth subdue darkness creeping gathered divide.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-4">
-                    <div class="single_latest_blog">
-                        <div class="thumb">
-                            <img src="img/latest_blog/2.png" alt="">
-                        </div>
-                        <div class="content_blog">
-                            <div class="date">
-                                <p>12 Jun, 2019 in <a href="#">Design tips</a></p>
-                            </div>
-                            <div class="blog_meta">
-                                <h3><a href="#">Commitment to dedicated Support</a></h3>
-                            </div>
-                            <p class="blog_text">
-                                Firmament morning sixth subdue darkness creeping gathered divide.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-4">
-                    <div class="single_latest_blog">
-                        <div class="thumb">
-                            <img src="img/latest_blog/3.png" alt="">
-                        </div>
-                        <div class="content_blog">
-                            <div class="date">
-                                <p>12 Jun, 2019 in <a href="#">Design tips</a></p>
-                            </div>
-                            <div class="blog_meta">
-                                <h3><a href="#">Commitment to dedicated Support</a></h3>
-                            </div>
-                            <p class="blog_text">
-                                Firmament morning sixth subdue darkness creeping gathered divide.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-    <!-- our_latest_blog_end -->
+        <div class="row justify-content-center ">
+          <!-- single-features -->
+          <div class="col-lg-3 col-sm-6 col-md-6">
+            <div class="single-service ">
+              <div class="service-icon ">
+                <img
+                  src="static/landing_assets/img/service/shape1.png"
+                  alt=""
+                />
+                <img
+                  class="s-icon"
+                  src="static/landing_assets/img/service/icon1.png"
+                  alt=""
+                />
+                <img
+                  class="clr-icon"
+                  src="static/landing_assets/img/service/clr-icon1.png"
+                  alt=""
+                />
+              </div>
+              <div class="service-content">
+                <h4>Object Detection</h4>
+              </div>
+            </div>
+          </div>
+          <!-- single-features -->
+          <div class="col-lg-3  col-sm-6 col-md-6">
+            <div class="single-service">
+              <div class="service-icon">
+                <img
+                  src="static/landing_assets/img/service/shape1.png"
+                  alt=""
+                />
+                <img
+                  class="s-icon"
+                  src="static/landing_assets/img/service/icon2.png"
+                  alt=""
+                />
+                <img
+                  class="clr-icon"
+                  src="static/landing_assets/img/service/clr-icon2.png"
+                  alt=""
+                />
+              </div>
+              <div class="service-content ">
+                <h4>Image Classification</h4>
+            
+              </div>
+            </div>
+          </div>
+          
+          <!-- single-features -->
+          <div class="col-lg-3  col-sm-6 col-md-6">
+            <div class="single-service ">
+              <div class="service-icon">
+                <img
+                  src="static/landing_assets/img/service/shape1.png"
+                  alt=""
+                />
+                <img
+                  class="s-icon"
+                  src="static/landing_assets/img/service/icon3.png"
+                  alt=""
+                />
+                <img
+                  class="clr-icon"
+                  src="static/landing_assets/img/service/clr-icon3.png"
+                  alt=""
+                />
+              </div>
+              <div class="service-content">
+                <h4>ML Automation</h4>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================ End Service Area =================-->
 
+    <!--================ Start Testimonial Area =================-->
+    <section class="testimonial-area section-gap">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 text-center">
+            <div class="section-title">
+              <h1>Contact <span>Us</span></h1>
+            </div>
 
-    <!-- footer -->
-    <footer class="footer footer_bg_1">
-        <div class="footer_top">
-            <div class="container">
+            <!--================Contact Area =================-->
+            <section id="contact" class="contact_area">
+              <div class="container">
                 <div class="row">
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <div class="footer_widget">
-                            <div class="footer_logo">
-                                <a href="#">
-                                    <img src="img/logo.png" alt="">
-                                </a>
-                            </div>
-                            <p>
-                                Firmament morning sixth subdue darkness creeping gathered divide our let god moving.
-                                Moving in fourth air night bring upon it beast let you dominion likeness open place day
-                                great.
-                            </p>
-                            <div class="socail_links">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-twitter-alt"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-youtube-play"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
+                  <div class="col-lg-4">
+                    <div class="contact_info">
+                      <div class="info_item">
+                        <i class="lnr lnr-home"></i>
+                        <h6>Islamabad, Pakistan</h6>
+                        <p>Mational University of Sciences & Technology</p>
+                      </div>
+                      <div class="info_item">
+                        <i class="lnr lnr-phone-handset"></i>
+                        <h6><a href="#">0900-786-01</a></h6>
+                        <p>Mon to Fri 9 AM to 6 PM</p>
+                      </div>
+                      <div class="info_item">
+                        <i class="lnr lnr-envelope"></i>
+                        <h6><a href="#">datamd@gmail.com</a></h6>
+                        <p>Send us your query anytime!</p>
+                      </div>
                     </div>
-                    <div class="col-xl-2 offset-xl-1 col-md-6 col-lg-3">
-                        <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Courses
-                            </h3>
-                            <ul>
-                                <li><a href="#">Wordpress</a></li>
-                                <li><a href="#"> Photoshop</a></li>
-                                <li><a href="#">Illustrator</a></li>
-                                <li><a href="#">Adobe XD</a></li>
-                                <li><a href="#">UI/UX</a></li>
-                            </ul>
-
+                  </div>
+                  <div class="col-lg-8">
+                    <form
+                      class="row contact_form"
+                      action="contact_process.php"
+                      method="post"
+                      id="contactForm"
+                      novalidate="novalidate"
+                    >
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                          />
                         </div>
-                    </div>
-                    <div class="col-xl-2 col-md-6 col-lg-2">
-                        <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Resourches
-                            </h3>
-                            <ul>
-                                <li><a href="#">Free Adobe XD</a></li>
-                                <li><a href="#">Tutorials</a></li>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#"> About</a></li>
-                                <li><a href="#"> Contact</a></li>
-                            </ul>
+                        <div class="form-group">
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="Enter email address"
+                          />
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-lg-3">
-                        <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Address
-                            </h3>
-                            <p>
-                                200, D-block, Green lane USA <br>
-                                +10 367 467 8934 <br>
-                                edumark@contact.com
-                            </p>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="subject"
+                            name="subject"
+                            placeholder="Enter Subject"
+                          />
                         </div>
-                    </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <textarea
+                            class="form-control"
+                            name="message"
+                            id="message"
+                            rows="1"
+                            placeholder="Enter Message"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12 text-right">
+                        <button
+                          type="submit"
+                          value="submit"
+                          class="primary-btn rounded"
+                        >
+                          Send Message
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </section>
+            <!--================Contact Area =================-->
+          </div>
         </div>
-        <div class="copy-right_text">
-            <div class="container">
-                <div class="footer_border"></div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <p class="copy_right text-center">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </p>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center"></div>
+        </div>
+      </div>
+    </section>
+    <!--================ End Testimonial Area =================-->
+
+    <!--================ Start CTA Area =================-->
+    <section class="cta-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 col-md-12">
+            <h2>Get to Know Project Estimate?</h2>
+            <p>
+              There is a moment in the life of any aspiring astronomer that it
+              is time to buy that first telescope. It’s exciting to think about
+              setting up your own viewing station whether that is on the deck
+            </p>
+            <a href="#" class="primary-btn">Get Estimate for Free</a>
+          </div>
+          <img
+            src="static/landing_assets/img/cta-bg-shape.png"
+            alt=""
+            class="cta-shape img-fluid"
+          />
+        </div>
+      </div>
+    </section>
+    <!--================ End CTA Area =================-->
+
+    <!--================ start footer Area  =================-->
+    <footer class="footer-area section_gap">
+      <div class="container">
+        <div class="row footer-top">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>About DataMD</h6>
+              <p>
+                The world has become so fast paced that people don’t want to
+                stand by reading a page of information, they would much rather
+                look.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>Navigation Links</h6>
+              <div class="row">
+                <ul class="col footer-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="services.html">Services</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>Newsletter</h6>
+              <p>
+                For business professionals caught between high OEM price
+                mediocre print and graphic.
+              </p>
+              <div class="" id="mc_embed_signup">
+                <form
+                  target="_blank"
+                  novalidate="true"
+                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                  method="get"
+                  class="form-inline"
+                >
+                  <div class="d-flex flex-row">
+                    <input
+                      class="form-control"
+                      name="EMAIL"
+                      placeholder="Enter Email"
+                      onfocus="this.placeholder = ''"
+                      onblur="this.placeholder = 'Enter Email '"
+                      required=""
+                      type="email"
+                    />
+
+                    <button class="click-btn btn btn-default">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
+                    <div style="position: absolute; left: -5000px">
+                      <input
+                        name="b_36c4fd991d266f23781ded980_aefe40901a"
+                        tabindex="-1"
+                        value=""
+                        type="text"
+                      />
                     </div>
-                </div>
+                  </div>
+                  <div class="info"></div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div
+        class="footer-bottom d-flex justify-content-between align-items-center flex-wrap"
+      >
+        <div class="container">
+          <div class="row justify-content-between">
+            <div class="col-lg-12">
+              <div class="footer-social d-flex align-items-center">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-behance"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
-    <!-- footer -->
+    <!--================ End footer Area  =================-->
 
-
-    <!-- form itself end-->
-    <form id="test-form" class="white-popup-block mfp-hide">
-        <div class="popup_box ">
-            <div class="popup_inner">
-                <div class="logo text-center">
-                    <a href="#">
-                        <img src="img/form-logo.png" alt="">
-                    </a>
-                </div>
-                <h3>Sign in</h3>
-                <form action="#">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12">
-                            <input type="email" placeholder="Enter email">
-                        </div>
-                        <div class="col-xl-12 col-md-12">
-                            <input type="password" placeholder="Password">
-                        </div>
-                        <div class="col-xl-12">
-                            <button type="submit" class="boxed_btn_orange">Sign in</button>
-                        </div>
-                    </div>
-                </form>
-                <p class="doen_have_acc">Don’t have an account? <a class="dont-hav-acc" href="#test-form2">Sign Up</a>
-                </p>
-            </div>
-        </div>
-    </form>
-    <!-- form itself end -->
-
-    <!-- form itself end-->
-    <form id="test-form2" class="white-popup-block mfp-hide">
-        <div class="popup_box ">
-            <div class="popup_inner">
-                <div class="logo text-center">
-                    <a href="#">
-                        <img src="img/form-logo.png" alt="">
-                    </a>
-                </div>
-                <h3>Resistration</h3>
-                <form action="#">
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12">
-                            <input type="email" placeholder="Enter email">
-                        </div>
-                        <div class="col-xl-12 col-md-12">
-                            <input type="password" placeholder="Password">
-                        </div>
-                        <div class="col-xl-12 col-md-12">
-                            <input type="Password" placeholder="Confirm password">
-                        </div>
-                        <div class="col-xl-12">
-                            <button type="submit" class="boxed_btn_orange">Sign Up</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </form>
-    <!-- form itself end -->
-
-
-    <!-- JS here -->
-    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/ajax-form.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/scrollIt.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/nice-select.min.js"></script>
-    <script src="js/jquery.slicknav.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/gijgo.min.js"></script>
-
-    <!--contact js-->
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
-
-    <script src="js/main.js"></script>
-</body>
-
+    <script src="static/landing_assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <script
+      src="static/landing_assets/https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+      integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="static/landing_assets/js/vendor/bootstrap.min.js"></script>
+    <script src="static/landing_assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="static/landing_assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="static/landing_assets/js/parallax.min.js"></script>
+    <script src="static/landing_assets/js/owl.carousel.min.js"></script>
+    <script src="static/landing_assets/js/jquery.nice-select.min.js"></script>
+    <script src="static/landing_assets/js/jquery.sticky.js"></script>
+    <script src="static/landing_assets/js/hexagons.min.js"></script>
+    <script src="static/landing_assets/js/jquery.counterup.min.js"></script>
+    <script src="static/landing_assets/js/waypoints.min.js"></script>
+    <script src="static/landing_assets/js/main.js"></script>
+  </body>
 </html>

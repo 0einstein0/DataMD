@@ -4,12 +4,13 @@ import re
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
 from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -101,6 +102,50 @@ def logout_user(request):
     return redirect('index')
 
 def register_page(request):
+    msg = None
+    success = False
+
+    if request.method == "POST":
+        form = SignUpForm(data=request.POST)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        user_group = request.POST.get('user_group')
+
+        user, created = User.objects.get_or_create(
+            username = username,
+            email = email,
+            first_name = first_name,
+            last_name = last_name
+        )
+
+        user.set_password(form.cleaned_data.get('password1'))
+        group = Group.objects.get(name=user_group)
+        user.groups.add(group)
+
+        print("created:", str(created), " of user: ", user)
+
+        
+    
+    form = SignUpForm()
+        
+
+    # --- RENDER VARIABLES ---
+    request = request
+    template = APP_NAME + '/accounts/register.html' 
+    context = {"form": form, "msg": msg, "success": success} # all the variables you want to pass to context
+    # --- --- ---
+
+    return render(
+        request, # pass the http request argument
+        template, # the template which represents function
+        context # a dictionary which will be added to the template context
+    )
+
+
+
+def register_page_old(request):
     page = 'register'
     
     if request.method == 'POST':
@@ -116,9 +161,9 @@ def register_page(request):
 
     # --- RENDER VARIABLES ---
     request = request
-    template = APP_NAME + '/login_register.html' 
+    template = APP_NAME + '/accounts/register.html' 
     context = {'page': page, 
-                'form': UserCreationForm() } # all the variables you want to pass to context
+                'form': SignUpForm() } # all the variables you want to pass to context
     # --- --- ---
 
     return render(
@@ -167,13 +212,24 @@ def dashboard(request):
 
 # annotation canvas for bounding boxes, keypoints, classification etc
 @login_required
+@user_passes_test(isAnnotator)
 def canvas(request, project_id):
-    # retrive all image paths 
+    # retrive all images that the user is assigned to 
+    try:
+        project = Project.objects.get(id = project_id)
+    except ObjectDoesNotExist:
+        return redirect('dashboard')
+    
+
+    images = Image.objects.filter(project = project, assigned_annotator = request.user)
+    print(images)
+    for x in images:
+        print(x.image.url)
 
     # --- RENDER VARIABLES ---
     request = request
-    template = APP_NAME + '/canvas.html' 
-    context = {'project_id': project_id} # all the variables you want to pass to context
+    template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + '/canvas.html' 
+    context = {'project': project, 'images': images} # all the variables you want to pass to context
     # --- --- ---
 
     return render(

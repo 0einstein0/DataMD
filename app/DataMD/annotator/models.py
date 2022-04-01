@@ -76,7 +76,8 @@ class Image(models.Model):
 
     # Relationship Field
     project = models.ForeignKey(Project, on_delete=models.CASCADE) # if Project deleted, image is deleted
-    annotation_class = models.ForeignKey(AnnotationClass, null=True, blank=True, on_delete=models.SET_NULL) 
+    annotation_class = models.ForeignKey(AnnotationClass, null=True, blank=True, on_delete=models.SET_NULL)
+    assigned_annotator = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, limit_choices_to={'groups__name': 'annotator_user_group'})
     # BUSINESS RULE: annotation class chosen must have the same project as the current Image Instance
 
     def __str__(self):

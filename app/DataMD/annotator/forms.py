@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 from .models import AnnotationType, Project, ProjectInvite
 
 class LoginForm(forms.Form):
@@ -19,8 +20,31 @@ class LoginForm(forms.Form):
             }
         ))
 
+# class RegisterForm(UserCreationForm):
+#     MANAGER = "manager_user_group"
+#     ANNOTATOR = "annotator_user_group"
+
+#     USER_GROUP_CHOICES = [
+#         (MANAGER, "Manager"),
+#         (ANNOTATOR, "Annotator")
+#     ]
+
+#     email = forms.EmailField(required = True)
+#     user_group = forms.CharField(choices = USER_GROUP_CHOICES)
+
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'password1', 'password2']
 
 class SignUpForm(UserCreationForm):
+    MANAGER = "manager_user_group"
+    ANNOTATOR = "annotator_user_group"
+
+    USER_GROUP_CHOICES = [
+        (MANAGER, "Manager"),
+        (ANNOTATOR, "Annotator")
+    ]
+
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -28,6 +52,31 @@ class SignUpForm(UserCreationForm):
                 "class": "form-control"
             }
         ))
+    
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "First Name",
+                "class": "form-control"
+            }
+        ))
+    
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Last Name",
+                "class": "form-control"
+            }
+        ))
+
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        ))
+    
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
@@ -50,9 +99,15 @@ class SignUpForm(UserCreationForm):
             }
         ))
 
+    user_group = forms.ChoiceField(label = 'Account Type', widget=forms.Select(
+        attrs={
+                "class": "form-control"
+            }
+    ), choices=USER_GROUP_CHOICES)
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2', 'user_group', 'first_name', 'last_name')
 
 class ProjectForm(forms.ModelForm):
 
