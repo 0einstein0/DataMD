@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -121,7 +123,8 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
+MEDIA_URL = 'https://storage.googleapis.com/med-images/media/'
 
 MEDIA_ROOT = BASE_DIR / 'server'
 STATIC_ROOT = BASE_DIR / 'annotator' / 'static'
@@ -130,3 +133,20 @@ STATIC_ROOT = BASE_DIR / 'annotator' / 'static'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+     os.path.join(BASE_DIR, 'data-md-017d1364121e.json')
+)
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'med-images'
+
+
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#     os.path.join(BASE_DIR, 'data-md-017d1364121e.json')
+# )
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_BUCKET_NAME = 'med-images'
+
+# MEDIA_URL = 'https://storage.googleapis.com/med-images/media/'
+# GOOGLE_CLOUD_STORAGE_BUCKET = 'med-images'
