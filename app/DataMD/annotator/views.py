@@ -220,7 +220,6 @@ def canvas(request, project_id):
     except ObjectDoesNotExist:
         return redirect('dashboard')
     
-
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
     print(images)
     for x in images:
@@ -309,6 +308,8 @@ def manage_project(request, project_id):
 
             # remove the annotator from the project
             project.annotators.remove(annotator_to_remove)
+        elif 'uploadImagesToProjectButton' in request.POST:
+            pass
         elif 'addAnnotatorsButton' in request.POST:
             for annotator_id in request.POST.getlist('annotators'):
                 
@@ -356,6 +357,10 @@ def manage_project(request, project_id):
     # Prepare Add Annotators Form ----
     addAnnotatorsForm = AddAnnotatorsForm()
     # ---
+
+    # Prepare Image Upload Form --
+
+    # --
 
     # Prepare Images ---
     images = Image.objects.filter(project = project)

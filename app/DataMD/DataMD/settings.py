@@ -124,7 +124,7 @@ LOGIN_URL = 'login'
 
 STATIC_URL = '/static/'
 #MEDIA_URL = '/media/'
-MEDIA_URL = 'https://storage.googleapis.com/med-images/media/'
+MEDIA_URL = 'https://storage.googleapis.com/med-images/'
 
 MEDIA_ROOT = BASE_DIR / 'server'
 STATIC_ROOT = BASE_DIR / 'annotator' / 'static'
@@ -137,7 +137,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
      os.path.join(BASE_DIR, 'data-md-017d1364121e.json')
 )
-
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'med-images'
 
