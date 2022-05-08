@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import timedelta
+from email.mime import image
 from pickletools import read_uint1
 import re
 from django.shortcuts import render, redirect
@@ -11,6 +13,10 @@ from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
 from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
+
+# cloud
+from google.cloud import storage
+#-----
 
 
 # Create your views here.
@@ -194,14 +200,13 @@ def dashboard(request):
         projects = Project.objects.filter(annotators = request.user.id)
 
     print(user_group)
-
-    image = Image.objects.get(id = 1)
-    print(image.image.url)
         
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[user_group]['directory'] + '/dashboard.html' 
-    context = {'projects': projects, 'user_group': user_group, 'the_image': image} # all the variables you want to pass to context
+    context = { 'projects': projects, 
+        'user_group': user_group 
+    } # all the variables you want to pass to context
     # --- --- ---
 
     return render(
@@ -222,13 +227,23 @@ def canvas(request, project_id):
     
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
     print(images)
+    
+    client = storage.Client()
+    bucket = client.get_bucket('med-images')
+    #blob = bucket.get_blob(images[0].image.name)
+    #url = blob.generate_signed_url(timedelta(3))
+
+    image_urls = []
+
     for x in images:
-        print(x.image.url)
+        image_urls.append(bucket.get_blob(x.image.name).generate_signed_url(timedelta(3)))
+
+    print(image_urls)
 
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + '/canvas.html' 
-    context = {'project': project, 'images': images} # all the variables you want to pass to context
+    context = {'project': project, 'images': images, 'image_urls': image_urls} # all the variables you want to pass to context
     # --- --- ---
 
     return render(

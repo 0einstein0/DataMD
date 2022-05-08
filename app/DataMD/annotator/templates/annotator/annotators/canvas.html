@@ -2,8 +2,8 @@
   <head>
     <script>
       var images = [
-        {% for image in images %}
-          "{{ image.image.url }}",
+        {% for url in image_urls %}
+          "{{ url | safe }}",
         {% endfor %}
       ];
     </script>
@@ -68,7 +68,7 @@
             </g>
           </svg>
         </div>
-        <img id="activeImg" src="{{ images.0.image.url }}" />
+        <img id="activeImg" src="{{ image_urls.0 | safe }}" />
         <div class="arrow" id="arrow-next">
           <svg
             xmlns="http://www.w3.org/2000/svg"

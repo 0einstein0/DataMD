@@ -137,6 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
      os.path.join(BASE_DIR, 'data-md-017d1364121e.json')
 )
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(BASE_DIR, 'data-md-017d1364121e.json')
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'med-images'
 
