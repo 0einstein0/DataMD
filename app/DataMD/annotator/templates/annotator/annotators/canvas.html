@@ -6,9 +6,24 @@
           "{{ url | safe }}",
         {% endfor %}
       ];
+
+      {% if project.annotation_type.name == 'BB' %} 
+        var type = 1;
+      {% if project.annotation_type.name == 'BE' %} 
+        var type = 2;
+      {% if project.annotation_type.name == 'KP' %} 
+        var type = 3;
+      {% if project.annotation_type.name == 'BP' %} 
+        var type = 4;
+      {% if project.annotation_type.name == 'FH' %} 
+        var type = 5;
+      {% if project.annotation_type.name == 'LN' %} 
+        var type = 1;  
+      {% endif %}
+
     </script>
 
-    <script src="/static/canvas_assets/js/script.js"></script>
+    <script src="/static/canvas_assets/js/script2.js"></script>
     <link rel="stylesheet" href="/static/canvas_assets/css/style.css" />
     <link
       rel="stylesheet"
@@ -21,12 +36,12 @@
   <body>
     <div id="content">
       <div id="toolbar">
-        <button class="btnIcon" id="freehand"><img src="/static/canvas_assets/icons/freehand.png" /></button>
+        <!--<button class="btnIcon" id="freehand"><img src="/static/canvas_assets/icons/freehand.png" /></button>
         <button  class="btnIcon"id="rect"><img src="/static/canvas_assets/icons/rect.png" /></button>
         <button  class="btnIcon"  id="point"><img src="/static/canvas_assets/icons/point.png" /></button>
         <button  class="btnIcon"  id="polygon"><img src="/static/canvas_assets/icons/polygon.png" /></button>
         <button  class="btnIcon"  id="ellipse"><img src="/static/canvas_assets/icons/ellipse.png" /></button>
-        </button>
+        </button> -->
       </div>
       <div id="imageViewer">
         <div class="arrow" id="arrow-prev">

@@ -219,6 +219,8 @@ def dashboard(request):
 @login_required
 @user_passes_test(isAnnotator)
 def canvas(request, project_id):
+    image_urls = []
+
     # retrive all images that the user is assigned to 
     try:
         project = Project.objects.get(id = project_id)
@@ -226,20 +228,21 @@ def canvas(request, project_id):
         return redirect('dashboard')
     
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
-    print(images)
-    
+    print(images) # -- DEBUG
+
     client = storage.Client()
     bucket = client.get_bucket('med-images')
-    #blob = bucket.get_blob(images[0].image.name)
-    #url = blob.generate_signed_url(timedelta(3))
-
-    image_urls = []
 
     for x in images:
-        image_urls.append(bucket.get_blob(x.image.name).generate_signed_url(timedelta(3)))
+        image_urls.append(
+            bucket
+            .get_blob(x.image.name)
+            .generate_signed_url(timedelta(3))
+        )
 
     print(image_urls)
 
+    print("hmm", project.annotation_type.name)
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + '/canvas.html' 

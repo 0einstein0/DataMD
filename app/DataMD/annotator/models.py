@@ -9,12 +9,18 @@ class AnnotationType(models.Model):
     # Choices
     CLASSIFICATION = 'CF'
     BOUNDING_BOX = 'BB'
-    LINE = "LN"
-    KEYPOINT = "KP"
+    BOUNDING_ELLIPSE = 'BE'
+    BOUNDING_POLYGON = 'BP'
+    FREEHAND = 'FH'
+    LINE = 'LN'
+    KEYPOINT = 'KP'
 
     choices = [
         (CLASSIFICATION, "Image Classification"),
         (BOUNDING_BOX, "Bounding Box"),
+        (BOUNDING_ELLIPSE, "Bounding Ellipse"),
+        (BOUNDING_POLYGON, "Bounding Polygon"),
+        (FREEHAND, "Freehand"),
         (LINE, "Line"),
         (KEYPOINT, "Key Point")
     ]
@@ -106,7 +112,3 @@ class ProjectInvite(models.Model):
     class Meta:
         unique_together = ('project', 'recipient_annotator')
 
-
-########################################################################################
-# updated = models.DateTimeField(auto_now = True) # updated each time saved
-# annotation_path = models.CharField(null = True, blank = True, max_length = 500)
