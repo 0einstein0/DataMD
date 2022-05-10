@@ -7,19 +7,20 @@
         {% endfor %}
       ];
 
-      var type = 1;
+      var type =1;
       {% if project.annotation_type.name == 'BB' %} 
-        type = 1;
+        type =1;
+
       {% elif project.annotation_type.name == 'BE' %} 
-        type = 2;
+        type =2;
       {% elif project.annotation_type.name == 'KP' %} 
-        type = 3;
+        type =3;
       {% elif project.annotation_type.name == 'BP' %} 
-        type = 4;
+        type =4;
       {% elif project.annotation_type.name == 'FH' %} 
-        type = 5;
+        type =5;
       {% elif project.annotation_type.name == 'LN' %} 
-        type = 1;  
+        type =1;  
       {% endif %}
 
     </script>
@@ -37,11 +38,14 @@
   <body>
     <div id="content">
       <div id="toolbar">
-        <button class="btnIcon" id="freehand"><img src="/static/canvas_assets/icons/freehand.png" /></button>
-        <button  class="btnIcon"id="rect"><img src="/static/canvas_assets/icons/rect.png" /></button>
-        <button  class="btnIcon"  id="point"><img src="/static/canvas_assets/icons/point.png" /></button>
-        <button  class="btnIcon"  id="polygon"><img src="/static/canvas_assets/icons/polygon.png" /></button>
-        <button  class="btnIcon"  id="ellipse"><img src="/static/canvas_assets/icons/ellipse.png" /></button>
+        <button class="btnIcon" >
+      
+          <script>
+  
+          document.write('<img src="/static/canvas_assets/icons/'+type+'.png"/>');     
+          </script>
+           </button>
+
         </button> 
       </div>
       <div id="imageViewer">

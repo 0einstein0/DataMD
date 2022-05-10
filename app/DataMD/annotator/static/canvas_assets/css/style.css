@@ -1,15 +1,16 @@
 #toolbar {
-  width: 30%;
   margin: 0 auto;
   margin-top: 3%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 #toolbar img {
   max-width: 30px;
 }
 
 .btnIcon {
+  align-self: center;
   border: none;
   padding: 10px;
   border-radius: 10px;
