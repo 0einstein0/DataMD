@@ -240,7 +240,7 @@ def canvas(request, project_id):
             .generate_signed_url(timedelta(3))
         )
 
-    print(image_urls)
+    print(image_urls) # -- DEBUG
 
     print("hmm", project.annotation_type.name)
     # --- RENDER VARIABLES ---
