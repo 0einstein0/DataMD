@@ -43,17 +43,3 @@
   padding: 30px;
   align-items: center;
 }
-
-.a9s-annotation rect,
-.a9s-annotation circle,
-.a9s-annotation ellipse,
-.a9s-annotation path,
-.a9s-annotation polygon,
-.a9s-selection rect,
-.a9s-selection circle,
-.a9s-selection ellipse,
-.a9s-selection path,
-.a9s-selection polygon {
-  cursor: crosshair;
-  vector-effect: non-scaling-stroke;
-}

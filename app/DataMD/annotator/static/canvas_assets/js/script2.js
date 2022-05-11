@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var config = {
     image: document.getElementById("activeImg"),
     locale: "auto",
+    widgets: [
+      "COMMENT",
+      { widget: "TAG", vocabulary: ["Animal", "Building", "Waterbody"] },
+    ],
   };
   var anno = Annotorious.init(config);
   initAnnon(anno);
@@ -21,6 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
     config = {
       image: document.getElementById("activeImg"),
       locale: "auto",
+      widgets: [
+        "COMMENT",
+        { widget: "TAG", vocabulary: ["Animal", "Building", "Waterbody"] },
+      ],
     };
     anno = Annotorious.init(config);
 
