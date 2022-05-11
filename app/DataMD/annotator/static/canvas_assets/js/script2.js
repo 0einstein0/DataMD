@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var config = {
     image: document.getElementById("activeImg"),
     locale: "auto",
-    disableEditor: true,
   };
   var anno = Annotorious.init(config);
   initAnnon(anno);
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
     config = {
       image: document.getElementById("activeImg"),
       locale: "auto",
-      disableEditor: true,
     };
     anno = Annotorious.init(config);
 
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   ////////////
   document.onkeydown = function (e) {
-    console.log(e.key);
     if (e.key === "ArrowRight") {
       goNext();
     } else if (e.key === "ArrowLeft") {
@@ -112,10 +109,11 @@ document.addEventListener("DOMContentLoaded", function () {
       ];
 
       const annotations = anno.getAnnotations();
-      console.log(selection.target.selector.value);
-      console.log(selection.target.source);
+      //  console.log(selection.target.selector.value);
+      //  console.log(selection.target.source);
 
-      console.log(annotations);
+      // console.log(annotations);
+
       await anno.updateSelected(selection);
       anno.saveSelected();
     });
