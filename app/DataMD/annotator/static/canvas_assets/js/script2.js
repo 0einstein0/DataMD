@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     locale: "auto",
     widgets: [
       "COMMENT",
-      { widget: "TAG", vocabulary: ["Animal", "Building", "Waterbody"] },
+      { widget: "TAG", vocabulary: possible_labels },
     ],
   };
   var anno = Annotorious.init(config);
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       locale: "auto",
       widgets: [
         "COMMENT",
-        { widget: "TAG", vocabulary: ["Animal", "Building", "Waterbody"] },
+        { widget: "TAG", vocabulary: possible_labels },
       ],
     };
     anno = Annotorious.init(config);

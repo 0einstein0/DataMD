@@ -7,6 +7,13 @@
         {% endfor %}
       ];
 
+      var possible_labels = []
+      possible_labels = [
+        {% for label in possible_labels %}
+          "{{ label }}",
+        {% endfor %}
+      ]
+
       var type =1;
       {% if project.annotation_type.name == 'BB' %} 
         type =1;

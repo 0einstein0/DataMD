@@ -220,6 +220,7 @@ def dashboard(request):
 @user_passes_test(isAnnotator)
 def canvas(request, project_id):
     image_urls = []
+    possible_labels = []
 
     # retrive all images that the user is assigned to 
     try:
@@ -229,6 +230,8 @@ def canvas(request, project_id):
     
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
     print(images) # -- DEBUG
+    annotation_classes = AnnotationClass.objects.filter(project = project)
+    print(annotation_classes, " - ", type(annotation_classes)) # -- DEBUG
 
     client = storage.Client()
     bucket = client.get_bucket('med-images')
@@ -240,13 +243,17 @@ def canvas(request, project_id):
             .generate_signed_url(timedelta(3))
         )
 
+    for x in annotation_classes:
+        possible_labels.append(x.name)
+
     print(image_urls) # -- DEBUG
+    print(possible_labels) # -- DEBUD
 
     print("hmm", project.annotation_type.name)
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + '/canvas.html' 
-    context = {'project': project, 'images': images, 'image_urls': image_urls} # all the variables you want to pass to context
+    context = {'project': project, 'images': images, 'image_urls': image_urls, 'possible_labels': possible_labels} # all the variables you want to pass to context
     # --- --- ---
 
     return render(
