@@ -8,52 +8,36 @@
       ];
 
       var possible_labels = []
+
       possible_labels = [
         {% for label in possible_labels %}
           "{{ label }}",
         {% endfor %}
       ]
 
-      var type = 1;
-      {% if project.annotation_type.name == 'BB' %} 
-        type =1;
-      {% elif project.annotation_type.name == 'BE' %} 
-        type =2;
-      {% elif project.annotation_type.name == 'KP' %} 
-        type =3;
-      {% elif project.annotation_type.name == 'BP' %} 
-        type =4;
-      {% elif project.annotation_type.name == 'FH' %} 
-        type =5;
-      {% elif project.annotation_type.name == 'LN' %} 
-        type =1;  
-      {% endif %}
-
     </script>
-
-    <script src="/static/canvas_assets/js/script2.js"></script>
+    <script src="/static/canvas_assets/js/scriptCF.js"></script>
 
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.css"
     />
+    <link rel="stylesheet" href="/static/canvas_assets/css/styleCF.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
-        <link rel="stylesheet" href="/static/canvas_assets/css/style.css" />
   </head>
 
   <body>
     <div id="content">
-      <div id="toolbar">
-        <button class="btnIcon" >
-      
-          <script>
-  
-          document.write('<img src="/static/canvas_assets/icons/'+type+'.png"/>');     
-          </script>
-           </button>
+      <div class="toolbar">
+        <button class="btnIcon" id="lab1">
+          Pneumonia<span>Press: X</span>
+        </button>
 
-        </button> 
+        <button class="btnIcon" id="lab2">
+          No Pneumonia<span>Press: C</span>
+        </button>
       </div>
       <div id="imageViewer">
         <div class="arrow" id="arrow-prev">
@@ -135,6 +119,11 @@
             </g>
           </svg>
         </div>
+      </div>
+      <div class="toolbar">
+        <button class="btnIcon" id="rect">
+          <img src="./Assets/Icons/rect.png" />
+        </button>
       </div>
     </div>
   </body>

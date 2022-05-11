@@ -221,6 +221,7 @@ def dashboard(request):
 def canvas(request, project_id):
     image_urls = []
     possible_labels = []
+    canvas_page = ''
 
     # retrive all images that the user is assigned to 
     try:
@@ -228,6 +229,11 @@ def canvas(request, project_id):
     except ObjectDoesNotExist:
         return redirect('dashboard')
     
+    if project.annotation_type.name == 'CF':
+        canvas_page = '/canvas_CF.html'
+    else:
+        canvas_page = '/canvas.html'
+
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
     print(images) # -- DEBUG
     annotation_classes = AnnotationClass.objects.filter(project = project)
@@ -252,7 +258,7 @@ def canvas(request, project_id):
     print("hmm", project.annotation_type.name)
     # --- RENDER VARIABLES ---
     request = request
-    template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + '/canvas.html' 
+    template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + canvas_page 
     context = {'project': project, 'images': images, 'image_urls': image_urls, 'possible_labels': possible_labels} # all the variables you want to pass to context
     # --- --- ---
 
