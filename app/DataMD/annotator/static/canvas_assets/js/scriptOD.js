@@ -1,11 +1,71 @@
 document.addEventListener("DOMContentLoaded", function () {
+  var ColorSelectorWidget = function (args) {
+    // 1. Find a current color setting in the annotation, if any
+    var currentColorBody = args.annotation
+      ? args.annotation.bodies.find(function (b) {
+          return b.purpose == "highlighting";
+        })
+      : null;
+
+    // 2. Keep the value in a variable
+    var currentColorValue = currentColorBody ? currentColorBody.value : null;
+
+    // 3. Triggers callbacks on user action
+    var addTag = function (evt) {
+      if (currentColorBody) {
+        args.onUpdateBody(currentColorBody, {
+          type: "TextualBody",
+          purpose: "highlighting",
+          value: evt.target.dataset.tag,
+        });
+      } else {
+        args.onAppendBody({
+          type: "TextualBody",
+          purpose: "highlighting",
+          value: evt.target.dataset.tag,
+        });
+      }
+    };
+
+    // 4. This part renders the UI elements
+    var createButton = function (clr, value) {
+      var button = document.createElement("button");
+
+      if (clr == currentColorValue) button.className = "selected";
+
+      button.dataset.tag = clr;
+      button.style.backgroundColor = clr;
+      button.innerText = value;
+      button.addEventListener("click", addTag);
+      return button;
+    };
+
+    var container = document.createElement("div");
+    container.className = "colorselector-widget";
+
+    var button1 = createButton("RED", "Label A");
+    var button2 = createButton("BLUE", "Label B");
+    var button3 = createButton("GREEN", "Label C");
+
+    container.appendChild(button1);
+    container.appendChild(button2);
+    container.appendChild(button3);
+
+    return container;
+  };
+
+  var ColorFormatter = function (annotation) {
+    var highlightBody = annotation.bodies.find(function (b) {
+      return b.purpose == "highlighting";
+    });
+
+    if (highlightBody) return highlightBody.clr;
+  };
   var config = {
     image: document.getElementById("activeImg"),
     locale: "auto",
-    widgets: [
-      "COMMENT",
-      { widget: "TAG", vocabulary: possible_labels },
-    ],
+    widgets: [ColorSelectorWidget, "COMMENT"],
+    formatter: ColorFormatter,
   };
   var anno = Annotorious.init(config);
   initAnnon(anno);
@@ -25,10 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
     config = {
       image: document.getElementById("activeImg"),
       locale: "auto",
-      widgets: [
-        "COMMENT",
-        { widget: "TAG", vocabulary: possible_labels },
-      ],
+      widgets: [ColorSelectorWidget, "COMMENT"],
+      formatter: ColorFormatter,
     };
     anno = Annotorious.init(config);
 

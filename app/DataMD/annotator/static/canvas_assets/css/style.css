@@ -43,3 +43,50 @@
   padding: 30px;
   align-items: center;
 }
+.colorselector-widget {
+  padding: 8px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.colorselector-widget button {
+  outline: none;
+  border: none;
+  padding: 8px;
+  display: inline-block;
+  border-radius: 20px;
+  cursor: pointer;
+  opacity: 0.5;
+  margin: 4px;
+  color: white;
+  font-weight: 500;
+}
+
+.colorselector-widget button.selected,
+.colorselector-widget button:hover {
+  opacity: 1;
+}
+
+svg.a9s-annotationlayer .a9s-annotation.RED .a9s-outer {
+  stroke: red;
+  stroke-width: 3;
+  fill: rgba(255, 0, 0, 0.3);
+}
+
+svg.a9s-annotationlayer .a9s-annotation.GREEN .a9s-outer {
+  stroke: green;
+  stroke-width: 3;
+  fill: rgba(0, 255, 0, 0.3);
+}
+
+svg.a9s-annotationlayer .a9s-annotation.BLUE .a9s-outer {
+  stroke: blue;
+  stroke-width: 3;
+  fill: rgba(0, 0, 255, 0.3);
+}
+
+svg.a9s-annotationlayer .a9s-annotation.RED .a9s-inner,
+svg.a9s-annotationlayer .a9s-annotation.GREEN .a9s-inner,
+svg.a9s-annotationlayer .a9s-annotation.BLUE .a9s-inner {
+  fill: transparent;
+  stroke: none;
+}
