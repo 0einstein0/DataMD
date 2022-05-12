@@ -88,13 +88,19 @@
           </div>
         </div>
         <div class="">
-          <div class="pt-2">
+          <div class="pt-4">
             {% if request.user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="login generic-btn info">
+            <a style=" background-color: purple;
+            color: white; 
+            border-radius: 25px;
+            padding: 15px;" href="{% url 'logout' %}" class="login generic-btn info">
               <span>Logout</span>
             </a>
             {% else %}
-            <a href="{% url 'login' %}" class="login genric-btn info">
+            <a style=" background-color: purple;
+            color: white; 
+            border-radius: 25px;
+            padding: 15px;" href="{% url 'login' %}" class="login genric-btn info">
               <span>Login</span>
             </a>
             {% endif %}

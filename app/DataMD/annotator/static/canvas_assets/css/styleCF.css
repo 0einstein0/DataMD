@@ -49,22 +49,3 @@ span {
 #rect {
   display: none;
 }
-
-.a9s-selection {
-  fill: rgba(0, 255, 128, 0.199);
-  cursor: pointer;
-}
-
-.a9s-annotation .a9s-inner:hover,
-.a9s-selection .a9s-inner:hover {
-  fill: rgba(0, 255, 128, 0.199);
-  background-color: yellow;
-  stroke: rgb(44, 95, 42);
-}
-
-.a9s-annotation .a9s-outer:hover,
-.a9s-selection .a9s-outer:hover {
-  fill: rgba(0, 255, 128, 0.199);
-
-  stroke: rgb(44, 95, 42);
-}
