@@ -3,6 +3,7 @@ from datetime import timedelta
 from email.mime import image
 from pickletools import read_uint1
 import re
+import PIL
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -13,6 +14,7 @@ from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
 from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
+import pydicom
 
 # cloud
 from google.cloud import storage
@@ -232,7 +234,7 @@ def canvas(request, project_id):
     if project.annotation_type.name == 'CF':
         canvas_page = '/canvas_CF.html'
     else:
-        canvas_page = '/canvas.html'
+        canvas_page = '/canvas_OD.html'
 
     images = Image.objects.filter(project = project, assigned_annotator = request.user)
     print(images) # -- DEBUG
@@ -252,8 +254,8 @@ def canvas(request, project_id):
     for x in annotation_classes:
         possible_labels.append(x.name)
 
-    print(image_urls) # -- DEBUG
-    print(possible_labels) # -- DEBUD
+    print("image_urls :: ", image_urls) # -- DEBUG
+    print("possible labels :: ", possible_labels) # -- DEBUG
 
     print("hmm", project.annotation_type.name)
     # --- RENDER VARIABLES ---
@@ -323,7 +325,8 @@ def manage_project(request, project_id):
 
     # handle form input
     if request.method == 'POST':
-        print(request.POST) # -- DEBUG
+        print("request.POST :: ", request.POST) # -- DEBUG
+        print("request.FILES :: ", request.FILES) # -- DEBUG
 
         # Check which form was submitted
         if 'editInfoButton' in request.POST:
@@ -340,7 +343,42 @@ def manage_project(request, project_id):
             # remove the annotator from the project
             project.annotators.remove(annotator_to_remove)
         elif 'uploadImagesToProjectButton' in request.POST:
-            pass
+            images = request.FILES.getlist('images')
+            for image in images:
+                # TODO: assign each image to an annotator
+                # -> get to know how many annotators there are
+                count_of_annotators = project.annotators.all().count()
+                #count_of_images = Image.objects.filter(project = project.id).count()
+
+                print("count of annotators :: ", count_of_annotators) # -- DEBUG
+                #print("count of images :: ", count_of_images) # -- DEBUG
+                # -> see how much images unannotated does each annotator have
+                count_of__unnanotated_images = Image.objects.filter(project = project.id).count()
+                # -> assign to the one with the least
+                print("image ::", image) # -- DEBUG
+                print("image content type ::", image.content_type) # -- DEBUG
+                if image.content_type == 'image/jpeg' or image.content_type == 'image/png':
+                    image_instance = Image(
+                        name = image.name,
+                        image = image,
+                        project = project
+                    )
+                    # image_instance.save()
+                    print('image instance :: ', image_instance)
+                else: 
+                    print('ERROR: wRONG FILE TYPE')
+                    print('you uploaded ', image.content_type)
+                    ds = pydicom.read_file(image) # read dicom image
+                    img = ds.pixel_array
+                    png = PIL.Image.fromarray(img, 'RGB')
+                    #png.save('dicom.png')
+                    png.show()
+                    print("pixel array :: ", img)
+
+                    # TODO: return error
+                
+                
+
         elif 'addAnnotatorsButton' in request.POST:
             for annotator_id in request.POST.getlist('annotators'):
                 
@@ -388,10 +426,6 @@ def manage_project(request, project_id):
     # Prepare Add Annotators Form ----
     addAnnotatorsForm = AddAnnotatorsForm()
     # ---
-
-    # Prepare Image Upload Form --
-
-    # --
 
     # Prepare Images ---
     images = Image.objects.filter(project = project)

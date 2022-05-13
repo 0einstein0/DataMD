@@ -12,24 +12,39 @@
   ];
 
   var possible_labels = []
-
   possible_labels = [
     {% for label in possible_labels %}
       "{{ label }}",
     {% endfor %}
   ]
+
+  var type = 1;
+  {% if project.annotation_type.name == 'BB' %} 
+    type =1;
+  {% elif project.annotation_type.name == 'BE' %} 
+    type =2;
+  {% elif project.annotation_type.name == 'KP' %} 
+    type =3;
+  {% elif project.annotation_type.name == 'BP' %} 
+    type =4;
+  {% elif project.annotation_type.name == 'FH' %} 
+    type =5;
+  {% elif project.annotation_type.name == 'LN' %} 
+    type =1;  
+  {% endif %}
+
 </script>
-<script src="/static/canvas_assets/js/scriptCF.js"></script>
+
+<script src="/static/canvas_assets/js/scriptOD.js"></script>
 
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.css"
 />
-
-<link rel="stylesheet" href="/static/canvas_assets/css/styleCF.css" />
-
 <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>{% endblock stylesheets %}
+<script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
+<link rel="stylesheet" href="/static/canvas_assets/css/styleOD.css" />
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -41,7 +56,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Canvas</h5>
+                                <h5 class="m-b-10">Dashboard</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
@@ -59,6 +74,17 @@
                     <div class="row">
                         <div class="col-sm-12">
                           <div id="content">
+                            <div id="toolbar">
+                              <button class="btnIcon" >
+                            
+                                <script>
+                        
+                                document.write('<img src="/static/canvas_assets/icons/'+type+'.png"/>');     
+                                </script>
+                                 </button>
+                      
+                              </button> 
+                            </div>
                             <div id="imageViewer">
                               <div class="arrow" id="arrow-prev">
                                 <svg
@@ -140,8 +166,9 @@
                                 </svg>
                               </div>
                             </div>
-                            <div class="labelBtns"></div>
-                          </div>
+                          </div> 
+
+
 
                         </div>
                     </div>

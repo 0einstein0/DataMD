@@ -78,6 +78,7 @@
         <div class="tab-pane fade" id="pills-send" role="tabpanel" aria-labelledby="pills-send-tab">
             <form method="POST">
                 {% csrf_token %}
+                
                 {{ addAnnotatorsForm.as_p }}
 
                 <button type="submit" name="addAnnotatorsButton" class="btn btn-primary">

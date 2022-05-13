@@ -13,7 +13,7 @@
     <div class="tab-content" id="pills-tabContent" style="border: 2px solid #ddd">
         <!-- UNANNOTATED IMAGES -->
         <div class="tab-pane fade show active" id="pills-unannotated" role="tabpanel" aria-labelledby="pills-unannotated-tab">
-            <p>Unnannoted Images</p>
+            <p>Unnannotated Images</p>
             <div style="overflow: auto">
                 
             </div>
@@ -24,12 +24,13 @@
         </div>
         <!-- ADD NEW IMAGES -->
         <div class="tab-pane fade" id="pills-add" role="tabpanel" aria-labelledby="pills-add-tab">
-            <form method="POST">
+            <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 
-
+                <input required name="images" type="file" multiple class="form-control">
+                <br>
                 <button type="submit" name="uploadImagesToProjectButton" class="btn btn-primary">
-                    Send Invites
+                    Upload Images
                 </button>
             </form>
         </div>

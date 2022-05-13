@@ -143,15 +143,4 @@ class AddAnnotatorsForm(forms.Form):
         self.fields['annotators'].widget.attrs['class'] = 'select2-multiple'
         self.fields['annotators'].empty_label = None
 
-class UploadImagesToProjectForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ProjectForm, self).__init__(*args, **kwargs)
-
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
-    class Meta:
-        model = Image
-        fields = ['image']
-
 
