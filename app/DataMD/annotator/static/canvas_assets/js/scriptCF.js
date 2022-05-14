@@ -42,6 +42,52 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   ////////////
+  var labelsNo = possible_labels.length;
+  var labelBtn;
+  var labelText;
+  var btnDiv = document.getElementById("labelBtns");
+
+  switch (labelsNo) {
+    case 1:
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+      labelText = document.createTextNode(possible_labels[0]);
+      labelBtn.appendChild(labelText);
+      btnDiv.appendChild(labelBtn);
+      break;
+    case 2:
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+      labelText = document.createTextNode(possible_labels[0]);
+      labelBtn.appendChild(labelText);
+      btnDiv.appendChild(labelBtn);
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(0, 0, 255, 0.5)";
+      labelText = document.createTextNode(possible_labels[1]);
+      labelBtn.appendChild(labelText);
+      btnDiv.appendChild(labelBtn);
+      break;
+    case 3:
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+      labelText = document.createTextNode(possible_labels[0]);
+      labelBtn.appendChild(labelText);
+      btnDiv.appendChild(labelBtn);
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(0, 255, 0, 0.5)";
+      labelText = document.createTextNode(possible_labels[1]);
+      labelBtn.appendChild(labelText);
+      btnDiv.appendChild(labelBtn);
+      labelBtn = document.createElement("button");
+      labelBtn.style.backgroundColor = "rgba(0, 0, 255, 0.5)";
+      labelText = document.createTextNode(possible_labels[2]);
+      labelBtn.appendChild(labelText);
+
+      break;
+    // code block
+    default:
+      break;
+  }
 
   ////////////////////
 });

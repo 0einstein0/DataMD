@@ -1,6 +1,4 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} Canvas {% endblock %} 
+{% extends "layouts/base.html" %} {% block title %} Canvas {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -29,128 +27,124 @@
 <link rel="stylesheet" href="/static/canvas_assets/css/styleCF.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>{% endblock stylesheets %}
+<script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
+{% endblock stylesheets %} {% block content %}
 
-{% block content %}
-
-    <div class="pcoded-content">
-        <div class="pcoded-inner-content">
-            <!-- [ breadcrumb ] start -->
-            <div class="page-header">
-                <div class="page-block">
-                    <div class="row align-items-center">
-                        <div class="col-md-12">
-                            <div class="page-header-title">
-                                <h5 class="m-b-10">Canvas</h5>
-                            </div>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- [ breadcrumb ] end -->
-            <div class="main-body">
-                <div class="page-wrapper">
-                    <!-- [ Main Content ] start -->
-                    <h5>Hello, {{ user.first_name }} {{ user.last_name }}</h5>
-                    <!-- [ ROW 1 ] start -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div id="content">
-                            <div id="imageViewer">
-                              <div class="arrow" id="arrow-prev">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  x="0px"
-                                  y="0px"
-                                  width="30"
-                                  height="30"
-                                  viewBox="0 0 172 172"
-                                  style="fill: #000000"
-                                >
-                                  <g
-                                    fill="none"
-                                    fill-rule="nonzero"
-                                    stroke="none"
-                                    stroke-width="1"
-                                    stroke-linecap="butt"
-                                    stroke-linejoin="miter"
-                                    stroke-miterlimit="10"
-                                    stroke-dasharray=""
-                                    stroke-dashoffset="0"
-                                    font-family="none"
-                                    font-weight="none"
-                                    font-size="none"
-                                    text-anchor="none"
-                                    style="mix-blend-mode: normal"
-                                  >
-                                    <path d="M0,172v-172h172v172z" fill="none"></path>
-                                    <path
-                                      d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
-                                      fill="#cccccc"
-                                    ></path>
-                                    <g fill="#666666">
-                                      <path
-                                        d="M70.101,86l32.61037,-32.61037c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177v0c-3.53329,-3.53329 -9.26848,-3.53329 -12.80177,0l-39.37824,39.37824c-3.33699,3.33699 -3.33699,8.73934 0,12.0678l39.37824,39.37824c3.53329,3.53329 9.26848,3.53329 12.80177,0v0c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177z"
-                                      ></path>
-                                    </g>
-                                  </g>
-                                </svg>
-                              </div>
-                              <img id="activeImg" src="{{ image_urls.0 | safe }}" />
-                              <div class="arrow" id="arrow-next">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  x="0px"
-                                  y="0px"
-                                  width="30"
-                                  height="30"
-                                  viewBox="0 0 172 172"
-                                  style="fill: #000000"
-                                >
-                                  <g
-                                    fill="none"
-                                    fill-rule="nonzero"
-                                    stroke="none"
-                                    stroke-width="1"
-                                    stroke-linecap="butt"
-                                    stroke-linejoin="miter"
-                                    stroke-miterlimit="10"
-                                    stroke-dasharray=""
-                                    stroke-dashoffset="0"
-                                    font-family="none"
-                                    font-weight="none"
-                                    font-size="none"
-                                    text-anchor="none"
-                                    style="mix-blend-mode: normal"
-                                  >
-                                    <path d="M0,172v-172h172v172z" fill="none"></path>
-                                    <path
-                                      d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
-                                      fill="#cccccc"
-                                    ></path>
-                                    <g fill="#666666">
-                                      <path
-                                        d="M94.73233,86l-32.61037,-32.61037c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177v0c3.53329,-3.53329 9.26848,-3.53329 12.80177,0l39.37824,39.37824c3.33699,3.33699 3.33699,8.73934 0,12.0678l-39.37824,39.37824c-3.53329,3.53329 -9.26848,3.53329 -12.80177,0v0c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177z"
-                                      ></path>
-                                    </g>
-                                  </g>
-                                </svg>
-                              </div>
-                            </div>
-                            <div class="labelBtns"></div>
-                          </div>
-
-                        </div>
-                    </div>
-                    <!-- [ ROW 1 ] start -->
-                    <!-- [ Main Content ] end -->
-                </div>
-            </div>
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/dashboard"><i class="feather icon-home"></i></a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
+    <!-- [ breadcrumb ] end -->
+    <div class="main-body">
+      <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <!-- [ ROW 1 ] start -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div id="content">
+              <div id="imageViewer">
+                <div class="arrow" id="arrow-prev">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 172 172"
+                    style="fill: #000000"
+                  >
+                    <g
+                      fill="none"
+                      fill-rule="nonzero"
+                      stroke="none"
+                      stroke-width="1"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-miterlimit="10"
+                      stroke-dasharray=""
+                      stroke-dashoffset="0"
+                      font-family="none"
+                      font-weight="none"
+                      font-size="none"
+                      text-anchor="none"
+                      style="mix-blend-mode: normal"
+                    >
+                      <path d="M0,172v-172h172v172z" fill="none"></path>
+                      <path
+                        d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
+                        fill="#cccccc"
+                      ></path>
+                      <g fill="#666666">
+                        <path
+                          d="M70.101,86l32.61037,-32.61037c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177v0c-3.53329,-3.53329 -9.26848,-3.53329 -12.80177,0l-39.37824,39.37824c-3.33699,3.33699 -3.33699,8.73934 0,12.0678l39.37824,39.37824c3.53329,3.53329 9.26848,3.53329 12.80177,0v0c3.53329,-3.53329 3.53329,-9.26848 0,-12.80177z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+                <img id="activeImg" src="{{ image_urls.0 | safe }}" />
+                <div class="arrow" id="arrow-next">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 172 172"
+                    style="fill: #000000"
+                  >
+                    <g
+                      fill="none"
+                      fill-rule="nonzero"
+                      stroke="none"
+                      stroke-width="1"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-miterlimit="10"
+                      stroke-dasharray=""
+                      stroke-dashoffset="0"
+                      font-family="none"
+                      font-weight="none"
+                      font-size="none"
+                      text-anchor="none"
+                      style="mix-blend-mode: normal"
+                    >
+                      <path d="M0,172v-172h172v172z" fill="none"></path>
+                      <path
+                        d="M86,172c-47.49649,0 -86,-38.50351 -86,-86v0c0,-47.49649 38.50351,-86 86,-86v0c47.49649,0 86,38.50351 86,86v0c0,47.49649 -38.50351,86 -86,86z"
+                        fill="#cccccc"
+                      ></path>
+                      <g fill="#666666">
+                        <path
+                          d="M94.73233,86l-32.61037,-32.61037c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177v0c3.53329,-3.53329 9.26848,-3.53329 12.80177,0l39.37824,39.37824c3.33699,3.33699 3.33699,8.73934 0,12.0678l-39.37824,39.37824c-3.53329,3.53329 -9.26848,3.53329 -12.80177,0v0c-3.53329,-3.53329 -3.53329,-9.26848 0,-12.80177z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div id="labelBtns"></div>
+            </div>
+          </div>
+        </div>
+        <!-- [ ROW 1 ] start -->
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
 

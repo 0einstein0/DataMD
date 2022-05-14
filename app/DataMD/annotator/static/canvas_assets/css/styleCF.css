@@ -1,36 +1,8 @@
-.toolbar {
-  margin: 0 auto;
-  display: flex;
-  padding-top: 2%;
-  justify-content: center;
-}
-.toolbar img {
-  max-width: 30px;
-}
-span {
-  display: block;
-  font-weight: normal;
-  font-size: 12px;
-  padding-top: 5px;
-}
-.btnIcon {
-  border: none;
-  margin: 0 10px 0 10px;
-  padding: 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 15px;
-  background-color: #d5d5d5;
-}
-
-.toolbar button:hover {
-  background-color: #999999;
-}
 #imageViewer {
   width: 50%;
   margin: 0 auto;
   max-height: 70vh;
-  margin-top: 3%;
+
   display: flex;
   justify-content: center;
 }
@@ -44,8 +16,27 @@ span {
   display: flex;
   padding: 30px;
   align-items: center;
+  cursor: pointer;
 }
 
-#rect {
-  display: none;
+#labelBtns {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#labelBtns button {
+  align-self: center;
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+#labelBtns button:hover {
+  opacity: 0.6;
+  padding: 10px;
 }
