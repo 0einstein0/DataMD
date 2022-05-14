@@ -351,10 +351,14 @@ def manage_project(request, project_id):
                 #count_of_images = Image.objects.filter(project = project.id).count()
 
                 print("count of annotators :: ", count_of_annotators) # -- DEBUG
-                #print("count of images :: ", count_of_images) # -- DEBUG
+                
                 # -> see how much images unannotated does each annotator have
-                count_of__unnanotated_images = Image.objects.filter(project = project.id).count()
+                count_of_unnanotated_images = Image.objects.filter(project = project.id).count()
+                print("count of unannoted images :: ", count_of_unnanotated_images) # -- DEBUG
+                
                 # -> assign to the one with the least
+                # TODO: do it
+
                 print("image ::", image) # -- DEBUG
                 print("image content type ::", image.content_type) # -- DEBUG
                 if image.content_type == 'image/jpeg' or image.content_type == 'image/png':
@@ -363,8 +367,8 @@ def manage_project(request, project_id):
                         image = image,
                         project = project
                     )
-                    # image_instance.save()
-                    print('image instance :: ', image_instance)
+                    image_instance.save()
+                    print('image instance SAVED :: ', image_instance)
                 else: 
                     print('ERROR: wRONG FILE TYPE')
                     print('you uploaded ', image.content_type)
