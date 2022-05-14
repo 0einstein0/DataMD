@@ -94,12 +94,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function goPrev() {
+    anno.destroy();
     currentImage -= 1;
     if (currentImage < 0) {
       currentImage = images.length - 1;
     }
 
     document.getElementById("activeImg").src = images[currentImage];
+    config = {
+      image: document.getElementById("activeImg"),
+      locale: "auto",
+      widgets: [ColorSelectorWidget, "COMMENT"],
+      formatter: ColorFormatter,
+    };
+    anno = Annotorious.init(config);
+
+    initAnnon(anno);
   }
   ////////////
   document.onkeydown = function (e) {
