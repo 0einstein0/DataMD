@@ -12,6 +12,9 @@
   min-height: 65vh;
   max-height: 65vh;
 }
+#content {
+  margin-top: -40px;
+}
 
 .page-header-title {
   display: flex;
