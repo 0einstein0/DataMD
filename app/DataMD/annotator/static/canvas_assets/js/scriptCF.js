@@ -15,14 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentImage < 0) {
       currentImage = images.length - 1;
     }
-
     document.getElementById("activeImg").src = images[currentImage];
   }
 
-  function selectColor(colorNum, colors) {
-    if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
-    return "hsl(" + ((colorNum * (360 / colors)) % 360) + ",63%,50%)";
-  }
   ////////////
 
   document.onkeydown = function (e) {
@@ -38,6 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ///////
   };
 
+  document.getElementById("dark-icon").onclick = function () {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+  };
+
   document.getElementById("arrow-next").onclick = function () {
     goNext();
   };
@@ -47,6 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   ////////////
+
+  function selectColor(colorNum, colors) {
+    if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
+    return "hsl(" + ((colorNum * (360 / colors)) % 360) + ",63%,50%)";
+  }
   var labelsNo = possible_labels.length;
   var labelBtn;
   var labelText;

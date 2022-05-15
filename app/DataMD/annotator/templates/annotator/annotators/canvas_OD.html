@@ -44,6 +44,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious@2.7.0/dist/annotorious.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@recogito/annotorious-selector-pack@latest/dist/annotorious-selector-pack.min.js"></script>
 <link rel="stylesheet" href="/static/canvas_assets/css/styleOD.css" />
+
 {% endblock stylesheets %}
 
 {% block content %}
@@ -55,10 +56,21 @@
                 <div class="page-block">
                     <div class="row align-items-center">
                         <div class="col-md-12">
-      
+                          <div class="page-header-title">
+                            <p class="proj-name">{{project.name}}</p>
+
+                            <label  class="switch">
+                              
+                              <input id="dark-icon" type="checkbox">
+                              
+                              <span class="slider round"> <i id="darki" class="feather icon-moon"></i></span>
+                            </label>
+                       
+                          </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/dashboard"><i class="feather icon-home"></i></a></li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
@@ -73,7 +85,6 @@
                           <div id="content">
                             <div id="toolbar">
                               <button class="btnIcon" >
-                            
                                 <script>
                         
                                 document.write('<img src="/static/canvas_assets/icons/'+type+'.png"/>');     
@@ -174,6 +185,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 {% endblock content %}

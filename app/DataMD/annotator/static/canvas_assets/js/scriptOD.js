@@ -93,6 +93,11 @@ document.addEventListener("DOMContentLoaded", function () {
     initAnnon(anno);
   }
 
+  document.getElementById("dark-icon").onclick = function () {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+  };
+
   function goPrev() {
     anno.destroy();
     currentImage -= 1;
