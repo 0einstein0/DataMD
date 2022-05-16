@@ -85,25 +85,26 @@ i {
 
 .colorselector-widget button.selected,
 .colorselector-widget button:hover {
-  opacity: 1;
+  opacity: 0.8;
+  border: 3px solid rgb(46, 46, 46);
 }
 
 svg.a9s-annotationlayer .a9s-annotation.RED .a9s-outer {
-  stroke: red;
+  stroke: crimson;
   stroke-width: 3;
-  fill: rgba(255, 0, 0, 0.3);
+  fill: rgba(220, 20, 60, 0.2);
 }
 
 svg.a9s-annotationlayer .a9s-annotation.GREEN .a9s-outer {
-  stroke: green;
+  stroke: forestgreen;
   stroke-width: 3;
-  fill: rgba(0, 255, 0, 0.3);
+  fill: rgba(34, 139, 34, 0.2);
 }
 
 svg.a9s-annotationlayer .a9s-annotation.BLUE .a9s-outer {
-  stroke: blue;
+  stroke: darkcyan;
   stroke-width: 3;
-  fill: rgba(0, 0, 255, 0.3);
+  fill: rgba(0, 139, 139, 0.2);
 }
 
 svg.a9s-annotationlayer .a9s-annotation.RED .a9s-inner,

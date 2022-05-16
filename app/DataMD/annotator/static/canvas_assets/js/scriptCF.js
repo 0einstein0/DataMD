@@ -3,15 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentLabel = -1;
 
   function goNext() {
-
     jQuery.ajax({
-      type: 'GET',
-      url: '/ajax/update/labels/classification',
+      type: "GET",
+      url: "/ajax/update/labels/classification",
       data: {
         image_id: image_ids[currentImage],
-        annotation_class_id: (currentLabel > -1) ? label_ids[currentLabel] : 'None'
-      }
-    })
+        annotation_class_id:
+          currentLabel > -1 ? label_ids[currentLabel] : "None",
+      },
+    });
 
     currentImage += 1;
     if (currentImage >= images.length) {
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   for (let i = 0; i < labelsNo; ++i) {
     labelBtn = document.createElement("button");
-    labelBtn.setAttribute('id', 'labelButton'+i);
-    labelBtn.onclick = function() {
+    labelBtn.setAttribute("id", "labelButton" + i);
+    labelBtn.onclick = function () {
       currentLabel = i;
       console.log("currentLabel = " + currentLabel);
-    }
+    };
     //labelBtn.setAttribute("onclick","setCurrentLabel(" + i + ");");
     labelBtn.style.backgroundColor = selectColor(i, labelsNo);
     labelText = document.createTextNode(possible_labels[i]);
@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
     labelBtn.appendChild(labelKey);
     btnDiv.appendChild(labelBtn);
   }
-
 
   ////////////////////
 });

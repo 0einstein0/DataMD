@@ -11,12 +11,16 @@
     {% endfor %}
   ];
 
+  
+ 
   var possible_labels = []
   possible_labels = [
     {% for label in possible_labels %}
       "{{ label }}",
     {% endfor %}
-  ]
+  ];
+
+  
 
   var type = 1;
   {% if project.annotation_type.name == 'BB' %} 
@@ -32,6 +36,9 @@
   {% elif project.annotation_type.name == 'LN' %} 
     type =1;  
   {% endif %}
+
+  username = '{{ username }}'
+
 
 </script>
 

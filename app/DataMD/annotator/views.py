@@ -269,7 +269,7 @@ def canvas(request, project_id):
     'image_urls': image_urls, 
     'possible_labels': possible_labels,
     'annotation_classes': annotation_classes,
-    'username': request.user.username
+    'username': request.user.username,
     } # all the variables you want to pass to context
     # --- --- ---
 

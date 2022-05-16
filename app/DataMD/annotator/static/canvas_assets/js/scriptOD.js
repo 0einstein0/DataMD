@@ -169,8 +169,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ////////////////
 
     anno.setAuthInfo({
-      id: "0einstein0",
-      displayName: "einstein",
+      id: username,
+      displayName: username,
     });
 
     ////////////////
