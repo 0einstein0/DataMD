@@ -60,6 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
 
+  jQuery("button").on("click", function () {
+    jQuery("button").removeClass("btnActive");
+    jQuery(this).addClass("btnActive");
+  });
+
   function selectColor(colorNum, colors) {
     if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
     return "hsl(" + ((colorNum * (360 / colors)) % 360) + ",63%,50%)";
@@ -74,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var labelBtn;
   var labelText;
   var btnDiv = document.getElementById("labelBtns");
-  var keyArray = ["A", "L", "D", "J", "G"];
+  var keyArray = ["A", "S", "D", "J", "G"];
   var labelKey;
 
   for (let i = 0; i < labelsNo; ++i) {
