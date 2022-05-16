@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ////////////////
 
-    anno.on("createSelection", async function (selection) {
+    anno.once("createSelection", async function (selection) {
       selection.body = [
         {
           type: "TextualBody",

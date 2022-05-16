@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from pathlib import Path
 
 # Create your models here.
@@ -38,13 +39,13 @@ class Project(models.Model):
     def annotation_path(instance, filename):
         return os.path.join(
         'annotations',
-        str(instance.project.id),
+        str(instance.manager.id),
         filename
     )
     
     name = models.CharField(max_length = 200)
     description = models.TextField(blank=True)
-    annotation = models.FileField(null=True, blank=True, upload_to=annotation_path)
+    annotation = models.FileField(null=True, blank=True, upload_to=annotation_path, storage=FileSystemStorage)
     createdAt = models.DateTimeField(auto_now_add = True)
     config = models.TextField(blank=True) # might switch to JSONField() if deemeded preferable
 

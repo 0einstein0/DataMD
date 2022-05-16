@@ -14,5 +14,7 @@ urlpatterns = [
     path('dashboard/annotator_progress/', views.filler, name="annotator_progress"),
     # ANNOTATOR
     path('dashboard/project_invites', views.project_invites_page, name="project_invites_page"),
-    path('canvas/<str:project_id>/', views.canvas, name = "canvas")
+    path('canvas/<str:project_id>/', views.canvas, name = "canvas"),
+    # AJAX
+    path('ajax/update/labels/classification', views.updateLabelsClassification, name = "update_labels_classification")
 ]

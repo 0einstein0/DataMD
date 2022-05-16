@@ -3,19 +3,35 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
 <script>
+
+  // CURRENT IMAGE MAPS TO THESE
   var images = [
     {% for url in image_urls %}
       "{{ url | safe }}",
     {% endfor %}
   ];
 
-  var possible_labels = []
+  var image_ids = [
+    {% for image in images %}
+      "{{ image.id }}",
+    {% endfor %}
+  ]
 
-  possible_labels = [
+  /////
+  var possible_labels = [
     {% for label in possible_labels %}
       "{{ label }}",
     {% endfor %}
   ]
+
+  var label_ids = [
+    {% for label in annotation_classes %}
+      "{{ label.id }}",
+    {% endfor %}
+  ]
+
+  username = '{{ username }}'
+
 </script>
 <script src="/static/canvas_assets/js/scriptCF.js"></script>
 

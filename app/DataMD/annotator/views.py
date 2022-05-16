@@ -4,17 +4,20 @@ from email.mime import image
 from pickletools import read_uint1
 import re
 import PIL
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from pyparsing import anyOpenTag
 from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
 from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 import pydicom
+from django.core.files.storage import FileSystemStorage
 
 # cloud
 from google.cloud import storage
@@ -257,11 +260,17 @@ def canvas(request, project_id):
     print("image_urls :: ", image_urls) # -- DEBUG
     print("possible labels :: ", possible_labels) # -- DEBUG
 
-    print("hmm", project.annotation_type.name)
+    print("hmm", project.annotation_type.name) # -- DEBUG
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[ANNOTATOR]['directory'] + canvas_page 
-    context = {'project': project, 'images': images, 'image_urls': image_urls, 'possible_labels': possible_labels} # all the variables you want to pass to context
+    context = {'project': project, 
+    'images': images, 
+    'image_urls': image_urls, 
+    'possible_labels': possible_labels,
+    'annotation_classes': annotation_classes,
+    'username': request.user.username
+    } # all the variables you want to pass to context
     # --- --- ---
 
     return render(
@@ -346,18 +355,18 @@ def manage_project(request, project_id):
             images = request.FILES.getlist('images')
             for image in images:
                 # TODO: assign each image to an annotator
-                # -> get to know how many annotators there are
-                count_of_annotators = project.annotators.all().count()
-                #count_of_images = Image.objects.filter(project = project.id).count()
-
-                print("count of annotators :: ", count_of_annotators) # -- DEBUG
+                # -> get a list of all annotators
+                annotators = project.annotators.all()
                 
-                # -> see how much images unannotated does each annotator have
-                count_of_unnanotated_images = Image.objects.filter(project = project.id).count()
-                print("count of unannoted images :: ", count_of_unnanotated_images) # -- DEBUG
+                print("annotators  :: ", annotators) # -- DEBUG
                 
-                # -> assign to the one with the least
-                # TODO: do it
+                # -> see how much images unannotated does each annotator have and return the annotator with the least
+                assigned_annotator = annotators.first()
+                print("assigned annotator :: ", assigned_annotator)
+                
+                for annotator in annotators:
+                    count_of_unnanotated_images_of_user = Image.objects.filter(project = project.id, annotation_class = None, assigned_annotator = annotators).count()
+                
 
                 print("image ::", image) # -- DEBUG
                 print("image content type ::", image.content_type) # -- DEBUG
@@ -367,7 +376,7 @@ def manage_project(request, project_id):
                         image = image,
                         project = project
                     )
-                    image_instance.save()
+                    #image_instance.save()
                     print('image instance SAVED :: ', image_instance)
                 else: 
                     print('ERROR: wRONG FILE TYPE')
@@ -533,3 +542,30 @@ def login_page(request):
         template, # the template which represents function
         context # a dictionary which will be added to the template context
     )
+
+
+# AJAX VIEWS
+def updateLabelsClassification(request):
+    image_id = request.GET['image_id']
+    annotation_class_id = request.GET['annotation_class_id']
+
+    if annotation_class_id != 'None':
+        # get annotation_class db record object
+        annotation_class = AnnotationClass.objects.get(id = annotation_class_id)
+         # get image db record object
+        image = Image.objects.get(id = image_id) 
+        # get the project
+        project = image.project
+
+        print("request.GET :: ", request.GET) # -- DEBUG
+        print("image :: ", image) # -- DEBUG
+        print("annotation_class :: ", annotation_class) # -- DEBUG
+
+        with project.annotation.open('a') as f:
+            f.write(str(image.image.name) + "," + str(annotation_class.name) + "\n")
+
+    return HttpResponse(request.GET)
+
+def fetchLabelIfExists(request):
+    
+    pass
