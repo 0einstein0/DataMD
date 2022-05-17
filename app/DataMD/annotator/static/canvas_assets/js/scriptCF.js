@@ -32,18 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
 
-  document.onkeydown = function (e) {
+  document.onkeyup = function (e) {
     //////
     if (e.key === "ArrowRight") {
       goNext();
     } else if (e.key === "ArrowLeft") {
       goPrev();
     }
-
-    ///////
-
-    ///////
   };
+
+  //////
+
+  ////
 
   document.getElementById("dark-icon").onclick = function () {
     var element = document.body;
@@ -59,11 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   ////////////
-
-  jQuery("button").on("click", function () {
-    jQuery("button").removeClass("btnActive");
-    jQuery(this).addClass("btnActive");
-  });
 
   function selectColor(colorNum, colors) {
     if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
@@ -85,11 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
   for (let i = 0; i < labelsNo; ++i) {
     labelBtn = document.createElement("button");
     labelBtn.setAttribute("id", "labelButton" + i);
+    labelBtn.setAttribute("class", "labelBtn");
     labelBtn.onclick = function () {
       currentLabel = i;
       console.log("currentLabel = " + currentLabel);
+      selectLabel(this);
     };
-    //labelBtn.setAttribute("onclick","setCurrentLabel(" + i + ");");
+
     labelBtn.style.backgroundColor = selectColor(i, labelsNo);
     labelText = document.createTextNode(possible_labels[i]);
     labelKey = document.createTextNode("Press: " + keyArray[i]);
@@ -100,5 +97,18 @@ document.addEventListener("DOMContentLoaded", function () {
     btnDiv.appendChild(labelBtn);
   }
 
+  document.onkeydown = function (e) {
+    if (keyArray.includes(e.key)) {
+      i = keyArray.indexOf(e.key);
+      btn = document.getElementById("labelButton" + i);
+      selectLabel(btn);
+    }
+  };
   ////////////////////
+  function selectLabel(btn) {
+    document.querySelectorAll(".labelBtn").forEach((button) => {
+      button.classList.remove("active");
+    });
+    btn.classList.add("active");
+  }
 });

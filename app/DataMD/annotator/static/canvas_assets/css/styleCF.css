@@ -50,7 +50,7 @@ i {
   justify-content: center;
 }
 
-#labelBtns button {
+button {
   box-sizing: border-box;
   width: 25%;
   font-size: medium;
@@ -67,11 +67,10 @@ i {
 #labelBtn button:focus,
 #labelBtns button:hover,
 #labelBtns button:active,
-.btnActive {
+.active {
   opacity: 0.9;
   font-size: 15px;
   margin-bottom: 5px;
-
   border: 3px solid rgb(49, 49, 49);
 }
 
