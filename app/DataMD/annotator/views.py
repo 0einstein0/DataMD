@@ -18,6 +18,8 @@ from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 import pydicom
 from django.core.files.storage import FileSystemStorage
+import cv2
+import keras
 
 # cloud
 from google.cloud import storage
@@ -246,6 +248,8 @@ def canvas(request, project_id):
 
     client = storage.Client()
     bucket = client.get_bucket('med-images')
+    
+    #prediction = pred(, images[0].url)
 
     for x in images:
         image_urls.append(
@@ -542,6 +546,16 @@ def login_page(request):
         template, # the template which represents function
         context # a dictionary which will be added to the template context
     )
+
+def pred(model_path,img_path):   
+        img = cv2.imread(img_path)   
+        model = keras.models.load_model(model_path)          
+        if img is None and model is None:
+            return('Something is wrong')
+        else:        
+            img = cv2.resize(img,(300,300),3)
+            img = img.reshape(1,300,300,3)
+            return model.predict(img)
 
 
 # AJAX VIEWS
