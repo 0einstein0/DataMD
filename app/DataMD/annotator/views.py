@@ -595,6 +595,8 @@ def fetchLabelsClassification(request):
     image_id = request.GET['image_id']
     image = Image.objects.get(id = image_id)
 
+    print("???? ", image.annotation_class)
+
     if image.annotation_class is not None:
         return JsonResponse({
             'label': image.annotation_class.name

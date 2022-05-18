@@ -2,7 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentImage = 0;
   var currentLabel = -1;
 
+  //
+
+
+
+
+
+  //
+  
   function goNext() {
+    console.log('did it press? ' + currentLabel);
     // if the user pressed something commit that to db, else do nothing
     if (currentLabel > -1) {
       jQuery.ajax({
@@ -13,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
           annotation_class_id: label_ids[currentLabel]
         },
       })
-    }
+    };
 
     // see if any labels to fetch from db for next image
-    nextImage = currentImage + 1
+    var nextImage = currentImage + 1;
     if (nextImage >= images.length) {
       nextImage = 0;
     }
@@ -33,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // if labels to fetch
         if (fetched.label != 'None') {
           // make the button pressed
-          console.log('button press')
-          
+          btn = document.getElementById("labelButton" + possible_labels.indexOf(fetched.label));
+          selectLabel(btn)
         }
         else {
           // make the buttons all unpressed
@@ -52,13 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log('after ' + currentLabel)
         document.getElementById("activeImg").src = images[currentImage];
       }
-    })
+    });
 
 
   }
 
   function goPrev() {
-    
 
     currentImage -= 1;
     if (currentImage < 0) {
@@ -147,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   ////////////////////
   function selectLabel(btn) {
+    console.log('butoon clikced!!!');
     document.querySelectorAll(".labelBtn").forEach((button) => {
       button.classList.remove("active");
     });
