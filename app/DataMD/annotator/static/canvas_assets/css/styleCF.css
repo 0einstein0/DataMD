@@ -7,10 +7,10 @@
 }
 
 #imageViewer img {
-  min-width: 100vh;
-  max-width: 100vh;
-  min-height: 65vh;
-  max-height: 65vh;
+  min-width: 110vh;
+  max-width: 110vh;
+  min-height: 69vh;
+  max-height: 69vh;
 }
 #content {
   margin-top: -40px;
@@ -145,4 +145,13 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+.modelDiv i {
+  margin-right: 10px;
+}
+.modelDiv {
+  font-size: large;
+}
+.modelPred {
+  margin-top: 5px;
 }

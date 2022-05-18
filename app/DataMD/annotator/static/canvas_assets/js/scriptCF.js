@@ -113,4 +113,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     btn.classList.add("active");
   }
+
+  ////////
+
+  jQuery(document).ready(function () {
+    function checkWidth() {
+      var windowSize = jQuery(window).width();
+
+      if (windowSize < 1000) {
+        alert("Please increase the browser width for Canvas to load properly");
+        console.log("screen width is less than 100px");
+      }
+    }
+    // Execute on load
+    checkWidth();
+    // Bind event listener
+    jQuery(window).resize(checkWidth);
+  });
 });
