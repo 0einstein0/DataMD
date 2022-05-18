@@ -4,7 +4,7 @@ from email.mime import image
 from pickletools import read_uint1
 import re
 import PIL
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -20,6 +20,7 @@ import pydicom
 from django.core.files.storage import FileSystemStorage
 import cv2
 import keras
+
 
 # cloud
 from google.cloud import storage
@@ -563,26 +564,42 @@ def updateLabelsClassification(request):
     image_id = request.GET['image_id']
     annotation_class_id = request.GET['annotation_class_id']
 
-    if annotation_class_id != 'None':
-        # get annotation_class db record object
-        annotation_class = AnnotationClass.objects.get(id = annotation_class_id)
-         # get image db record object
-        image = Image.objects.get(id = image_id) 
-        # get the project
-        project = image.project
+    image = Image.objects.get(id = image_id)
+    project = image.project
+    annotation_class = AnnotationClass.objects.get(id = annotation_class_id)
 
-        print("request.GET :: ", request.GET) # -- DEBUG
-        print("image :: ", image) # -- DEBUG
-        print("annotation_class :: ", annotation_class) # -- DEBUG
+    # if previously annotated, make an edit
+    if image.annotation_class is not None:
+        # if the edit will actually return changes, only then edit
+        if image.annotation_class != annotation_class:
+            # edit the file 
+            print('EDIT')
 
+
+            # save label to db
+            image.annotation_class = annotation_class
+            image.save()
+        pass
+    else: # otherwise append a new line
+        print('ADD')
         with project.annotation.open('a') as f:
             f.write(str(image.image.name) + "," + str(annotation_class.name) + "\n")
-        
+            
+        # save label to db
         image.annotation_class = annotation_class
-        print(image.annotation_class)
-        
-    return HttpResponse(request.GET)
+        image.save()
 
-def fetchLabelIfExists(request):
-    
-    pass
+    return JsonResponse({'success': 1})
+
+def fetchLabelsClassification(request):
+    image_id = request.GET['image_id']
+    image = Image.objects.get(id = image_id)
+
+    if image.annotation_class is not None:
+        return JsonResponse({
+            'label': image.annotation_class.name
+        })
+    else:
+        return JsonResponse({
+            'label': 'None'
+        })

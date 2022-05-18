@@ -16,5 +16,6 @@ urlpatterns = [
     path('dashboard/project_invites', views.project_invites_page, name="project_invites_page"),
     path('canvas/<str:project_id>/', views.canvas, name = "canvas"),
     # AJAX
-    path('ajax/update/labels/classification', views.updateLabelsClassification, name = "update_labels_classification")
+    path('ajax/update/labels/classification', views.updateLabelsClassification, name = "update_labels_classification"),
+    path('ajax/fetch/labels/classification', views.fetchLabelsClassification, name="fetch_labels_classification")
 ]

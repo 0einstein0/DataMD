@@ -3,31 +3,71 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentLabel = -1;
 
   function goNext() {
-    jQuery.ajax({
-      type: "GET",
-      url: "/ajax/update/labels/classification",
-      data: {
-        image_id: image_ids[currentImage],
-        annotation_class_id:
-          currentLabel > -1 ? label_ids[currentLabel] : "None",
-      },
-    });
-
-    currentImage += 1;
-    if (currentImage >= images.length) {
-      currentImage = 0;
+    // if the user pressed something commit that to db, else do nothing
+    if (currentLabel > -1) {
+      jQuery.ajax({
+        type: "GET",
+        url: "/ajax/update/labels/classification",
+        data: {
+          image_id: image_ids[currentImage],
+          annotation_class_id: label_ids[currentLabel]
+        },
+      })
     }
 
-    currentLabel = -1; //TODO: fetch the actual label
-    document.getElementById("activeImg").src = images[currentImage];
+    // see if any labels to fetch from db for next image
+    nextImage = currentImage + 1
+    if (nextImage >= images.length) {
+      nextImage = 0;
+    }
+    // TODO: loading animation ?
+    jQuery.ajax({
+      type: "GET",
+      url: "/ajax/fetch/labels/classification",
+      dataType: 'json',
+      data: {
+        image_id: image_ids[nextImage],
+      },
+      success: function(fetched) {
+        console.log(fetched)
+        // if labels to fetch
+        if (fetched.label != 'None') {
+          // make the button pressed
+          console.log('button press')
+          
+        }
+        else {
+          // make the buttons all unpressed
+          document.querySelectorAll(".labelBtn").forEach((button) => {
+            button.classList.remove("active");
+          });
+        }
+
+        // go to next image
+        currentImage += 1;
+        if (currentImage >= images.length) {
+          currentImage = 0;
+        }
+        currentLabel = -1;
+        console.log('after ' + currentLabel)
+        document.getElementById("activeImg").src = images[currentImage];
+      }
+    })
+
+
   }
 
   function goPrev() {
+    
+
     currentImage -= 1;
     if (currentImage < 0) {
       currentImage = images.length - 1;
     }
     document.getElementById("activeImg").src = images[currentImage];
+    document.querySelectorAll(".labelBtn").forEach((button) => {
+      button.classList.remove("active");
+    });
   }
 
   ////////////
@@ -83,10 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
     labelBtn.setAttribute("class", "labelBtn");
     labelBtn.onclick = function () {
       currentLabel = i;
-      console.log("currentLabel = " + currentLabel);
+      console.log("currentLabel = " + currentLabel); // DEBUG
       selectLabel(this);
     };
-
     labelBtn.style.backgroundColor = selectColor(i, labelsNo);
     labelText = document.createTextNode(possible_labels[i]);
     labelKey = document.createTextNode("Press: " + keyArray[i].toUpperCase());
@@ -102,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
       i = keyArray.indexOf(e.key);
       btn = document.getElementById("labelButton" + i);
       currentLabel = i;
-      console.log("currentLabel = " + currentLabel);
+      console.log("currentLabel = " + currentLabel); // DEBUG
       selectLabel(btn);
     }
   };
