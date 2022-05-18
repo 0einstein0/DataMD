@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function selectColor(colorNum, colors) {
     if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
-    return "hsl(" + ((colorNum * (360 / colors)) % 360) + ",63%,50%)";
+    return "hsl(" + ((colorNum * (300 / colors)) % 300) + ",63%,50%)";
   }
 
   function setCurrentLabel(i) {
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var labelBtn;
   var labelText;
   var btnDiv = document.getElementById("labelBtns");
-  var keyArray = ["A", "S", "D", "J", "G"];
+  var keyArray = ["a", "s", "d", "j", "g"];
   var labelKey;
 
   for (let i = 0; i < labelsNo; ++i) {
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     labelBtn.style.backgroundColor = selectColor(i, labelsNo);
     labelText = document.createTextNode(possible_labels[i]);
-    labelKey = document.createTextNode("Press: " + keyArray[i]);
+    labelKey = document.createTextNode("Press: " + keyArray[i].toUpperCase());
     linebreak = document.createElement("br");
     labelBtn.appendChild(labelText);
     labelBtn.appendChild(linebreak);
@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (keyArray.includes(e.key)) {
       i = keyArray.indexOf(e.key);
       btn = document.getElementById("labelButton" + i);
+      currentLabel = i;
+      console.log("currentLabel = " + currentLabel);
       selectLabel(btn);
     }
   };

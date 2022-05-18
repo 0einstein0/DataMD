@@ -577,7 +577,10 @@ def updateLabelsClassification(request):
 
         with project.annotation.open('a') as f:
             f.write(str(image.image.name) + "," + str(annotation_class.name) + "\n")
-
+        
+        image.annotation_class = annotation_class
+        print(image.annotation_class)
+        
     return HttpResponse(request.GET)
 
 def fetchLabelIfExists(request):

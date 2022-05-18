@@ -1,26 +1,32 @@
-    {% load check_group %}
-    {% if request.user|has_group:"manager_user_group" %} 
-    <nav class="pcoded-navbar">
-        <div class="navbar-wrapper">
-            <div class="navbar-brand header-logo">
-                <a href="{% url 'dashboard' %}" class="b-brand">
-                    <div class="b-bg">
-                        <i class="feather icon-trending-up"></i>
-                    </div>
-                    <span class="b-title">DataMD</span>
-                </a>
-                <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
-            </div>
-            <div class="navbar-content scroll-div">
-                <ul class="nav pcoded-inner-navbar">
-                    <!--<li class="nav-item pcoded-menu-caption">
+{% load check_group %} {% if request.user|has_group:"manager_user_group" %}
+<nav class="pcoded-navbar">
+  <div class="navbar-wrapper">
+    <div class="navbar-brand header-logo">
+      <a href="{% url 'dashboard' %}" class="b-brand">
+        <div class="b-bg">
+          <i class="feather icon-layers"></i>
+        </div>
+        <span class="b-title">DataMD</span>
+      </a>
+      <a class="mobile-menu" id="mobile-collapse" href="javascript:"
+        ><span></span
+      ></a>
+    </div>
+    <div class="navbar-content scroll-div">
+      <ul class="nav pcoded-inner-navbar">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
                     </li>-->
-                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
-                        class="nav-item {% if 'index' in segment %} active {% endif %}">
-                        <a href="{% url 'dashboard' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Home</span></a>
-                    </li>
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <li
+          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+          class="nav-item {% if 'index' in segment %} active {% endif %}"
+        >
+          <a href="{% url 'dashboard' %}" class="nav-link"
+            ><span class="pcoded-micon"><i class="feather icon-home"></i></span
+            ><span class="pcoded-mtext">Home</span></a
+          >
+        </li>
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>UI Element</label>
                     </li>
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
@@ -35,17 +41,28 @@
                             <li class=""><a href="/ui-icons.html" class="">Feather<span class="pcoded-badge label label-danger">NEW</span></a></li>
                         </ul>
                     </li>-->
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Manage</label>
                     </li>-->
-                    <li data-username="form elements advance componant validation masking wizard picker select" class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-server"></i></span><span class="pcoded-mtext">Projects</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class=""><a href="{% url 'create_project' %}" class="">Create New Project</a></li>
-                            <li class=""><a href="" class="">View Annotations</a></li>
-                        </ul>
-                    </li>
-                    <!--<li data-username="form elements advance componant validation masking wizard picker select" 
+        <li
+          data-username="form elements advance componant validation masking wizard picker select"
+          class="nav-item pcoded-hasmenu"
+        >
+          <a href="javascript:" class="nav-link"
+            ><span class="pcoded-micon"
+              ><i class="feather icon-server"></i></span
+            ><span class="pcoded-mtext">Projects</span></a
+          >
+          <ul class="pcoded-submenu">
+            <li class="">
+              <a href="{% url 'create_project' %}" class=""
+                >Create New Project</a
+              >
+            </li>
+            <li class=""><a href="" class="">View Annotations</a></li>
+          </ul>
+        </li>
+        <!--<li data-username="form elements advance componant validation masking wizard picker select" 
                         class="nav-item {% if 'ui-forms' in segment %} active {% endif %}">
                         <a href="/ui-forms.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form elements</span></a>
                     </li>
@@ -53,19 +70,26 @@
                         class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
                         <a href="/ui-tables.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-server"></i></span><span class="pcoded-mtext">Table</span></a>
                     </li>-->
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Statistics</label>
                     </li>-->
-                    <li data-username="Charts Morris" 
-                        class="nav-item {% if 'charts-morris' in segment %} active {% endif %}">
-                        <a href="{% url 'annotator_progress' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Annotator Progress</span></a></li>
-                    <!--<li data-username="Maps Google" 
+        <li
+          data-username="Charts Morris"
+          class="nav-item {% if 'charts-morris' in segment %} active {% endif %}"
+        >
+          <a href="{% url 'annotator_progress' %}" class="nav-link"
+            ><span class="pcoded-micon"
+              ><i class="feather icon-pie-chart"></i></span
+            ><span class="pcoded-mtext">Annotator Progress</span></a
+          >
+        </li>
+        <!--<li data-username="Maps Google" 
                          class="nav-item {% if 'maps-google' in segment %} active {% endif %}">
                         <a href="/maps-google.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a></li>-->
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Account</label>
-                    </li>
-                    <!--<li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
+        <li class="nav-item pcoded-menu-caption">
+          <label>Account</label>
+        </li>
+        <!--<li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Authentication</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{% url 'auth_reset_pass' %}" class="">Reset Password</a></li>
@@ -73,17 +97,18 @@
                             <li class=""><a href="{% url 'register' %}" class="">Register</a></li>
                         </ul>
                     </li>-->
-                    <!--<li data-username="Sample Page" 
+        <!--<li data-username="Sample Page" 
                         class="nav-item {% if 'page-blank' in segment %} active {% endif %}">
                         <a href="/page-blank.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li>
                     <li data-username="Sample Page" class="nav-item"><a href="/page-404.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Error 404</span></a></li>
                     -->
-                    <li data-username="Disabled Menu" class="nav-item">
-                        <a href="{% url 'logout' %}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Logout</span>
-                        </a>
-                    </li>
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <li data-username="Disabled Menu" class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <span class="pcoded-micon"><i class="feather icon-power"></i></span
+            ><span class="pcoded-mtext">Logout</span>
+          </a>
+        </li>
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>More Resources</label>
                     </li>                    
                     <li data-username="Support Page" class="nav-item ">
@@ -101,37 +126,50 @@
                             </span>
                             <span class="pcoded-mtext">PRO Version</span>
                         </a>
-                    </li>-->                     
-                </ul>
-            </div>
+                    </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+{% elif request.user|has_group:"annotator_user_group"%}
+<nav class="pcoded-navbar">
+  <div class="navbar-wrapper">
+    <div class="navbar-brand header-logo">
+      <a href="{% url 'dashboard' %}" class="b-brand">
+        <div class="b-bg">
+          <i class="feather icon-layers"></i>
         </div>
-    </nav>
-    {% elif request.user|has_group:"annotator_user_group"%}
-    <nav class="pcoded-navbar">
-        <div class="navbar-wrapper">
-            <div class="navbar-brand header-logo">
-                <a href="{% url 'dashboard' %}" class="b-brand">
-                    <div class="b-bg">
-                        <i class="feather icon-trending-up"></i>
-                    </div>
-                    <span class="b-title">DataMD</span>
-                </a>
-                <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
-            </div>
-            <div class="navbar-content scroll-div">
-                <ul class="nav pcoded-inner-navbar">
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <span class="b-title">DataMD</span>
+      </a>
+      <a class="mobile-menu" id="mobile-collapse" href="javascript:"
+        ><span></span
+      ></a>
+    </div>
+    <div class="navbar-content scroll-div">
+      <ul class="nav pcoded-inner-navbar">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
                     </li>-->
-                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
-                        class="nav-item {% if 'index' in segment %} active {% endif %}">
-                        <a href="{% url 'dashboard' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Home</span></a>
-                    </li>
-                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
-                        class="nav-item {% if 'index' in segment %} active {% endif %}">
-                        <a href="{% url 'project_invites_page' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bell"></i></span><span class="pcoded-mtext">Project Invites</span>  <span class="pcoded-badge label label-danger">1</span></a>
-                    </li>
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <li
+          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+          class="nav-item {% if 'index' in segment %} active {% endif %}"
+        >
+          <a href="{% url 'dashboard' %}" class="nav-link"
+            ><span class="pcoded-micon"><i class="feather icon-home"></i></span
+            ><span class="pcoded-mtext">Home</span></a
+          >
+        </li>
+        <li
+          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+          class="nav-item {% if 'index' in segment %} active {% endif %}"
+        >
+          <a href="{% url 'project_invites_page' %}" class="nav-link"
+            ><span class="pcoded-micon"><i class="feather icon-bell"></i></span
+            ><span class="pcoded-mtext">Project Invites</span>
+            <span class="pcoded-badge label label-danger">1</span></a
+          >
+        </li>
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>UI Element</label>
                     </li>
                     <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
@@ -146,10 +184,10 @@
                             <li class=""><a href="/ui-icons.html" class="">Feather<span class="pcoded-badge label label-danger">NEW</span></a></li>
                         </ul>
                     </li>-->
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Manage</label>
                     </li>-->
-                    <!--<li data-username="form elements advance componant validation masking wizard picker select" class="nav-item pcoded-hasmenu">
+        <!--<li data-username="form elements advance componant validation masking wizard picker select" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-server"></i></span><span class="pcoded-mtext">Projects</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{% url 'create_project' %}" class="">Create New Project</a></li>
@@ -157,7 +195,7 @@
                             <li class=""><a href="" class="">View Annotations</a></li>
                         </ul>
                     </li>-->
-                    <!--<li data-username="form elements advance componant validation masking wizard picker select" 
+        <!--<li data-username="form elements advance componant validation masking wizard picker select" 
                         class="nav-item {% if 'ui-forms' in segment %} active {% endif %}">
                         <a href="/ui-forms.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form elements</span></a>
                     </li>
@@ -165,19 +203,26 @@
                         class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
                         <a href="/ui-tables.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-server"></i></span><span class="pcoded-mtext">Table</span></a>
                     </li>-->
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>Statistics</label>
                     </li>-->
-                    <li data-username="Charts Morris" 
-                        class="nav-item {% if 'charts-morris' in segment %} active {% endif %}">
-                        <a href="" class="nav-link "><span class="pcoded-micon"><i class="feather icon-activity"></i></span><span class="pcoded-mtext">Work Activity</span></a></li>
-                    <!--<li data-username="Maps Google" 
+        <li
+          data-username="Charts Morris"
+          class="nav-item {% if 'charts-morris' in segment %} active {% endif %}"
+        >
+          <a href="" class="nav-link"
+            ><span class="pcoded-micon"
+              ><i class="feather icon-activity"></i></span
+            ><span class="pcoded-mtext">Work Activity</span></a
+          >
+        </li>
+        <!--<li data-username="Maps Google" 
                          class="nav-item {% if 'maps-google' in segment %} active {% endif %}">
                         <a href="/maps-google.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a></li>-->
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Account</label>
-                    </li>
-                    <!--<li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
+        <li class="nav-item pcoded-menu-caption">
+          <label>Account</label>
+        </li>
+        <!--<li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Authentication</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{% url 'auth_reset_pass' %}" class="">Reset Password</a></li>
@@ -185,17 +230,18 @@
                             <li class=""><a href="{% url 'register' %}" class="">Register</a></li>
                         </ul>
                     </li>-->
-                    <!--<li data-username="Sample Page" 
+        <!--<li data-username="Sample Page" 
                         class="nav-item {% if 'page-blank' in segment %} active {% endif %}">
                         <a href="/page-blank.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li>
                     <li data-username="Sample Page" class="nav-item"><a href="/page-404.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Error 404</span></a></li>
                     -->
-                    <li data-username="Disabled Menu" class="nav-item">
-                        <a href="{% url 'logout' %}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Logout</span>
-                        </a>
-                    </li>
-                    <!--<li class="nav-item pcoded-menu-caption">
+        <li data-username="Disabled Menu" class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <span class="pcoded-micon"><i class="feather icon-power"></i></span
+            ><span class="pcoded-mtext">Logout</span>
+          </a>
+        </li>
+        <!--<li class="nav-item pcoded-menu-caption">
                         <label>More Resources</label>
                     </li>                    
                     <li data-username="Support Page" class="nav-item ">
@@ -213,9 +259,9 @@
                             </span>
                             <span class="pcoded-mtext">PRO Version</span>
                         </a>
-                    </li>-->                     
-                </ul>
-            </div>
-        </div>
-    </nav>
-    {% endif %}
+                    </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endif %}
