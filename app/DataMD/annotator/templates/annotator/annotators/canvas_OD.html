@@ -64,7 +64,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                           <div class="page-header-title">
-                            <p class="proj-name">{{project.name}}</p>
+                            <p id="homey" class="proj-name">{{project.name}}</p>
 
                             <label  class="switch">
                               
@@ -87,6 +87,18 @@
                 <div class="page-wrapper">
                     <!-- [ Main Content ] start -->
                     <!-- [ ROW 1 ] start -->
+                    <div id="myModal" class="modal fade">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Please Increase Screen Width</h5>
+                          </div>
+                          <div class="modal-body">
+                            <p>Annotation Canvas Performs better on a Larger Screen.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                           <div id="content">
@@ -94,13 +106,13 @@
                               <button class="btnIcon" >
                                 <script>
                         
-                                document.write('<img src="/static/canvas_assets/icons/'+type+'.png"/>');     
+                                document.write('<img  src="/static/canvas_assets/icons/'+type+'.png"/>');     
                                 </script>
                                  </button>
                       
                               </button> 
                             </div>
-                            <div id="imageViewer">
+                            <div class="imgV" id="imageViewer">
                               <div class="arrow" id="arrow-prev">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"

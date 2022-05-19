@@ -61,16 +61,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (highlightBody) return highlightBody.clr;
   };
+
   var config = {
     image: document.getElementById("activeImg"),
     locale: "auto",
     widgets: [ColorSelectorWidget, "COMMENT"],
     formatter: ColorFormatter,
   };
+
   var anno = Annotorious.init(config);
-  initAnnon(anno);
-  selectAnno(type);
+  anno.on("createSelection", function () {
+    var annotations = anno.getAnnotations();
+    if (annotations.length === 0) {
+      initAnnon(anno);
+      selectAnno(type);
+    } else {
+      if (annotations.length !== 0) {
+        var ele = document.querySelector("a9s-annotationlayer");
+        anno.on("startSelection", function () {
+          ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+        });
+      }
+    }
+  });
+
+  /////
+  jQuery("div").on("click", ".a9s-annotationlayer", function () {
+    console.log("click");
+  });
+  ////
+
   var currentImage = 0;
+  //////
 
   ////////////
   function goNext() {
@@ -88,9 +110,23 @@ document.addEventListener("DOMContentLoaded", function () {
       widgets: [ColorSelectorWidget, "COMMENT"],
       formatter: ColorFormatter,
     };
+
     anno = Annotorious.init(config);
 
-    initAnnon(anno);
+    anno.on("createSelection", function () {
+      var annotations = anno.getAnnotations();
+      if (annotations.length === 0) {
+        initAnnon(anno);
+        selectAnno(type);
+      } else {
+        if (annotations.length !== 0) {
+          var ele = document.querySelector("a9s-annotationlayer");
+          anno.on("startSelection", function () {
+            ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+          });
+        }
+      }
+    });
   }
 
   document.getElementById("dark-icon").onclick = function () {
@@ -113,8 +149,20 @@ document.addEventListener("DOMContentLoaded", function () {
       formatter: ColorFormatter,
     };
     anno = Annotorious.init(config);
-
-    initAnnon(anno);
+    anno.on("createSelection", function () {
+      var annotations = anno.getAnnotations();
+      if (annotations.length === 0) {
+        initAnnon(anno);
+        selectAnno(type);
+      } else {
+        if (annotations.length !== 0) {
+          var ele = document.querySelector("a9s-annotationlayer");
+          anno.on("startSelection", function () {
+            ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+          });
+        }
+      }
+    });
   }
   ////////////
   document.onkeydown = function (e) {
@@ -175,7 +223,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ////////////////
 
-    anno.once("createSelection", async function (selection) {
+    //////
+
+    anno.once("createAnnotation", async function (selection) {
       selection.body = [
         {
           type: "TextualBody",
@@ -200,4 +250,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     ////////////////////
   }
+
+  //////
+
+  ////////
+
+  jQuery(document).ready(function () {
+    function checkWidth() {
+      var windowSize = jQuery(window).width();
+      if (windowSize < 1000) {
+        jQuery("#myModal").modal("show");
+        console.log("screen width is less than 100px");
+      } else {
+        jQuery("#myModal").modal("hide");
+      }
+    }
+    // Execute on load
+    checkWidth();
+    // Bind event listener
+    jQuery(window).resize(checkWidth);
+  });
+
+  ////////////////
 });

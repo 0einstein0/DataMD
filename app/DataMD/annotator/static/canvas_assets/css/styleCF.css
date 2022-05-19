@@ -16,6 +16,14 @@
   margin-top: -40px;
 }
 
+#myModal {
+  margin-top: 20%;
+  text-align: center;
+}
+.pcoded-content {
+  padding-bottom: 0px;
+}
+
 .page-header-title {
   display: flex;
   justify-content: space-between;
@@ -58,7 +66,7 @@ button {
   border-radius: 10px;
   padding: 10px;
   margin: 5px;
-  opacity: 0.5;
+  opacity: 0.8;
   color: white;
   font-weight: 600;
   border: none;
@@ -68,10 +76,11 @@ button {
 #labelBtns button:hover,
 #labelBtns button:active,
 .active {
-  opacity: 0.9;
+  opacity: 1;
   font-size: 15px;
   margin-bottom: 5px;
-  border: 3px solid rgb(49, 49, 49);
+  border: #48474780 solid 5px;
+  box-shadow: 5px 5px 3px #888888;
 }
 
 /* The switch - the box around the slider */
@@ -147,11 +156,51 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 .modelDiv i {
+  font-size: 22px;
+}
+
+#ai-icon {
   margin-right: 10px;
 }
+
 .modelDiv {
   font-size: large;
 }
 .modelPred {
-  margin-top: 5px;
+  margin-top: 10px;
+}
+
+.modelBtns {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+}
+.modelBtns i {
+  opacity: 1;
+  font-size: 22px;
+  color: white;
+}
+.modelBtns button {
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+.modelBtns .correct {
+  background-color: rgb(29, 161, 78);
+}
+.modelBtns .incorrect {
+  background-color: rgb(174, 56, 56);
+}
+
+.modelBtns button:focus,
+.modelBtns button:hover,
+.modelBtns button:active {
+  opacity: 1;
+  font-size: 15px;
+  margin-bottom: 5px;
+  border: #48474780 solid 5px;
+  box-shadow: 5px 5px 3px #888888;
 }

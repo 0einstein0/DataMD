@@ -1,5 +1,5 @@
 {% load check_group %} {% if request.user|has_group:"manager_user_group" %}
-<nav class="pcoded-navbar">
+<nav class="pcoded-navbar navbar-collapsed">
   <div class="navbar-wrapper">
     <div class="navbar-brand header-logo">
       <a href="{% url 'dashboard' %}" class="b-brand">
@@ -132,7 +132,7 @@
   </div>
 </nav>
 {% elif request.user|has_group:"annotator_user_group"%}
-<nav class="pcoded-navbar">
+<nav class="pcoded-navbar navbar-collapsed">
   <div class="navbar-wrapper">
     <div class="navbar-brand header-logo">
       <a href="{% url 'dashboard' %}" class="b-brand">

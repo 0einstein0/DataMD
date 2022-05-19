@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
         url: "/ajax/update/labels/classification",
         data: {
           image_id: image_ids[currentImage],
-          annotation_class_id: label_ids[currentLabel]
+          annotation_class_id: label_ids[currentLabel],
         },
-      })
+      });
     }
 
     // see if any labels to fetch from db for next image
-    nextImage = currentImage + 1
+    nextImage = currentImage + 1;
     if (nextImage >= images.length) {
       nextImage = 0;
     }
@@ -24,19 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
     jQuery.ajax({
       type: "GET",
       url: "/ajax/fetch/labels/classification",
-      dataType: 'json',
+      dataType: "json",
       data: {
         image_id: image_ids[nextImage],
       },
-      success: function(fetched) {
-        console.log(fetched)
+      success: function (fetched) {
+        console.log(fetched);
         // if labels to fetch
-        if (fetched.label != 'None') {
+        if (fetched.label != "None") {
           // make the button pressed
-          console.log('button press')
-          
-        }
-        else {
+          console.log("button press");
+        } else {
           // make the buttons all unpressed
           document.querySelectorAll(".labelBtn").forEach((button) => {
             button.classList.remove("active");
@@ -49,17 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
           currentImage = 0;
         }
         currentLabel = -1;
-        console.log('after ' + currentLabel)
+        console.log("after " + currentLabel);
         document.getElementById("activeImg").src = images[currentImage];
-      }
-    })
-
-
+      },
+    });
   }
 
   function goPrev() {
-    
-
     currentImage -= 1;
     if (currentImage < 0) {
       currentImage = images.length - 1;
@@ -158,10 +152,11 @@ document.addEventListener("DOMContentLoaded", function () {
   jQuery(document).ready(function () {
     function checkWidth() {
       var windowSize = jQuery(window).width();
-
       if (windowSize < 1000) {
-        alert("Please increase the browser width for Canvas to load properly");
+        jQuery("#myModal").modal("show");
         console.log("screen width is less than 100px");
+      } else {
+        jQuery("#myModal").modal("hide");
       }
     }
     // Execute on load
