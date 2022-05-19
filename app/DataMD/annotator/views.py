@@ -20,6 +20,7 @@ import pydicom
 from django.core.files.storage import FileSystemStorage
 import cv2
 import keras
+import pandas as pd
 
 
 # cloud
@@ -574,7 +575,12 @@ def updateLabelsClassification(request):
         if image.annotation_class != annotation_class:
             # edit the file 
             print('EDIT')
-
+            with project.annotation.open('r+') as f:
+                df = pd.read_csv(f, index_col=1)
+                print(df)
+                df.at[image.image.name, ] = annotation_class.name
+                print(df)
+                #df.to_csv(f)
 
             # save label to db
             image.annotation_class = annotation_class
@@ -594,8 +600,6 @@ def updateLabelsClassification(request):
 def fetchLabelsClassification(request):
     image_id = request.GET['image_id']
     image = Image.objects.get(id = image_id)
-
-    print("???? ", image.annotation_class)
 
     if image.annotation_class is not None:
         return JsonResponse({

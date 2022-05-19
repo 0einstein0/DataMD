@@ -2,26 +2,35 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentImage = 0;
   var currentLabel = -1;
 
-  //
+  ///////////
+  function updateDatabaseLabel() {
+    jQuery.ajax({
+      type: "GET",
+      url: "/ajax/update/labels/classification",
+      data: {
+        image_id: image_ids[currentImage],
+        annotation_class_id: label_ids[currentLabel]
+      },
+    })
+  }
 
+  function pressButtonOfLabel(label_name) {
+    btn = document.getElementById("labelButton" + possible_labels.indexOf(label_name));
+    selectLabel(btn)
+  }
 
-
-
-
-  //
+  function unpressAllButtons() {
+    document.querySelectorAll(".labelBtn").forEach((button) => {
+      button.classList.remove("active");
+    });
+  }
+  ////////////////
   
   function goNext() {
     console.log('did it press? ' + currentLabel);
     // if the user pressed something commit that to db, else do nothing
     if (currentLabel > -1) {
-      jQuery.ajax({
-        type: "GET",
-        url: "/ajax/update/labels/classification",
-        data: {
-          image_id: image_ids[currentImage],
-          annotation_class_id: label_ids[currentLabel]
-        },
-      })
+      updateDatabaseLabel();
     };
 
     // see if any labels to fetch from db for next image
@@ -41,15 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(fetched)
         // if labels to fetch
         if (fetched.label != 'None') {
-          // make the button pressed
-          btn = document.getElementById("labelButton" + possible_labels.indexOf(fetched.label));
-          selectLabel(btn)
+          pressButtonOfLabel(fetched.label);
         }
         else {
-          // make the buttons all unpressed
-          document.querySelectorAll(".labelBtn").forEach((button) => {
-            button.classList.remove("active");
-          });
+          unpressAllButtons();
         }
 
         // go to next image
@@ -58,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
           currentImage = 0;
         }
         currentLabel = -1;
-        console.log('after ' + currentLabel)
         document.getElementById("activeImg").src = images[currentImage];
       }
     });
@@ -67,15 +70,44 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function goPrev() {
+    // if the user pressed something commit that to db, else do nothing
+    if (currentLabel > -1) {
+      updateDatabaseLabel();
+    };
 
-    currentImage -= 1;
-    if (currentImage < 0) {
-      currentImage = images.length - 1;
+    // see if any labels to fetch from db for previous image
+    var prevImage = currentImage - 1;
+    if (prevImage < 0) {
+      prevImage = images.length - 1;
     }
-    document.getElementById("activeImg").src = images[currentImage];
-    document.querySelectorAll(".labelBtn").forEach((button) => {
-      button.classList.remove("active");
+    // TODO: loading animation ?
+    jQuery.ajax({
+      type: "GET",
+      url: "/ajax/fetch/labels/classification",
+      dataType: 'json',
+      data: {
+        image_id: image_ids[prevImage],
+      },
+      success: function(fetched) {
+        console.log(fetched)
+        // if labels to fetch
+        if (fetched.label != 'None') {
+          pressButtonOfLabel(fetched.label);
+        }
+        else {
+          unpressAllButtons();
+        }
+
+        // go to next image
+        currentImage -= 1;
+        if (currentImage < 0) {
+          currentImage = images.length - 1;
+        }
+        currentLabel = -1;
+        document.getElementById("activeImg").src = images[currentImage];
+      }
     });
+
   }
 
   ////////////
