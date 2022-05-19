@@ -137,11 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
 
-  function setCurrentLabel(i) {
-    currentLabel = i;
-    console.log("currentLabel = " + currentLabel);
-  }
-
   var labelsNo = possible_labels.length;
   var labelBtn;
   var labelText;
