@@ -77,6 +77,18 @@
       <div class="page-wrapper">
         <!-- [ Main Content ] start -->
         <!-- [ ROW 1 ] start -->
+        <div id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Please Increase Screen Width</h5>
+              </div>
+              <div class="modal-body">
+                <p>Annotation Canvas Performs better on a Larger Screen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-10">
             <div id="content">
@@ -168,9 +180,17 @@
 
           <div class="col-sm-2">
             <div class="modelDiv">
-              <i class="feather icon-cpu"></i>AI Prediction
+              <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
               <div class="modelPred">
-                <p>Prediction</p>
+                <p>Prediction: 98.05%</p>
+                <div class="modelBtns">
+                  <button class="correct">
+                    <i class="feather icon-check"></i>
+                  </button>
+                  <button class="incorrect">
+                    <i class="feather icon-x"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

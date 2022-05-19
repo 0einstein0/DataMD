@@ -22,6 +22,11 @@
   background-color: #999999;
 }
 
+#myModal {
+  margin-top: 20%;
+  text-align: center;
+}
+
 .page-header-title {
   display: flex;
   justify-content: space-between;
@@ -86,7 +91,8 @@ i {
 .colorselector-widget button.selected,
 .colorselector-widget button:hover {
   opacity: 0.8;
-  border: 3px solid rgb(46, 46, 46);
+  border: #48474780 solid 5px;
+  box-shadow: 5px 5px 3px #888888;
 }
 
 svg.a9s-annotationlayer .a9s-annotation.RED .a9s-outer {

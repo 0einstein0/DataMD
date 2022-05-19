@@ -30,11 +30,26 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log('did it press? ' + currentLabel);
     // if the user pressed something commit that to db, else do nothing
     if (currentLabel > -1) {
+<<<<<<< HEAD
       updateDatabaseLabel();
     };
 
     // see if any labels to fetch from db for next image
     var nextImage = currentImage + 1;
+=======
+      jQuery.ajax({
+        type: "GET",
+        url: "/ajax/update/labels/classification",
+        data: {
+          image_id: image_ids[currentImage],
+          annotation_class_id: label_ids[currentLabel],
+        },
+      });
+    }
+
+    // see if any labels to fetch from db for next image
+    nextImage = currentImage + 1;
+>>>>>>> ab0ff5e56f00b1285da0b8e9cdd8a87e586ae71e
     if (nextImage >= images.length) {
       nextImage = 0;
     }
@@ -49,11 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function (fetched) {
         console.log(fetched);
         // if labels to fetch
+<<<<<<< HEAD
         if (fetched.label != 'None') {
           pressButtonOfLabel(fetched.label);
         }
         else {
           unpressAllButtons();
+=======
+        if (fetched.label != "None") {
+          // make the button pressed
+          console.log("button press");
+        } else {
+          // make the buttons all unpressed
+          document.querySelectorAll(".labelBtn").forEach((button) => {
+            button.classList.remove("active");
+          });
+>>>>>>> ab0ff5e56f00b1285da0b8e9cdd8a87e586ae71e
         }
 
         // go to next image
@@ -62,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
           currentImage = 0;
         }
         currentLabel = -1;
+<<<<<<< HEAD
         document.getElementById("activeImg").src = images[currentImage];
       }
     });
@@ -79,6 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var prevImage = currentImage - 1;
     if (prevImage < 0) {
       prevImage = images.length - 1;
+=======
+        console.log("after " + currentLabel);
+        document.getElementById("activeImg").src = images[currentImage];
+      },
+    });
+  }
+
+  function goPrev() {
+    currentImage -= 1;
+    if (currentImage < 0) {
+      currentImage = images.length - 1;
+>>>>>>> ab0ff5e56f00b1285da0b8e9cdd8a87e586ae71e
     }
     // TODO: loading animation ?
     jQuery.ajax({
