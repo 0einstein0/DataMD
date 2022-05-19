@@ -41,15 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     var container = document.createElement("div");
+    var colorsArray = [
+      "tomato",
+      "darkcyan",
+      "indianred",
+      "olivedrab",
+      "dodgerblue",
+    ];
     container.className = "colorselector-widget";
 
-    var button1 = createButton("RED", "Label A");
-    var button2 = createButton("BLUE", "Label B");
-    var button3 = createButton("GREEN", "Label C");
-
-    container.appendChild(button1);
-    container.appendChild(button2);
-    container.appendChild(button3);
+    for (var i = 0; i < possible_labels.length; i++) {
+      var button = createButton(colorsArray[i], possible_labels[i]);
+      container.appendChild(button);
+    }
 
     return container;
   };

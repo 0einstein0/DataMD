@@ -9,14 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "/ajax/update/labels/classification",
       data: {
         image_id: image_ids[currentImage],
-        annotation_class_id: label_ids[currentLabel]
+        annotation_class_id: label_ids[currentLabel],
       },
-    })
+    });
   }
 
   function pressButtonOfLabel(label_name) {
-    btn = document.getElementById("labelButton" + possible_labels.indexOf(label_name));
-    selectLabel(btn)
+    btn = document.getElementById(
+      "labelButton" + possible_labels.indexOf(label_name)
+    );
+    selectLabel(btn);
   }
 
   function unpressAllButtons() {
@@ -25,13 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   ////////////////
-  
+
   function goNext() {
-    console.log('did it press? ' + currentLabel);
+    console.log("did it press? " + currentLabel);
     // if the user pressed something commit that to db, else do nothing
     if (currentLabel > -1) {
       updateDatabaseLabel();
-    };
+    }
 
     // see if any labels to fetch from db for next image
     var nextImage = currentImage + 1;
@@ -49,10 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function (fetched) {
         console.log(fetched);
         // if labels to fetch
-        if (fetched.label != 'None') {
+        if (fetched.label != "None") {
           pressButtonOfLabel(fetched.label);
-        }
-        else {
+        } else {
           unpressAllButtons();
         }
 
@@ -63,17 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];
-      }
+      },
     });
-
-
   }
 
   function goPrev() {
     // if the user pressed something commit that to db, else do nothing
     if (currentLabel > -1) {
       updateDatabaseLabel();
-    };
+    }
 
     // see if any labels to fetch from db for previous image
     var prevImage = currentImage - 1;
@@ -84,17 +83,16 @@ document.addEventListener("DOMContentLoaded", function () {
     jQuery.ajax({
       type: "GET",
       url: "/ajax/fetch/labels/classification",
-      dataType: 'json',
+      dataType: "json",
       data: {
         image_id: image_ids[prevImage],
       },
-      success: function(fetched) {
-        console.log(fetched)
+      success: function (fetched) {
+        console.log(fetched);
         // if labels to fetch
-        if (fetched.label != 'None') {
+        if (fetched.label != "None") {
           pressButtonOfLabel(fetched.label);
-        }
-        else {
+        } else {
           unpressAllButtons();
         }
 
@@ -105,9 +103,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];
-      }
+      },
     });
-
   }
 
   ////////////
@@ -140,11 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
 
-  function selectColor(colorNum, colors) {
-    if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
-    return "hsl(" + ((colorNum * (300 / colors)) % 300) + ",63%,50%)";
-  }
-
   function setCurrentLabel(i) {
     currentLabel = i;
     console.log("currentLabel = " + currentLabel);
@@ -155,6 +147,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var labelText;
   var btnDiv = document.getElementById("labelBtns");
   var keyArray = ["a", "s", "d", "j", "g"];
+  var colorsArray = [
+    "tomato",
+    "darkcyan",
+    "indianred",
+    "olivedrab",
+    "dodgerblue",
+  ];
   var labelKey;
 
   for (let i = 0; i < labelsNo; ++i) {
@@ -166,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("currentLabel = " + currentLabel); // DEBUG
       selectLabel(this);
     };
-    labelBtn.style.backgroundColor = selectColor(i, labelsNo);
+    labelBtn.style.backgroundColor = colorsArray[i];
     labelText = document.createTextNode(possible_labels[i]);
     labelKey = document.createTextNode("Press: " + keyArray[i].toUpperCase());
     linebreak = document.createElement("br");
@@ -187,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   ////////////////////
   function selectLabel(btn) {
-    console.log('butoon clikced!!!');
+    console.log("butoon clikced!!!");
     document.querySelectorAll(".labelBtn").forEach((button) => {
       button.classList.remove("active");
     });
@@ -212,7 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
     jQuery(window).resize(checkWidth);
   });
 
-
   jQuery(document).ready(function () {
     function checkWidth() {
       var windowSize = jQuery(window).width();
@@ -229,4 +227,3 @@ document.addEventListener("DOMContentLoaded", function () {
     jQuery(window).resize(checkWidth);
   });
 });
-

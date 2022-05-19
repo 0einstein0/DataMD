@@ -95,27 +95,7 @@ i {
   box-shadow: 5px 5px 3px #888888;
 }
 
-svg.a9s-annotationlayer .a9s-annotation.RED .a9s-outer {
-  stroke: crimson;
-  stroke-width: 3;
-  fill: rgba(220, 20, 60, 0.2);
-}
-
-svg.a9s-annotationlayer .a9s-annotation.GREEN .a9s-outer {
-  stroke: forestgreen;
-  stroke-width: 3;
-  fill: rgba(34, 139, 34, 0.2);
-}
-
-svg.a9s-annotationlayer .a9s-annotation.BLUE .a9s-outer {
-  stroke: darkcyan;
-  stroke-width: 3;
-  fill: rgba(0, 139, 139, 0.2);
-}
-
-svg.a9s-annotationlayer .a9s-annotation.RED .a9s-inner,
-svg.a9s-annotationlayer .a9s-annotation.GREEN .a9s-inner,
-svg.a9s-annotationlayer .a9s-annotation.BLUE .a9s-inner {
+svg.a9s-annotationlayer .a9s-annotation button .a9s-inner {
   fill: transparent;
   stroke: none;
 }
