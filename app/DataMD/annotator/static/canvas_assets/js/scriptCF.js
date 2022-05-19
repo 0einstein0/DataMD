@@ -210,4 +210,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Bind event listener
     jQuery(window).resize(checkWidth);
   });
+
+
+  jQuery(document).ready(function () {
+    function checkWidth() {
+      var windowSize = jQuery(window).width();
+      if (windowSize < 1000) {
+        jQuery("#myModal").modal("show");
+        console.log("screen width is less than 100px");
+      } else {
+        jQuery("#myModal").modal("hide");
+      }
+    }
+    // Execute on load
+    checkWidth();
+    // Bind event listener
+    jQuery(window).resize(checkWidth);
+  });
 });
+
