@@ -1,6 +1,7 @@
 from __future__ import annotations
 from datetime import timedelta
 from email.mime import image
+import os
 from pickletools import read_uint1
 import re
 import PIL
@@ -347,6 +348,8 @@ def manage_project(request, project_id):
         if 'editInfoButton' in request.POST:
             project.name = request.POST.get('name')
             project.description = request.POST.get('description')
+            project.machine_learning_model = request.FILES.get('ml_model')
+            print(request.FILES.get('ml_model'))
             project.save()
             success_messages.append('Changes Saved')
         elif 'btn_remove' in request.POST:
@@ -362,16 +365,16 @@ def manage_project(request, project_id):
             for image in images:
                 # TODO: assign each image to an annotator
                 # -> get a list of all annotators
-                annotators = project.annotators.all()
+                #annotators = project.annotators.all()
                 
-                print("annotators  :: ", annotators) # -- DEBUG
+                #print("annotators  :: ", annotators) # -- DEBUG
                 
                 # -> see how much images unannotated does each annotator have and return the annotator with the least
-                assigned_annotator = annotators.first()
-                print("assigned annotator :: ", assigned_annotator)
+                #assigned_annotator = annotators.first()
+                #print("assigned annotator :: ", assigned_annotator)
                 
-                for annotator in annotators:
-                    count_of_unnanotated_images_of_user = Image.objects.filter(project = project.id, annotation_class = None, assigned_annotator = annotators).count()
+                #for annotator in annotators:
+                #    count_of_unnanotated_images_of_user = Image.objects.filter(project = project.id, annotation_class = None, assigned_annotator = annotators).count()
                 
 
                 print("image ::", image) # -- DEBUG
@@ -382,14 +385,16 @@ def manage_project(request, project_id):
                         image = image,
                         project = project
                     )
-                    #image_instance.save()
+                    image_instance.save()
+                    success_messages.append('Images Uploaded')
                     print('image instance SAVED :: ', image_instance)
                 else: 
                     print('ERROR: wRONG FILE TYPE')
                     print('you uploaded ', image.content_type)
                     ds = pydicom.read_file(image) # read dicom image
                     img = ds.pixel_array
-                    png = PIL.Image.fromarray(img, 'RGB')
+                    print("img ", img)
+                    png = PIL.Image.fromarray(img)
                     #png.save('dicom.png')
                     png.show()
                     print("pixel array :: ", img)
@@ -439,6 +444,8 @@ def manage_project(request, project_id):
     editInfoForm = ProjectForm(instance = project)
     editInfoForm.fields['annotation_type'].disabled = True
     annotation_classes = AnnotationClass.objects.filter(project = project)
+    machine_learning_model_filename = os.path.basename(project.machine_learning_model.name) if project.machine_learning_model.name is not None else 'None'
+    print("machine_learning_model_filename :: ", machine_learning_model_filename)
     print(annotation_classes) # -- DEBUG
     # ---
 
@@ -461,6 +468,7 @@ def manage_project(request, project_id):
     context = { 'project': project, 
         'editInfoForm': editInfoForm, 
         'annotation_classes': annotation_classes,
+        'machine_learning_model_filename': machine_learning_model_filename,
         'pending_invites': pending_invites,
         'addAnnotatorsForm': addAnnotatorsForm,
         'error_messages': error_messages,

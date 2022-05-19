@@ -1,7 +1,7 @@
 import os
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import FileSystemStorage, DefaultStorage
 from pathlib import Path
 
 # Create your models here.
@@ -38,14 +38,22 @@ class AnnotationType(models.Model):
 class Project(models.Model):
     def annotation_path(instance, filename):
         return os.path.join(
-        'annotations',
-        str(instance.manager.id),
-        filename
-    )
+            'annotations',
+            str(instance.manager.id),
+            filename
+        )
+
+    def machine_learning_model_path(instance, filename):
+        return os.path.join(
+            'models',
+            str(instance.manager.id),
+            filename
+        )
     
     name = models.CharField(max_length = 200)
     description = models.TextField(blank=True)
     annotation = models.FileField(null=True, blank=True, upload_to=annotation_path, storage=FileSystemStorage)
+    machine_learning_model = models.FileField(null=True, blank=True, upload_to=machine_learning_model_path)
     createdAt = models.DateTimeField(auto_now_add = True)
     config = models.TextField(blank=True) # might switch to JSONField() if deemeded preferable
 
@@ -78,7 +86,6 @@ class Image(models.Model):
 
     name = models.CharField(max_length = 200)
     image = models.ImageField(null=True, blank=True, upload_to=image_path)
-    # isAnnotated = models.BooleanField(default=False) # probably not needed as one can tell annotation through whether annotation_class is blank or not
     createdAt = models.DateTimeField(auto_now_add = True) 
 
     # Relationship Field

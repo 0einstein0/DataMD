@@ -21,9 +21,12 @@
   </div>
   {% endfor %}
 
+  Machine Learning Model:
+  <input name="ml_model" type="file" class="form-control">
+  <br>
+  <h5>Current Uploaded Model: {{ machine_learning_model_filename }}</h5>
+  <br>
   <!-- END FORM RENDER -->
-
-
 
   <button type="submit" name="editInfoButton" class="btn btn-primary">
     Save Changes
