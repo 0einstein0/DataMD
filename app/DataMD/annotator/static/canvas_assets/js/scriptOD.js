@@ -142,6 +142,8 @@ document.addEventListener("DOMContentLoaded", function () {
       goNext();
     } else if (e.key === "ArrowLeft") {
       goPrev();
+    } else if (e.key === "Enter") {
+      anno.saveSelected();
     } else {
       var btn = document.getElementById("label" + e.key);
       btn.click();
