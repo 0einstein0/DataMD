@@ -575,12 +575,15 @@ def updateLabelsClassification(request):
         if image.annotation_class != annotation_class:
             # edit the file 
             print('EDIT')
-            with project.annotation.open('r+') as f:
-                df = pd.read_csv(f, index_col=1)
+            with project.annotation.open('r') as f:
+                df = pd.read_csv(f, index_col='name', header = 0)
                 print(df)
-                df.at[image.image.name, ] = annotation_class.name
+                #df['label'] = df['label'].replace({image.annotation_class.name : annotation_class.name })
+                df.loc[image.image.name, 'label'] = annotation_class.name
+                
+            with project.annotation.open('w') as f:
                 print(df)
-                #df.to_csv(f)
+                df.to_csv(f, line_terminator='\n')
 
             # save label to db
             image.annotation_class = annotation_class
