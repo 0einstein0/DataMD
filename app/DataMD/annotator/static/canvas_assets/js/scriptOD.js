@@ -215,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
       anno.saveSelected();
     });
 
+    anno.on("updateAnnotation", function (annotation, previous) {});
+
     anno.on("deleteAnnotation", function (annotation) {
       anno.clearAnnotations();
     });
