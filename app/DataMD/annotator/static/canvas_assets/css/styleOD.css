@@ -86,6 +86,7 @@ i {
   margin: 4px;
   color: white;
   font-weight: 500;
+  font-size: medium;
 }
 
 .colorselector-widget button.selected,

@@ -28,19 +28,24 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // 4. This part renders the UI elements
-    var createButton = function (clr, value) {
+    var createButton = function (clr, value, key) {
       var button = document.createElement("button");
-
+      var labelKey = document.createElement("p");
       if (clr == currentColorValue) button.className = "selected";
 
       button.dataset.tag = clr;
       button.style.backgroundColor = clr;
-      button.innerText = value;
+
+      labelKey.innerText = "Press: " + key.toUpperCase();
+
+      button.innerText = value + "\n" + labelKey.textContent;
+      button.setAttribute("id", "label" + key);
       button.addEventListener("click", addTag);
       return button;
     };
 
     var container = document.createElement("div");
+    var keyArray = ["a", "s", "d", "j", "g"];
     var colorsArray = [
       "tomato",
       "darkcyan",
@@ -51,7 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
     container.className = "colorselector-widget";
 
     for (var i = 0; i < possible_labels.length; i++) {
-      var button = createButton(colorsArray[i], possible_labels[i]);
+      var button = createButton(
+        colorsArray[i],
+        possible_labels[i],
+        keyArray[i]
+      );
       container.appendChild(button);
     }
 
@@ -69,31 +78,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var config = {
     image: document.getElementById("activeImg"),
     locale: "auto",
-    widgets: [ColorSelectorWidget, "COMMENT"],
+    widgets: [ColorSelectorWidget],
     formatter: ColorFormatter,
   };
 
   var anno = Annotorious.init(config);
-  anno.on("createSelection", function () {
-    var annotations = anno.getAnnotations();
-    if (annotations.length === 0) {
-      initAnnon(anno);
-      selectAnno(type);
-    } else {
-      if (annotations.length !== 0) {
-        var ele = document.querySelector("a9s-annotationlayer");
-        anno.on("startSelection", function () {
-          ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
-        });
-      }
-    }
-  });
-
-  /////
-  jQuery("div").on("click", ".a9s-annotationlayer", function () {
-    console.log("click");
-  });
-  ////
+  selectAnno(type);
+  initAnnon(anno);
 
   var currentImage = 0;
   //////
@@ -111,26 +102,14 @@ document.addEventListener("DOMContentLoaded", function () {
     config = {
       image: document.getElementById("activeImg"),
       locale: "auto",
-      widgets: [ColorSelectorWidget, "COMMENT"],
+      widgets: [ColorSelectorWidget],
       formatter: ColorFormatter,
     };
 
     anno = Annotorious.init(config);
 
-    anno.on("createSelection", function () {
-      var annotations = anno.getAnnotations();
-      if (annotations.length === 0) {
-        initAnnon(anno);
-        selectAnno(type);
-      } else {
-        if (annotations.length !== 0) {
-          var ele = document.querySelector("a9s-annotationlayer");
-          anno.on("startSelection", function () {
-            ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
-          });
-        }
-      }
-    });
+    initAnnon(anno);
+    selectAnno(type);
   }
 
   document.getElementById("dark-icon").onclick = function () {
@@ -149,24 +128,13 @@ document.addEventListener("DOMContentLoaded", function () {
     config = {
       image: document.getElementById("activeImg"),
       locale: "auto",
-      widgets: [ColorSelectorWidget, "COMMENT"],
+      widgets: [ColorSelectorWidget],
       formatter: ColorFormatter,
     };
     anno = Annotorious.init(config);
-    anno.on("createSelection", function () {
-      var annotations = anno.getAnnotations();
-      if (annotations.length === 0) {
-        initAnnon(anno);
-        selectAnno(type);
-      } else {
-        if (annotations.length !== 0) {
-          var ele = document.querySelector("a9s-annotationlayer");
-          anno.on("startSelection", function () {
-            ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
-          });
-        }
-      }
-    });
+
+    initAnnon(anno);
+    selectAnno(type);
   }
   ////////////
   document.onkeydown = function (e) {
@@ -174,6 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
       goNext();
     } else if (e.key === "ArrowLeft") {
       goPrev();
+    } else {
+      var btn = document.getElementById("label" + e.key);
+      btn.click();
     }
   };
   ////////////
@@ -228,29 +199,22 @@ document.addEventListener("DOMContentLoaded", function () {
     ////////////////
 
     //////
+    anno.on("startSelection", function (point) {
+      const annotations = anno.getAnnotations();
+      if (annotations.length === 1) {
+        var ele = document.querySelector("a9s-annotationlayer");
+        ele.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+      }
+    });
 
     anno.once("createAnnotation", async function (selection) {
-      selection.body = [
-        {
-          type: "TextualBody",
-          purpose: "tagging",
-          value: "label",
-          created: "2020-05-18T09:39:47.582Z",
-          creator: {
-            id: "http://recogito.example.com/rainer",
-            name: "rainer",
-          },
-        },
-      ];
-
       const annotations = anno.getAnnotations();
-      //  console.log(selection.target.selector.value);
-      //  console.log(selection.target.source);
-
-      // console.log(annotations);
-
       await anno.updateSelected(selection);
       anno.saveSelected();
+    });
+
+    anno.on("deleteAnnotation", function (annotation) {
+      anno.clearAnnotations();
     });
     ////////////////////
   }
