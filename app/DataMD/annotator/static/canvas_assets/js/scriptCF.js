@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // see if any labels to fetch from db for next image
     var nextImage = currentImage + 1;
     if (nextImage >= images.length) {
-      nextImage = 0;
+      nextImage -= 1;
     }
     // TODO: loading animation ?
     jQuery.ajax({
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // see if any labels to fetch from db for previous image
     var prevImage = currentImage - 1;
     if (prevImage < 0) {
-      prevImage = images.length - 1;
+      prevImage = 0;
     }
     // TODO: loading animation ?
     jQuery.ajax({
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // go to prev image
         currentImage -= 1;
         if (currentImage < 0) {
-          currentImage += 1;
+          currentImage = 0;
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];

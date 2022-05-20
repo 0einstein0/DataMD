@@ -622,4 +622,5 @@ def fetchLabelsClassification(request):
         })
 
 def updateLabelsObjectDetection(request):
+    
     pass
