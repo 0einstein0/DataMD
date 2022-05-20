@@ -101,13 +101,11 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "/ajax/update/labels/object_detection",
       data: {
         image_id: image_ids[currentImage],
-        annotation_class_id: label_ids[currentLabel],
+        annotation_class_id: currentAnnotation.label_db_id,
       },
     });
   }
   
-
-
   ///////
 
 
@@ -226,6 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
     result.y = coords[1];
     result.w = coords[2];
     result.h = coords[3];
+
+    // label db id
+    result.label_db_id = label_ids[possible_labels.indexOf(result.label)];
+    console.log("result.label_db_id ", result.label_db_id);
     
     return result;
   }
