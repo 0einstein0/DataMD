@@ -18,5 +18,6 @@ urlpatterns = [
     # DB APIs FOR AJAX 
     path('ajax/update/labels/classification', views.updateLabelsClassification, name = "update_labels_classification"),
     path('ajax/fetch/labels/classification', views.fetchLabelsClassification, name="fetch_labels_classification"),
-    path('ajax/update/labels/object_detection', views.updateLabelsObjectDetection, name="update_labels_object_detection")
+    path('ajax/update/labels/object_detection', views.updateLabelsObjectDetection, name="update_labels_object_detection"),
+    path('ajax/fetch/labels/object_detection', views.fetchLabelsObjectDetection, name="fetch_labels_object_detection")
 ]

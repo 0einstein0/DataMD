@@ -1,0 +1,24 @@
+[
+  {
+    "type": "Annotation",
+    "body": [
+      {
+        "type": "TextualBody",
+        "purpose": "highlighting",
+        "value": "tomato",
+        "creator": { "id": "dr.daring", "name": "dr.daring" },
+        "created": "2022-05-20T19:16:21.762Z"
+      }
+    ],
+    "target": {
+      "source": "https://storage.googleapis.com/med-images/images/6/lppsju0a18n41.jpg?Expires=1653333373&GoogleAccessId=service-account-1%40data-md.iam.gserviceaccount.com&Signature=VYAg2mpd82Eux4sYkgfZtK6fnC3o4fzANKZ960b1y89HzdwrPPa%2B3Ge0A85p6e1xzIuTPq67mPahVKorFMjPcXGk8sv4791pZ20k9eFqYDZYeG4EoYDtk3irUPtUF1pZ4lOZHlAmSDsqVD1Xhogl4VD4VyfoXs%2FrrKkt9C1O%2FNjWrVgweVxljU4DpC86cK6ht2LY7m3X99hHFd4PquI8giQOWl93ziM%2FszFuivI1sNyH3Xs253BYxkiUyJJvnjtWGvTpoudyEXZRCEpbqpsmodRbQZ70WGyzS%2B612e9Ky6mrkEoqBh9YBKKAZQ7S5BiSCANHG6oDCpH4dY0pICyrPw%3D%3D",
+      "selector": {
+        "type": "FragmentSelector",
+        "conformsTo": "http://www.w3.org/TR/media-frags/",
+        "value": "xywh=pixel:279.0685729980469,247.14141845703125,296.9402770996094,238.4520263671875"
+      }
+    },
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "id": "#6676469f-caff-4406-ac03-fc686bdb6aa7"
+  }
+]

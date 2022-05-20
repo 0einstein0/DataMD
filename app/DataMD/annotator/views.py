@@ -576,6 +576,7 @@ def updateLabelsClassification(request):
     image = Image.objects.get(id = image_id)
     project = image.project
     annotation_class = AnnotationClass.objects.get(id = annotation_class_id)
+    name = os.path.basename(image.image.name)
 
     # if previously annotated, make an edit
     if image.annotation_class is not None:
@@ -584,10 +585,10 @@ def updateLabelsClassification(request):
             # edit the file 
             print('EDIT')
             with project.annotation.open('r') as f:
-                df = pd.read_csv(f, index_col='name', header = 0)
+                df = pd.read_csv(f, index_col = 'name', header = 0)
                 print(df)
                 #df['label'] = df['label'].replace({image.annotation_class.name : annotation_class.name })
-                df.loc[os.path.basename(image.image.name), 'label'] = annotation_class.name
+                df.loc[name, 'label'] = annotation_class.name
                 
             with project.annotation.open('w') as f:
                 print(df)
@@ -596,11 +597,10 @@ def updateLabelsClassification(request):
             # save label to db
             image.annotation_class = annotation_class
             image.save()
-        pass
     else: # otherwise append a new line
         print('ADD')
         with project.annotation.open('a') as f:
-            f.write(str(os.path.basename(image.image.name)) + "," + str(annotation_class.name) + "\n")
+            f.write(str(name) + "," + str(annotation_class.name) + "\n")
             
         # save label to db
         image.annotation_class = annotation_class
@@ -622,5 +622,82 @@ def fetchLabelsClassification(request):
         })
 
 def updateLabelsObjectDetection(request):
-    
+    #name,label,x,y,w,h
+
+    image_id = request.GET['image_id']
+    annotation_class_id = request.GET['annotation_class_id']
+    coordinates = {
+        'h': request.GET['h'],
+        'w': request.GET['w'],
+        'x': request.GET['x'],
+        'y': request.GET['y']
+    }
+
+    print('coordinates ::', coordinates)
+
+    image = Image.objects.get(id = image_id)
+    project = image.project
+    annotation_class = AnnotationClass.objects.get(id = annotation_class_id)
+    name = os.path.basename(image.image.name)
+
+    # if previously annotated, make an edit
+    if image.annotation_class is not None:
+        # edit the file 
+        print('EDIT')
+
+        with project.annotation.open('r') as f:
+            df = pd.read_csv(f, index_col = 'name', header = 0)
+            print(df)
+            df.loc[name, 'label'] = annotation_class.name
+            df.loc[name, 'x'] = coordinates['x']
+            df.loc[name, 'y'] = coordinates['y']
+            df.loc[name, 'w'] = coordinates['w']
+            df.loc[name, 'h'] = coordinates['h']
+            
+        with project.annotation.open('w') as f:
+            print(df)
+            df.to_csv(f, line_terminator='\n')
+
+        # save label to db
+        image.annotation_class = annotation_class
+        image.save()
+
+    else: # otherwise append a new line
+        print('ADD')
+        with project.annotation.open('a') as f:
+            f.write(str(name) + "," 
+            + str(annotation_class.name) + "," 
+            + str(coordinates['x']) + "," 
+            + str(coordinates['y']) + "," 
+            + str(coordinates['w']) + "," 
+            + str(coordinates['h'])
+            + str("\n"))
+        
+        # save label to db
+        image.annotation_class = annotation_class
+        image.save()
+
+    return JsonResponse({'success': 1})
+
+def fetchLabelsObjectDetection(request):
+    image_id = request.GET['image_id']
+    image = Image.objects.get(id = image_id)
+    project = image.project
+    name = os.path.basename(image.image.name)
+
+    if image.annotation_class is not None:
+        with project.annotation.open('r') as f:
+            df = pd.read_csv(f, index_col = 'name', header = 0)
+
+        return JsonResponse({
+            'label': image.annotation_class.name,
+            'x': df.loc[name, 'x'],
+            'y': df.loc[name, 'y'],
+            'w': df.loc[name, 'w'],
+            'h': df.loc[name, 'h']
+        })
+    else:
+        return JsonResponse({
+            'label': 'None'
+        })
     pass
