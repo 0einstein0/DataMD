@@ -620,3 +620,6 @@ def fetchLabelsClassification(request):
         return JsonResponse({
             'label': 'None'
         })
+
+def updateLabelsObjectDetection(request):
+    pass
