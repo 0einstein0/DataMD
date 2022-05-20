@@ -60,7 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // go to next image
         currentImage += 1;
         if (currentImage >= images.length) {
-          currentImage = 0;
+          ////Notification
+          $("#alertBox").fadeIn("fast");
+          setTimeout(function () {
+            $("#alertBox").fadeOut("fast");
+          }, 2000);
+
+          currentImage -= 1;
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];
@@ -96,10 +102,10 @@ document.addEventListener("DOMContentLoaded", function () {
           unpressAllButtons();
         }
 
-        // go to next image
+        // go to prev image
         currentImage -= 1;
         if (currentImage < 0) {
-          currentImage = images.length - 1;
+          currentImage += 1;
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];
