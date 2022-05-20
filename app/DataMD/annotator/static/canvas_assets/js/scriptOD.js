@@ -46,13 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var container = document.createElement("div");
     var keyArray = ["a", "s", "d", "j", "g"];
-    var colorsArray = [
-      "tomato",
-      "darkcyan",
-      "indianred",
-      "olivedrab",
-      "dodgerblue",
-    ];
+    
     container.className = "colorselector-widget";
 
     for (var i = 0; i < possible_labels.length; i++) {
@@ -85,12 +79,40 @@ document.addEventListener("DOMContentLoaded", function () {
   var anno = Annotorious.init(config);
   selectAnno(type);
   initAnnon(anno);
+  const NO_ANNOTATION = { label: -1 };
 
+  ////////////////////
+  
   var currentImage = 0;
-  //////
+  var currentAnnotation = NO_ANNOTATION;
+  var colorsArray = [
+    "tomato",
+    "darkcyan",
+    "indianred",
+    "olivedrab",
+    "dodgerblue",
+  ];
+  
+  ////////
 
-  ////////////
+  function updateDatabaseLabel() {
+    jQuery.ajax({
+      type: "GET",
+      url: "/ajax/update/labels/object_detection",
+      data: {
+        image_id: image_ids[currentImage],
+        annotation_class_id: label_ids[currentLabel],
+      },
+    });
+  }
+  
+
+
+  ///////
+
+
   function goNext() {
+
     anno.destroy();
     currentImage += 1;
     if (currentImage >= images.length) {
@@ -189,6 +211,25 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   ////////////
+  function getAnnotationValues(selection) {
+    var result = {}
+    var boundingbox_string = selection.target.selector.value;
+    var coordinate_string = boundingbox_string.split(":")[1];
+    var coords = coordinate_string.split(",");
+    
+    // the color value stored in this value is fetched from colors array. 
+    // the colorArray[n] corresponds to possible_label[n]
+    result.label = possible_labels[colorsArray.indexOf(selection.body[0].value)];
+    
+    // take from coords
+    result.x = coords[0];
+    result.y = coords[1];
+    result.w = coords[2];
+    result.h = coords[3];
+    
+    return result;
+  }
+
 
   /////////
 
@@ -209,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //////
     anno.on("startSelection", function (point) {
+      console.log("startSelection");
       const annotations = anno.getAnnotations();
       if (annotations.length === 1) {
         var ele = document.querySelector("a9s-annotationlayer");
@@ -216,16 +258,43 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    anno.once("createAnnotation", async function (selection) {
+    anno.on("createAnnotation", async function (selection) {
+      console.log("createAnnotation");
+      
+      // set currentAnnotation values and coordinates
+      currentAnnotation = getAnnotationValues(selection);
+      console.log(currentAnnotation)
+
       const annotations = anno.getAnnotations();
       await anno.updateSelected(selection);
       anno.saveSelected();
     });
 
-    anno.on("updateAnnotation", function (annotation, previous) {});
+    anno.on("updateAnnotation", function (annotation, previous) {
+      console.log("updateAnnotation");
+
+      // set currentAnnotation values and coordinates
+      currentAnnotation = getAnnotationValues(annotation);
+      console.log(currentAnnotation)
+
+    });
 
     anno.on("deleteAnnotation", function (annotation) {
+      console.log("deleteAnnotation");
+
+      // unset currentAnnotation value
+      currentAnnotation = NO_ANNOTATION;
+      console.log(currentAnnotation)
+
       anno.clearAnnotations();
+    });
+
+    anno.on('createSelection', function(selection) {
+      console.log("createSelection");
+    });
+
+    anno.on('cancelSelection', function(selection) {
+      console.log("cancelSelection");
     });
     ////////////////////
   }

@@ -558,14 +558,14 @@ def login_page(request):
     )
 
 def pred(model_path,img_path):   
-        img = cv2.imread(img_path)   
-        model = keras.models.load_model(model_path)          
-        if img is None and model is None:
-            return('Something is wrong')
-        else:        
-            img = cv2.resize(img,(300,300),3)
-            img = img.reshape(1,300,300,3)
-            return model.predict(img)
+    img = cv2.imread(img_path)   
+    model = keras.models.load_model(model_path)          
+    if img is None and model is None:
+        return('Something is wrong')
+    else:        
+        img = cv2.resize(img,(300,300),3)
+        img = img.reshape(1,300,300,3)
+        return model.predict(img)
 
 
 # AJAX VIEWS
@@ -587,7 +587,7 @@ def updateLabelsClassification(request):
                 df = pd.read_csv(f, index_col='name', header = 0)
                 print(df)
                 #df['label'] = df['label'].replace({image.annotation_class.name : annotation_class.name })
-                df.loc[image.image.name, 'label'] = annotation_class.name
+                df.loc[os.path.basename(image.image.name), 'label'] = annotation_class.name
                 
             with project.annotation.open('w') as f:
                 print(df)
@@ -600,7 +600,7 @@ def updateLabelsClassification(request):
     else: # otherwise append a new line
         print('ADD')
         with project.annotation.open('a') as f:
-            f.write(str(image.image.name) + "," + str(annotation_class.name) + "\n")
+            f.write(str(os.path.basename(image.image.name)) + "," + str(annotation_class.name) + "\n")
             
         # save label to db
         image.annotation_class = annotation_class

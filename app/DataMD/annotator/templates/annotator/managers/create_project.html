@@ -105,8 +105,11 @@
   jQuery(".add").on("click", add);
   jQuery(".remove").on("click", remove);
 
+  MAX_CLASSES = 5;
+
   function add() {
     var new_chq_no = parseInt(jQuery("#total_chq").val()) + 1;
+    if (new_chq_no == MAX_CLASSES + 1) { return; }
     var new_input =
       "<div class='input-group input-group-sm mb-3' id='new_" +
       new_chq_no +
