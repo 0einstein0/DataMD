@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var container = document.createElement("div");
     var keyArray = ["a", "s", "d", "j", "g"];
-    
+
     container.className = "colorselector-widget";
 
     for (var i = 0; i < possible_labels.length; i++) {
@@ -79,10 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var anno = Annotorious.init(config);
   selectAnno(type);
   initAnnon(anno);
-  
 
   ////////////////////
-  
+
   const NO_ANNOTATION = { label: -1 };
 
   ///////////////////
@@ -97,9 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
     "dodgerblue",
   ];
   var keyArray = ["a", "s", "d", "j", "g"];
-  
 
-  ////////
+  //////// First Image
+
+  /////////
 
   function updateDatabaseLabel() {
     jQuery.ajax({
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getLabelFromColor(color) {
-    // the label value stored in this array is fetched from colors array. 
+    // the label value stored in this array is fetched from colors array.
     // the colorArray[n] corresponds to possible_label[n]
     return possible_labels[colorsArray.indexOf(color)];
   }
@@ -134,33 +134,38 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             type: "TextualBody",
             purpose: "highlighting",
-            value: getColorFromLabel(label)
-          }
+            value: getColorFromLabel(label),
+          },
         ],
         target: {
           selector: {
             type: "FragmentSelector",
             conformsTo: "http://www.w3.org/TR/media-frags/",
-            value: `xywh=pixel:${x},${y},${w},${h}`
-          }
-        }
-      }
-    ]
+            value: `xywh=pixel:${x},${y},${w},${h}`,
+          },
+        },
+      },
+    ];
   }
 
   function renderAnnotation(vals) {
-    var annotation_object = getAnnotationObject(vals.label, vals.x, vals.y, vals.w, vals.h)
+    var annotation_object = getAnnotationObject(
+      vals.label,
+      vals.x,
+      vals.y,
+      vals.w,
+      vals.h
+    );
+    console.log(vals.x);
     anno.setAnnotations(annotation_object);
-    
+
     //var btn = document.getElementById("label" + keyArray[possible_labels.indexOf(vals.label)]);
     //btn.click();
   }
-  
+
   ///////
 
-
   function goNext() {
-
     // if the user pressed something commit that to db, else do nothing
     console.log("currentAnnotation ::");
     console.log(currentAnnotation);
@@ -197,21 +202,14 @@ document.addEventListener("DOMContentLoaded", function () {
         currentAnnotation = NO_ANNOTATION;
         document.getElementById("activeImg").src = images[currentImage];
 
-        anno.clearAnnotations(); // clear screen to make way for next 
+        anno.clearAnnotations(); // clear screen to make way for next
 
         // if annotations to fetch
         if (fetched.label != "None") {
           renderAnnotation(fetched);
         }
-
-        
-      }
-
-      
+      },
     });
-
-
-   
 
     /*config = {
       image: document.getElementById("activeImg"),
@@ -232,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function goPrev() {
-    
     // if the user pressed something commit that to db, else do nothing
     console.log("currentAnnotation ::");
     console.log(currentAnnotation);
@@ -250,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "/ajax/fetch/labels/object_detection",
       dataType: "json",
       data: {
-        image_id: image_ids[nextImage],
+        image_id: image_ids[prevImage],
       },
       success: function (fetched) {
         console.log(fetched);
@@ -263,21 +260,14 @@ document.addEventListener("DOMContentLoaded", function () {
         currentAnnotation = NO_ANNOTATION;
         document.getElementById("activeImg").src = images[currentImage];
 
-        anno.clearAnnotations(); // clear screen to make way for next 
+        anno.clearAnnotations(); // clear screen to make way for next
 
         // if annotations to fetch
         if (fetched.label != "None") {
           renderAnnotation(fetched);
         }
-
-        
-      }
-
-      
+      },
     });
-
-
-   
 
     /*config = {
       image: document.getElementById("activeImg"),
@@ -290,6 +280,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initAnnon(anno);
     selectAnno(type);*/
+  }
+  ////////////
+  ////////////
+  document.onkeydown = function (e) {
+    if (e.key === "ArrowRight") {
+      goNext();
+    } else if (e.key === "ArrowLeft") {
+      goPrev();
+    } else if (e.key === "Enter") {
+      anno.saveSelected();
+    } else {
+      var btn = document.getElementById("label" + e.key);
+      btn.click();
+    }
   };
   ////////////
   document.getElementById("arrow-next").onclick = function () {
@@ -300,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
     goPrev();
   };
 
-  ////////////
+  /////////////////////
 
   function selectAnno(type) {
     switch (type) {
@@ -327,13 +331,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
   function getAnnotationValues(selection) {
-    var result = {}
+    var result = {};
     var boundingbox_string = selection.target.selector.value;
     var coordinate_string = boundingbox_string.split(":")[1];
     var coords = coordinate_string.split(",");
-    
+
     result.label = getLabelFromColor(selection.body[0].value);
-    
+
     // take from coords
     result.x = coords[0];
     result.y = coords[1];
@@ -343,10 +347,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // label db id
     result.label_db_id = label_ids[possible_labels.indexOf(result.label)];
     console.log("result.label_db_id ", result.label_db_id);
-    
+
     return result;
   }
-
 
   /////////
 
@@ -377,10 +380,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     anno.on("createAnnotation", async function (selection) {
       console.log("createAnnotation");
-      
+
       // set currentAnnotation values and coordinates
       currentAnnotation = getAnnotationValues(selection);
-      console.log(currentAnnotation)
+      console.log(currentAnnotation);
 
       await anno.updateSelected(selection);
       anno.saveSelected();
@@ -391,11 +394,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // set currentAnnotation values and coordinates
       currentAnnotation = getAnnotationValues(annotation);
-      console.log(currentAnnotation)
+      console.log(currentAnnotation);
 
       //await anno.updateSelected(selection);
       //anno.saveSelected();
-
     });
 
     anno.on("deleteAnnotation", function (annotation) {
@@ -403,16 +405,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // unset currentAnnotation value
       currentAnnotation = NO_ANNOTATION;
-      console.log(currentAnnotation)
+      console.log(currentAnnotation);
 
       anno.clearAnnotations();
     });
 
-    anno.on('createSelection', function(selection) {
+    anno.on("createSelection", function (selection) {
       console.log("createSelection");
     });
 
-    anno.on('cancelSelection', function(selection) {
+    anno.on("cancelSelection", function (selection) {
       console.log("cancelSelection");
     });
     ////////////////////

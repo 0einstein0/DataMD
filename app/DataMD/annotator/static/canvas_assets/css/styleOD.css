@@ -107,6 +107,7 @@ svg.a9s-annotationlayer .a9s-annotation button .a9s-inner {
   display: inline-block;
   width: 60px;
   height: 30px;
+  cursor: pointer;
 }
 
 /* Hide default HTML checkbox */
@@ -172,4 +173,12 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/*box*/
+.a9s-annotation .a9s-inner,
+.a9s-selection .a9s-inner {
+  stroke: rgb(181, 157, 3);
+  stroke-width: 1px;
+  fill: rgba(255, 234, 0, 0.251);
 }
