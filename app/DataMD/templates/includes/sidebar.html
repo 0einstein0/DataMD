@@ -108,6 +108,19 @@
             ><span class="pcoded-mtext">Logout</span>
           </a>
         </li>
+        <li class="nav-item pcoded-menu-caption">
+          <label>Playground</label>
+        </li>
+
+        <li
+          data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe"
+          class="nav-item"
+        >
+          <a href="{% url 'od_playground' %}" class="nav-link"
+            ><span class="pcoded-micon"><i class="feather icon-box"></i></span
+            ><span class="pcoded-mtext">Object Detection</span></a
+          >
+        </li>
         <!--<li class="nav-item pcoded-menu-caption">
                         <label>More Resources</label>
                     </li>                    
@@ -266,7 +279,7 @@
           data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe"
           class="nav-item"
         >
-          <a class="nav-link"
+          <a href="{% url 'od_playground' %}" class="nav-link"
             ><span class="pcoded-micon"><i class="feather icon-box"></i></span
             ><span class="pcoded-mtext">Object Detection</span></a
           >

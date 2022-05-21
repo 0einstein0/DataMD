@@ -18,11 +18,10 @@ from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationCla
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 import pydicom
-from django.core.files.storage import FileSystemStorage
 import cv2
 import keras
 import pandas as pd
-
+from django.core.files.base import ContentFile
 
 # cloud
 from google.cloud import storage
@@ -225,12 +224,13 @@ def dashboard(request):
         context # a dictionary which will be added to the template context
     )
 
-# annotation canvas for bounding boxes, keypoints, classification etc
+# annotation canvas for bounding boxes, classification, etc
 @login_required
 @user_passes_test(isAnnotator)
 def canvas(request, project_id):
     image_urls = []
     possible_labels = []
+    images_available = True
     canvas_page = ''
 
     # retrive all images that the user is assigned to 
@@ -244,8 +244,11 @@ def canvas(request, project_id):
     else:
         canvas_page = '/canvas_OD.html'
 
-    images = Image.objects.filter(project = project, assigned_annotator = request.user)
+    
+    # get unannotated images assigned to the user
+    images = Image.objects.filter(project = project, assigned_annotator = request.user).exclude(annotation_class__isnull = False)
     print(images) # -- DEBUG
+
     annotation_classes = AnnotationClass.objects.filter(project = project)
     print(annotation_classes, " - ", type(annotation_classes)) # -- DEBUG
 
@@ -261,6 +264,10 @@ def canvas(request, project_id):
             .generate_signed_url(timedelta(3))
         )
 
+    if not image_urls:
+        images_available = False
+        image_urls.append('/static/canvas_assets/images/no_more_images.png') # error image
+    
     for x in annotation_classes:
         possible_labels.append(x.name)
 
@@ -277,6 +284,7 @@ def canvas(request, project_id):
     'possible_labels': possible_labels,
     'annotation_classes': annotation_classes,
     'username': request.user.username,
+    'images_available': images_available
     } # all the variables you want to pass to context
     # --- --- ---
 
@@ -291,13 +299,25 @@ def canvas(request, project_id):
 def create_project(request):
 
     if request.method == 'POST':
+        annotation_type = AnnotationType.objects.get(id = request.POST.get('annotation_type'))
+        name = request.POST.get('name')
+        manager = request.user
+        description = request.POST.get('description')
+
+        # auto create csv file
+        if annotation_type.name == 'CF':
+            header = 'name,label\n'
+        else:
+            header = 'name,label,x,y,w,h\n'
+        csv = ContentFile(header, name=str(name+"_"+manager.username+".csv"))
 
         # Create Project Record
         project_instance = Project(
-            name = request.POST.get('name'),
-            description = request.POST.get('description'),
-            annotation_type = AnnotationType.objects.get(id = request.POST.get('annotation_type')),
-            manager = request.user
+            name = name,
+            description = description,
+            annotation_type = annotation_type,
+            manager = manager,
+            annotation = csv 
         )
 
         # Commit Record to DB
@@ -348,8 +368,8 @@ def manage_project(request, project_id):
         if 'editInfoButton' in request.POST:
             project.name = request.POST.get('name')
             project.description = request.POST.get('description')
-            project.machine_learning_model = request.FILES.get('ml_model')
-            print(request.FILES.get('ml_model'))
+            project.machine_learning_model = request.FILES.get('machine_learning_model')
+            print(request.FILES.get('machine_learning_model'))
             project.save()
             success_messages.append('Changes Saved')
         elif 'btn_remove' in request.POST:
@@ -364,18 +384,17 @@ def manage_project(request, project_id):
             images = request.FILES.getlist('images')
             for image in images:
                 # TODO: assign each image to an annotator
-                # -> get a list of all annotators
-                #annotators = project.annotators.all()
-                
-                #print("annotators  :: ", annotators) # -- DEBUG
-                
-                # -> see how much images unannotated does each annotator have and return the annotator with the least
-                #assigned_annotator = annotators.first()
-                #print("assigned annotator :: ", assigned_annotator)
-                
-                #for annotator in annotators:
-                #    count_of_unnanotated_images_of_user = Image.objects.filter(project = project.id, annotation_class = None, assigned_annotator = annotators).count()
-                
+                annotators = project.annotators.all()
+
+                counts = {}
+                for annotator in annotators:
+                    counts[annotator] = 0
+
+                all_project_unnanotated = Image.objects.filter(project = project).exclude(annotation_class__isnull = False)
+                for img in all_project_unnanotated:
+                    counts[img.assigned_annotator] += 1
+            
+                assigned_annotator = min(counts, key=counts.get)
 
                 print("image ::", image) # -- DEBUG
                 print("image content type ::", image.content_type) # -- DEBUG
@@ -383,7 +402,8 @@ def manage_project(request, project_id):
                     image_instance = Image(
                         name = image.name,
                         image = image,
-                        project = project
+                        project = project,
+                        assigned_annotator = assigned_annotator
                     )
                     image_instance.save()
                     success_messages.append('Images Uploaded')
@@ -444,8 +464,8 @@ def manage_project(request, project_id):
     editInfoForm = ProjectForm(instance = project)
     editInfoForm.fields['annotation_type'].disabled = True
     annotation_classes = AnnotationClass.objects.filter(project = project)
-    machine_learning_model_filename = os.path.basename(project.machine_learning_model.name) if project.machine_learning_model.name is not None else 'None'
-    print("machine_learning_model_filename :: ", machine_learning_model_filename)
+    #machine_learning_model_filename = os.path.basename(project.machine_learning_model.name) if project.machine_learning_model.name is not None else 'None'
+    #print("machine_learning_model_filename :: ", machine_learning_model_filename)
     print(annotation_classes) # -- DEBUG
     # ---
 
@@ -468,7 +488,7 @@ def manage_project(request, project_id):
     context = { 'project': project, 
         'editInfoForm': editInfoForm, 
         'annotation_classes': annotation_classes,
-        'machine_learning_model_filename': machine_learning_model_filename,
+        #'machine_learning_model_filename': machine_learning_model_filename,
         'pending_invites': pending_invites,
         'addAnnotatorsForm': addAnnotatorsForm,
         'error_messages': error_messages,
@@ -556,6 +576,23 @@ def login_page(request):
         template, # the template which represents function
         context # a dictionary which will be added to the template context
     )
+
+def od_playground(request):
+
+    # --- RENDER VARIABLES ---
+    request = request
+    template = APP_NAME + '/playground/playground_OD.html' 
+    context = {} # all the variables you want to pass to context
+    # --- --- ---
+
+    return render(
+        request, # pass the http request argument
+        template, # the template which represents function
+        context # a dictionary which will be added to the template context
+    )
+
+
+ ##################   
 
 def pred(model_path,img_path):   
     img = cv2.imread(img_path)   

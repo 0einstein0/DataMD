@@ -1,11 +1,12 @@
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   
   <!-- FORM RENDER -->
   {% for field in editInfoForm %}
   <p>
     {% if field.field.required %} <font color="red">*</font> {% endif %}
-    {{field.label}}: {{field}}
+    {{field.label}}:  <br>
+    {{field}}
   </p>
   {% endfor %}
 
@@ -20,11 +21,6 @@
     </div>
   </div>
   {% endfor %}
-
-  Machine Learning Model:
-  <input name="ml_model" type="file" class="form-control">
-  <br>
-  <h5>Current Uploaded Model: {{ machine_learning_model_filename }}</h5>
   <br>
   <!-- END FORM RENDER -->
 

@@ -8,6 +8,7 @@ urlpatterns = [
     path('register/', views.register_page, name = "register"),
     path('auth_rest_pass/', views.filler, name="auth_reset_pass"),
     path('dashboard/', views.dashboard, name = "dashboard"),
+    path('playground/object_detection', views.od_playground, name = "od_playground"),
     # MANAGER 
     path('dashboard/create_project/', views.create_project, name="create_project"),
     path('dashboard/manage_project/<str:project_id>', views.manage_project, name="manage_project"),

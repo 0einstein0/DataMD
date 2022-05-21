@@ -76,9 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
     formatter: ColorFormatter,
   };
 
-  var anno = Annotorious.init(config);
-  selectAnno(type);
-  initAnnon(anno);
+  if (images_available) {
+    var anno = Annotorious.init(config);
+    selectAnno(type);
+    eventAnno(anno);
+  }
 
   ////////////////////
 
@@ -221,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     anno = Annotorious.init(config);
 
-    initAnnon(anno);
+    eventAnno(anno);
     selectAnno(type);*/
   }
 
@@ -279,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     anno = Annotorious.init(config);
 
-    initAnnon(anno);
+    eventAnno(anno);
     selectAnno(type);*/
   }
   ////////////
@@ -354,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /////////
 
-  function initAnnon(anno) {
+  function eventAnno(anno) {
     /////////////////
     Annotorious.SelectorPack(anno, {
       tools: ["rect", "freehand", "ellipse", "polygon", "point"],

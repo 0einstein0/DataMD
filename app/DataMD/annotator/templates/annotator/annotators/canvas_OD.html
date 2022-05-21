@@ -47,8 +47,10 @@
     type =1;  
   {% endif %}
 
-  username = '{{ username }}'
+  
+  var images_available = {{ images_available }}
 
+  var username = '{{ username }}'
 
 </script>
 
@@ -128,6 +130,7 @@
 
                             
                             <div  id="imageViewer">
+                              {% if images_available %}
                               <div class="arrow" id="arrow-prev">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +170,9 @@
                                   </g>
                                 </svg>
                               </div>
+                              {% endif %}
                               <img id="activeImg" src="{{ image_urls.0 | safe }}" />
+                              {% if images_available %}
                               <div class="arrow" id="arrow-next">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -207,6 +212,7 @@
                                   </g>
                                 </svg>
                               </div>
+                              {% endif %}
                             </div>
                            <!-------Alert------>
 

@@ -143,7 +143,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ////////////
 
-  var labelsNo = possible_labels.length;
+  var labelsNo = images_available ? possible_labels.length : 0;
+  console.log(labelsNo);
   var labelBtn;
   var labelText;
   var btnDiv = document.getElementById("labelBtns");

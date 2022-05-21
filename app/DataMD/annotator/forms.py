@@ -124,7 +124,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['name', 'description', 'annotation_type']
+        fields = ['name', 'description', 'annotation_type', 'machine_learning_model']
 
 
 class AddAnnotationClassesForm(forms.Form):
@@ -142,5 +142,4 @@ class AddAnnotatorsForm(forms.Form):
         super(AddAnnotatorsForm, self).__init__(*args, **kwargs)
         self.fields['annotators'].widget.attrs['class'] = 'select2-multiple'
         self.fields['annotators'].empty_label = None
-
 

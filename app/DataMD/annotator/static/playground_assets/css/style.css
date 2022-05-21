@@ -1,0 +1,41 @@
+#toolbar {
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 3%;
+  display: flex;
+  justify-content: space-between;
+}
+#toolbar img {
+  max-width: 30px;
+}
+
+.btnIcon {
+  border: none;
+  margin: 3%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #d5d5d5;
+}
+
+#toolbar button:hover {
+  background-color: #999999;
+}
+#imageViewer {
+  width: 50%;
+  margin: 0 auto;
+  max-height: 70vh;
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+}
+
+#imageViewer img {
+  min-width: 70vh;
+  max-width: 70vh;
+  min-height: 70vh;
+}
+.arrow {
+  display: flex;
+  padding: 30px;
+  align-items: center;
+}
