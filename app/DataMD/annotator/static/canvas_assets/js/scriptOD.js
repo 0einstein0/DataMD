@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
             value: `xywh=pixel:${x},${y},${w},${h}`,
           },
         },
+        id: label + x + y + w + h,
       },
     ];
   }
@@ -393,8 +394,9 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("updateAnnotation");
 
       // set currentAnnotation values and coordinates
+
       currentAnnotation = getAnnotationValues(annotation);
-      console.log(currentAnnotation);
+      updateDatabaseLabel();
 
       //await anno.updateSelected(selection);
       //anno.saveSelected();
