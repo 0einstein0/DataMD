@@ -7,11 +7,13 @@
 }
 
 #imageViewer img {
-  min-width: 110vh;
+  display: block;
   max-width: 110vh;
-  min-height: 69vh;
   max-height: 69vh;
+  width: auto;
+  height: auto;
 }
+
 #content {
   margin-top: -40px;
 }
