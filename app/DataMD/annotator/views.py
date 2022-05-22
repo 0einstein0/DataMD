@@ -354,7 +354,13 @@ def manage_project(request, project_id):
 
     project = Project.objects.get(id = project_id)
     pending_invites = ProjectInvite.objects.filter(project = project, status = 'Pending')
-    
+
+    ######### one time #########
+    print("yolol :: ", project.annotation.name)
+
+
+    # ##########################    
+
     # only allow access if they are the manager of this project
     if project.manager != request.user:
         return redirect('dashboard')    
