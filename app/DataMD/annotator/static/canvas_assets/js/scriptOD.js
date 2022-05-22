@@ -118,6 +118,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function deleteDatabaseLabel() {
+    jQuery.ajax({
+      type: "GET",
+      url: "/ajax/delete/labels/object_detection",
+      data: {
+        image_id: image_ids[currentImage],
+      },
+    });
+  }
+
   function getLabelFromColor(color) {
     // the label value stored in this array is fetched from colors array.
     // the colorArray[n] corresponds to possible_label[n]
@@ -386,17 +396,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // set currentAnnotation values and coordinates
       currentAnnotation = getAnnotationValues(selection);
+      updateDatabaseLabel();
+
       console.log(currentAnnotation);
 
-      await anno.updateSelected(selection);
-      anno.saveSelected();
+      //await anno.updateSelected(selection);
+      //anno.saveSelected();
     });
 
     anno.on("updateAnnotation", function (annotation, previous) {
       console.log("updateAnnotation");
 
       // set currentAnnotation values and coordinates
-
       currentAnnotation = getAnnotationValues(annotation);
       updateDatabaseLabel();
 
@@ -406,6 +417,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     anno.on("deleteAnnotation", function (annotation) {
       console.log("deleteAnnotation");
+
+      // delete from csv and db
+      deleteDatabaseLabel();
 
       // unset currentAnnotation value
       currentAnnotation = NO_ANNOTATION;

@@ -591,6 +591,21 @@ def od_playground(request):
         context # a dictionary which will be added to the template context
     )
 
+def annotator_progress(request):
+
+
+    # --- RENDER VARIABLES ---
+    request = request
+    template = APP_NAME + USER_GROUP_INFO[MANAGER]['directory'] + '/annotator_progress.html' 
+    context = {} # all the variables you want to pass to context
+    # --- --- ---
+
+    return render(
+        request, # pass the http request argument
+        template, # the template which represents function
+        context # a dictionary which will be added to the template context
+    )
+
 
  ##################   
 
@@ -737,4 +752,27 @@ def fetchLabelsObjectDetection(request):
         return JsonResponse({
             'label': 'None'
         })
-    pass
+    
+def deleteLabelsObjectDetection(request):
+    image_id = request.GET['image_id']
+    image = Image.objects.get(id = image_id)
+    project = image.project
+    name = os.path.basename(image.image.name)
+
+    if image.annotation_class is not None:
+        image.annotation_class = None
+        image.save()
+
+        with project.annotation.open('r') as f:
+            df = pd.read_csv(f, index_col = 'name', header = 0)
+            print(df)
+            df.drop([name], inplace=True)
+            
+        with project.annotation.open('w') as f:
+            print(df)
+            df.to_csv(f, line_terminator='\n')
+
+    return JsonResponse({'success': 1})
+
+
+
