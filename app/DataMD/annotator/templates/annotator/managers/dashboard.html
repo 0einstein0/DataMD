@@ -47,6 +47,7 @@
                                         <form style="display: inline;" action="{% url 'manage_project' project.id %}" >
                                         <button type="submit" class="btn btn-outline-primary" title="Edit project details, images, and annotators" data-toggle="tooltip">Manage Project</button>
                                         </form>
+                                        <a style="display: inline;" href="{% if project.annotation %}{{ project.annotation.url }}{% endif %}" download><button class="btn btn-outline-secondary" title="Download the annotations recieved so far in .csv form" data-toggle="tooltip">Download Annotations</button></a>
                                     </div>
                                     <div id="collapse{{ project.id }}" class=" card-body collapse" aria-labelledby="heading{{ project.id }}" data-parent="#projectAccordian">
                                         {{ project.description }}

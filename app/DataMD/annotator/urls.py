@@ -22,4 +22,5 @@ urlpatterns = [
     path('ajax/update/labels/object_detection', views.updateLabelsObjectDetection, name="update_labels_object_detection"),
     path('ajax/fetch/labels/object_detection', views.fetchLabelsObjectDetection, name="fetch_labels_object_detection"),
     path('ajax/delete/labels/object_detection', views.deleteLabelsObjectDetection, name="delete_labels_object_detection"),
+    path('ajax/fetch/predictions/classification', views.fetchPredictionsClassification, name="fetch_predictions_classification")
 ]

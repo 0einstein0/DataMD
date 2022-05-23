@@ -33,6 +33,10 @@
   var images_available = {{ images_available | lower }};
 
   var username = '{{ username }}';
+
+  var project_id = "{{ project.id }}"
+
+  var hasModel = {{ hasModel | lower }}
 </script>
 <script src="/static/canvas_assets/js/scriptCF.js"></script>
 
@@ -235,13 +239,15 @@
             <div class="modelDiv">
               <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
               <div class="modelPred">
-                <p>Prediction: 98.05%</p>
+                {% if hasModel %}
+                <h5 id ="predicting">Predicting...</h5>
+                {% endif %}
                 <div class="modelBtns">
-                  <button class="correct">
+                  <!--<button class="correct">
                     <i class="feather icon-check"></i>
                   </button>
                   <button class="incorrect">
-                    <i class="feather icon-x"></i>
+                    <i class="feather icon-x"></i>-->
                   </button>
                 </div>
               </div>

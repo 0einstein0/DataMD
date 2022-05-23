@@ -4,6 +4,7 @@ from email.mime import image
 import os
 from pickletools import read_uint1
 import re
+from tempfile import TemporaryFile
 import PIL
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
@@ -12,6 +13,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+import numpy as np
 from pyparsing import anyOpenTag
 from .forms import LoginForm, SignUpForm, ProjectForm, AddAnnotatorsForm
 from .models import Project, AnnotationType, ProjectInvite, Image, AnnotationClass
@@ -19,9 +21,20 @@ from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 import pydicom
 import cv2
+import urllib.request
+import requests
+import io
 import keras
 import pandas as pd
 from django.core.files.base import ContentFile
+import h5py
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+
+####
+import time
+  
+###
 
 # cloud
 from google.cloud import storage
@@ -224,6 +237,7 @@ def dashboard(request):
         context # a dictionary which will be added to the template context
     )
 
+current_model = None
 # annotation canvas for bounding boxes, classification, etc
 @login_required
 @user_passes_test(isAnnotator)
@@ -254,8 +268,7 @@ def canvas(request, project_id):
 
     client = storage.Client()
     bucket = client.get_bucket('med-images')
-    
-    #prediction = pred(, images[0].url)
+
 
     for x in images:
         image_urls.append(
@@ -268,6 +281,55 @@ def canvas(request, project_id):
         images_available = False
         image_urls.append('/static/canvas_assets/images/no_more_images.png') # error image
     
+    #####################
+    # url = image_urls[0]
+    # url = 'https://media.geeksforgeeks.org/wp-content/uploads/20211003151646/geeks14.png'
+    # #with urllib.request.urlopen(url) as resp:
+    # with requests.get(url, stream=True).raw as resp:
+    #     # read image as an numpy array
+    #     imageo = np.asarray(bytearray(resp.read()), dtype="uint8")
+    #     # use imdecode function
+    #     imageo = cv2.imdecode(image, cv2.IMREAD_COLOR)
+    #     cv2.imshow('image',imageo)
+
+    # print(url)
+    # resp = urllib.request.urlopen(url)
+    # print(resp)
+    # imageo = np.asarray(bytearray(resp.read()), dtype="uint8")
+    # imageo = cv2.imdecode(image, cv2.IMREAD_COLOR)
+
+    
+    # response = requests.get(url)
+    # imgo = PIL.Image.open(io.BytesIO(response.content))
+    # imgo_np = np.array(imgo)
+    # gry = cv2.cvtColor(imgo_np, cv2.COLOR_BGR2GRAY)
+    # pred(gry)
+    
+    #url = image_urls[0]
+    
+        # print('Pred ------ Starting prediction process')
+        # prediction = pred(hf, url)
+        # print("PREDICTION -----------------")
+        # print(prediction)
+        # print("----------------------------")
+            
+    
+    global current_model
+    # LOAD MODEL FILE OBJECT
+    # with project.machine_learning_model.open() as f:
+    #     print('Pred ------ making h5py file object')
+    #     ts_i = time.time()
+    #     print(ts_i)
+    #     current_model = h5py.File(f, mode = 'r')
+    #     ts_f = time.time()
+    #     print(ts_f)
+    #     time_taken = ts_f-ts_i
+    #     print(str(time_taken))
+    #     print('Pred ------ done making h5py file object')
+
+    ######################
+
+    hasModel = True if project.machine_learning_model else False
     for x in annotation_classes:
         possible_labels.append(x.name)
 
@@ -284,7 +346,8 @@ def canvas(request, project_id):
     'possible_labels': possible_labels,
     'annotation_classes': annotation_classes,
     'username': request.user.username,
-    'images_available': images_available
+    'images_available': images_available,
+    'hasModel': hasModel
     } # all the variables you want to pass to context
     # --- --- ---
 
@@ -356,8 +419,9 @@ def manage_project(request, project_id):
     pending_invites = ProjectInvite.objects.filter(project = project, status = 'Pending')
 
     ######### one time #########
-    print("yolol :: ", project.annotation.name)
-
+    print("yolol :: ", project.machine_learning_model.name)
+    project.machine_learning_model.name = 'models/2/model_2.h5'
+    project.save()
 
     # ##########################    
 
@@ -398,13 +462,15 @@ def manage_project(request, project_id):
 
                 all_project_unnanotated = Image.objects.filter(project = project).exclude(annotation_class__isnull = False)
                 for img in all_project_unnanotated:
-                    counts[img.assigned_annotator] += 1
+                    assigned_annotator_temp = img.assigned_annotator
+                    if assigned_annotator_temp in annotators:
+                        counts[assigned_annotator_temp] += 1
             
                 assigned_annotator = min(counts, key=counts.get)
 
                 print("image ::", image) # -- DEBUG
                 print("image content type ::", image.content_type) # -- DEBUG
-                if image.content_type == 'image/jpeg' or image.content_type == 'image/png':
+                if image.content_type == 'image/jpeg' or image.content_type == 'image/png' or image.content_type == 'image/bmp':
                     image_instance = Image(
                         name = image.name,
                         image = image,
@@ -412,18 +478,43 @@ def manage_project(request, project_id):
                         assigned_annotator = assigned_annotator
                     )
                     image_instance.save()
-                    success_messages.append('Images Uploaded')
+                    if 'Images Uploaded' not in success_messages:
+                        success_messages.append('Images Uploaded')
                     print('image instance SAVED :: ', image_instance)
-                else: 
+                elif image.content_type == 'application/octet-stream': 
                     print('ERROR: wRONG FILE TYPE')
                     print('you uploaded ', image.content_type)
                     ds = pydicom.read_file(image) # read dicom image
                     img = ds.pixel_array
-                    print("img ", img)
                     png = PIL.Image.fromarray(img)
+
+
+                    tempfile_io = io.BytesIO()
+                    png.save(tempfile_io, format='PNG')
+                    image_file = InMemoryUploadedFile(tempfile_io, None, image.name+'.png','image/png',tempfile_io.tell(), None)
+                    
+                    # f = io.BytesIO()
+                    # png.save(f, format="PNG")
+                    # f.seek(0)
+                    # final_image = ContentFile(f.getvalue())
+
+                    image_instance = Image(
+                        name = image.name,
+                        image = image_file,
+                        project = project,
+                        assigned_annotator = assigned_annotator
+                    )
+                    image_instance.save()
+
+                    if 'Images Uploaded' not in success_messages:
+                        success_messages.append('Images Uploaded')
+
+                    #print("img ", img)
+                    
+
                     #png.save('dicom.png')
-                    png.show()
-                    print("pixel array :: ", img)
+                    #png.show()
+                    #print("pixel array :: ", img)
 
                     # TODO: return error
                 
@@ -598,12 +689,30 @@ def od_playground(request):
     )
 
 def annotator_progress(request):
-
+    all_projects = Project.objects.filter(manager = request.user) 
+    project_data = {}   
+    for project in all_projects:
+        images = Image.objects.filter(project = project)
+        project_data[project] = {}
+        for image in images:
+            if image.assigned_annotator not in project_data[project]:
+                project_data[project][image.assigned_annotator] = {}
+            if "unannotated" not in project_data[project][image.assigned_annotator]:
+                project_data[project][image.assigned_annotator]["unannotated"] = 0
+            if "annotated" not in project_data[project][image.assigned_annotator]:
+                project_data[project][image.assigned_annotator]["annotated"] = 0
+            
+            if image.annotation_class is None:
+                project_data[project][image.assigned_annotator]["unannotated"] += 1
+            else:
+                project_data[project][image.assigned_annotator]["annotated"] += 1
+                    
+    print(project_data)
 
     # --- RENDER VARIABLES ---
     request = request
     template = APP_NAME + USER_GROUP_INFO[MANAGER]['directory'] + '/annotator_progress.html' 
-    context = {} # all the variables you want to pass to context
+    context = {'project_data': project_data} # all the variables you want to pass to context
     # --- --- ---
 
     return render(
@@ -615,16 +724,67 @@ def annotator_progress(request):
 
  ##################   
 
-def pred(model_path,img_path):   
-    img = cv2.imread(img_path)   
+
+def setModel(project):
+    # LOAD MODEL FILE OBJECT
+    with project.machine_learning_model.open() as f:
+        print('Pred ------ making h5py file object')
+        ts_i = time.time()
+        print(ts_i)
+        hf = h5py.File(f, mode = 'r')
+        ts_f = time.time()
+        print(ts_f)
+        time_taken = ts_f-ts_i
+        print(str(time_taken))
+        print('Pred ------ done making h5py file object')
+    pass
+    #global current_model = hf
+
+def pred(model_path,img_path):    
+    url_response = urllib.request.urlopen(img_path)
+    img = cv2.imdecode(np.array(bytearray(url_response.read()), dtype=np.uint8), -1)  
     model = keras.models.load_model(model_path)          
-    if img is None and model is None:
+    if img is None :
         return('Something is wrong')
-    else:        
+    else:     
         img = cv2.resize(img,(300,300),3)
         img = img.reshape(1,300,300,3)
         return model.predict(img)
 
+# def pred(model_path,img): 
+#     #print('Pred ------ Reading Image')  
+#     #img = cv2.imread(img_path)
+#     #print('Pred ------ Image Read')   
+#     print('Pred ------ Reading Model')
+#     model = keras.models.load_model(model_path) 
+#     print('Pred ------ Model Read')         
+#     if img is None and model is None:
+#         return('Something is wrong')
+#     else:        
+#         print('Pred ------ Resize and Reshape image')
+#         img = cv2.resize(img,(300,300),3)
+#         img = img.reshape(1,300,300,3)
+#         print('Pred ------ Making prediction')
+#         return model.predict(img)
+
+# def pred(img):
+#     print('Pred ------ Reading Image') 
+#     img = cv2.resize(img,(300,300),3)
+#     img = img.reshape(1,300,300,3)
+#     print('Pred ------ Image Read')
+#     print('Pred ------ Reading Image')  
+#     img = cv2.imread(img_path)
+#     print('Pred ------ Image Read')   
+#     print('Pred ------ Reading Model')
+#     #model = keras.models.load_model(model_path) 
+#     print('Pred ------ Model Read')         
+#     if img is None:
+#         return('Something is wrong')
+#     else:        
+#         print('Pred ------ Resize and Reshape image')
+#         img = cv2.resize(img,(300,300),3)
+#         img = img.reshape(1,300,300,3)
+#         print('Pred ------ Making prediction')
 
 # AJAX VIEWS
 def updateLabelsClassification(request):
@@ -780,5 +940,23 @@ def deleteLabelsObjectDetection(request):
 
     return JsonResponse({'success': 1})
 
+def fetchPredictionsClassification(request):
+    url = request.GET['image_url']
+    project = Project.objects.get(id = request.GET['project_id'])
 
+    with project.machine_learning_model.open() as f:
+        print('Pred ------ making h5py file object')
+        ts_i = time.time()
+        print(ts_i)
+        h5 = h5py.File(f, mode = 'r')
+        ts_f = time.time()
+        print(ts_f)
+        time_taken = ts_f-ts_i
+        print(str(time_taken))
+        print('Pred ------ done making h5py file object')
+        prediction = pred(h5, url)
+        print(prediction)
 
+    return JsonResponse({
+        'prediction': prediction
+    })
