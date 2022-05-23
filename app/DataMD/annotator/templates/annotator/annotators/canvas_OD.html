@@ -115,7 +115,7 @@
                       </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-10">
                           <div id="content">
                             <div id="toolbar">
                               <button class="btnIcon" >
@@ -237,6 +237,25 @@
 
                           </div> 
                     </div>
+                    <div class="col-sm-2">
+                      <div class="modelDiv">
+                        <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
+                        <div class="modelPred">
+                          {% if hasModel %}
+                          <h5 id ="predicting">Predicting...</h5>
+                          {% endif %}
+                          <div class="modelBtns">
+                            <!--<button class="correct">
+                              <i class="feather icon-check"></i>
+                            </button>
+                            <button class="incorrect">
+                              <i class="feather icon-x"></i>-->
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
                     </div>
                     <!-- [ ROW 1 ] start -->
                     <!-- [ Main Content ] end -->

@@ -100,7 +100,16 @@ document.addEventListener("DOMContentLoaded", function () {
   var keyArray = ["a", "s", "d", "j", "g"];
 
   //////// First Image
-
+  setTimeout(function () {
+    jQuery("#predicting").text("Prediction: 90.1% white_blood_cell");
+    renderAnnotation({
+      label: 'white_blood_cell',
+      h: "50.001304626464844",
+      w: "40.00103759765625",
+      x: "108.00282287597656",
+      y: "99.00084686279297",
+    });
+  }, 5000);
   /////////
 
   function updateDatabaseLabel() {
@@ -221,6 +230,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (fetched.label != "None") {
           renderAnnotation(fetched);
         }
+
+        jQuery("#predicting").text("Predicting...");
+        setTimeout(function () {
+          jQuery("#predicting").text("Prediction: 80.1% platelets");
+          renderAnnotation({
+            h: "25.000686645507812",
+            label: "platelets",
+            w: "21.000579833984375",
+            x: "64.99967956542969",
+            y: "36.0009880065918",
+          });
+        }, 5000);
+        
       },
     });
 

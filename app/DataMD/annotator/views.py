@@ -417,7 +417,18 @@ def manage_project(request, project_id):
 
     project = Project.objects.get(id = project_id)
     pending_invites = ProjectInvite.objects.filter(project = project, status = 'Pending')
-
+    # all_images = Image.objects.filter(project = project)
+    # client = storage.Client()
+    # bucket = client.get_bucket('med-images')
+    # image_urls = []
+    # print(image_urls)
+    # print(all_images)
+    # for x in all_images:
+    #     image_urls.append(
+    #         bucket
+    #         .get_blob(x.image.name)
+    #         .generate_signed_url(timedelta(3))
+    #     )
     ######### one time #########
     print("yolol :: ", project.machine_learning_model.name)
     project.machine_learning_model.name = 'models/2/model_2.h5'
@@ -590,7 +601,9 @@ def manage_project(request, project_id):
         'addAnnotatorsForm': addAnnotatorsForm,
         'error_messages': error_messages,
         'success_messages': success_messages,
-        'warning_messages': warning_messages,
+        'warning_messages': warning_messages
+        #'image_urls': image_urls,
+        #'all_images': all_images
     } # all the variables you want to pass to context
     # --- --- ---
 
