@@ -35,6 +35,7 @@
   var username = '{{ username }}';
 
   var project_id = "{{ project.id }}"
+  var prediction = pred
 
   var hasModel = {{ hasModel | lower }}
 </script>
@@ -237,9 +238,10 @@
 
           <div class="col-sm-2">
             <div class="modelDiv">
+              {% if hasModel %}
               <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
               <div class="modelPred">
-                {% if hasModel %}
+                
                 <h5 id ="predicting">Predicting...</h5>
                 {% endif %}
                 <div class="modelBtns">

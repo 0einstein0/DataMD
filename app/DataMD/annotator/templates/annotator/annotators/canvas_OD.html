@@ -20,6 +20,9 @@
   ]
 
   /////
+
+  var prediction = pred;
+
   var possible_labels = [
     {% for label in possible_labels %}
       "{{ label }}",
@@ -115,7 +118,7 @@
                       </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-10">
                           <div id="content">
                             <div id="toolbar">
                               <button class="btnIcon" >
@@ -236,6 +239,26 @@
                             <!-------Alert------>
 
                           </div> 
+                    </div>
+
+                    <div class="col-sm-2">
+                      <div class="modelDiv">
+                        {% if hasModel %}
+                        <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
+                        <div class="modelPred">
+                          
+                          <h5 id ="predicting">Predicting...</h5>
+                          {% endif %}
+                          <div class="modelBtns">
+                            <!--<button class="correct">
+                              <i class="feather icon-check"></i>
+                            </button>
+                            <button class="incorrect">
+                              <i class="feather icon-x"></i>-->
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     </div>
                     <!-- [ ROW 1 ] start -->

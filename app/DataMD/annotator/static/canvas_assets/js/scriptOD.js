@@ -86,6 +86,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const NO_ANNOTATION = { label: -1 };
 
+  if (hasModel) {
+    r = prediction[0];
+    bbox = r["rois"];
+    val = {
+      x: bbox[1],
+      y: bbox[0],
+      w: bbox[3] + bbox[1],
+      h: bbox[2] + bbox[0],
+    };
+    renderAnnotation(val);
+    setTimeout(function () {
+      jQuery("#predicting").text("Model Prediction: " + r);
+      pressButtonOfLabel(r[0]);
+    }, 5000);
+  }
+
   ///////////////////
 
   var currentImage = 0;
@@ -318,6 +334,12 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   /////////////////////
+  function pressButtonOfLabel(label_name) {
+    btn = document.getElementById(
+      "labelButton" + possible_labels.indexOf(label_name)
+    );
+    selectLabel(btn);
+  }
 
   function selectAnno(type) {
     switch (type) {

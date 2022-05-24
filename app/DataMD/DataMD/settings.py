@@ -81,8 +81,11 @@ WSGI_APPLICATION = 'DataMD.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '/cloudsql/data-md:us-central1:data-md-django-db',
+        'NAME': 'mysql',
+        'USER': 'root',
+        'PASSWORD': 'seecs@123'
     }
 }
 

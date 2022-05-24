@@ -147,7 +147,7 @@ def register_page(request):
             first_name = first_name,
             last_name = last_name
         )
-
+        
         user.set_password(form.cleaned_data.get('password1'))
         group = Group.objects.get(name=user_group)
         user.groups.add(group)
@@ -272,9 +272,7 @@ def canvas(request, project_id):
 
     for x in images:
         image_urls.append(
-            bucket
-            .get_blob(x.image.name)
-            .generate_signed_url(timedelta(3))
+            bucket.get_blob(x.image.name).generate_signed_url(timedelta(3))
         )
 
     if not image_urls:
@@ -305,31 +303,34 @@ def canvas(request, project_id):
     # gry = cv2.cvtColor(imgo_np, cv2.COLOR_BGR2GRAY)
     # pred(gry)
     
-    #url = image_urls[0]
-    
-        # print('Pred ------ Starting prediction process')
-        # prediction = pred(hf, url)
-        # print("PREDICTION -----------------")
-        # print(prediction)
-        # print("----------------------------")
+  
             
     
     global current_model
     # LOAD MODEL FILE OBJECT
-    # with project.machine_learning_model.open() as f:
-    #     print('Pred ------ making h5py file object')
-    #     ts_i = time.time()
-    #     print(ts_i)
-    #     current_model = h5py.File(f, mode = 'r')
-    #     ts_f = time.time()
-    #     print(ts_f)
-    #     time_taken = ts_f-ts_i
-    #     print(str(time_taken))
-    #     print('Pred ------ done making h5py file object')
+    hasModel = True if project.machine_learning_model else False
 
+    if(hasModel):
+        with project.machine_learning_model.open() as f:
+            print('Pred ------ making h5py file object')
+            ts_i = time.time()
+            print(ts_i)
+            current_model = h5py.File(f, mode = 'r')
+            ts_f = time.time()
+            print(ts_f)
+            time_taken = ts_f-ts_i
+            print(str(time_taken))
+            print('Pred ------ done making h5py file object')
+            url = image_urls[0]
+            print('Pred ------ Starting prediction process')
+            prediction = pred(current_model, url)
+            print("PREDICTION -----------------")
+            print(prediction)
+            print("----------------------------")
     ######################
 
-    hasModel = True if project.machine_learning_model else False
+
+
     for x in annotation_classes:
         possible_labels.append(x.name)
 
@@ -347,7 +348,8 @@ def canvas(request, project_id):
     'annotation_classes': annotation_classes,
     'username': request.user.username,
     'images_available': images_available,
-    'hasModel': hasModel
+    'hasModel': hasModel,
+    'pred': pred
     } # all the variables you want to pass to context
     # --- --- ---
 
@@ -418,13 +420,7 @@ def manage_project(request, project_id):
     project = Project.objects.get(id = project_id)
     pending_invites = ProjectInvite.objects.filter(project = project, status = 'Pending')
 
-    ######### one time #########
-    print("yolol :: ", project.machine_learning_model.name)
-    project.machine_learning_model.name = 'models/2/model_2.h5'
-    project.save()
-
-    # ##########################    
-
+   
     # only allow access if they are the manager of this project
     if project.manager != request.user:
         return redirect('dashboard')    
