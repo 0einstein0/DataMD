@@ -135,6 +135,7 @@ def register_page(request):
 
     if request.method == "POST":
         form = SignUpForm(data=request.POST)
+        print(request.POST)
         username = request.POST.get('username')
         email = request.POST.get('email')
         first_name = request.POST.get('first_name')
@@ -147,12 +148,16 @@ def register_page(request):
             first_name = first_name,
             last_name = last_name
         )
-        
-        user.set_password(form.cleaned_data.get('password1'))
+
+
+        user.set_password(request.POST.get('password1'))
+        user.save()
         group = Group.objects.get(name=user_group)
         user.groups.add(group)
 
         print("created:", str(created), " of user: ", user)
+
+        return redirect('login')
 
         
     
