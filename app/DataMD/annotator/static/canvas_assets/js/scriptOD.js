@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ////////////////////
 
   const NO_ANNOTATION = { label: -1 };
-
+  /*
   if (hasModel) {
     r = prediction[0];
     bbox = r["rois"];
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pressButtonOfLabel(r[0]);
   }
 
+  */
   ///////////////////
 
   var currentImage = 0;
@@ -231,19 +232,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (fetched.label != "None") {
           renderAnnotation(fetched);
         }
-
-        jQuery("#predicting").text("Predicting...");
-        setTimeout(function () {
-          jQuery("#predicting").text("Prediction: 80.1% platelets");
-          renderAnnotation({
-            h: "25.000686645507812",
-            label: "platelets",
-            w: "21.000579833984375",
-            x: "64.99967956542969",
-            y: "36.0009880065918",
-          });
-        }, 5000);
-        
       },
     });
 
@@ -253,9 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
       widgets: [ColorSelectorWidget],
       formatter: ColorFormatter,
     };
-
     anno = Annotorious.init(config);
-
     eventAnno(anno);
     selectAnno(type);*/
   }
@@ -311,9 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
       widgets: [ColorSelectorWidget],
       formatter: ColorFormatter,
     };
-
     anno = Annotorious.init(config);
-
     eventAnno(anno);
     selectAnno(type);*/
   }

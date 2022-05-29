@@ -20,9 +20,6 @@
   ]
 
   /////
-
-  var prediction = pred;
-
   var possible_labels = [
     {% for label in possible_labels %}
       "{{ label }}",
@@ -50,6 +47,8 @@
     type =1;  
   {% endif %}
 
+  var hasModel = {{ hasModel | lower }}
+  var prediction =  {{ prediction }}
   
   var images_available = {{ images_available | lower }}
 
@@ -89,9 +88,7 @@
                             </label>
                        
                           </div>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/dashboard"><i class="feather icon-home"></i></a></li>
-                            </ul>
+                      
 
                         </div>
                     </div>
@@ -240,14 +237,13 @@
 
                           </div> 
                     </div>
-
                     <div class="col-sm-2">
                       <div class="modelDiv">
                         {% if hasModel %}
                         <i id="ai-icon" class="feather icon-cpu"></i>AI Prediction
                         <div class="modelPred">
                           
-                          <h5 id ="predicting">Predicting...</h5>
+                          <h5 id ="predicting"></h5>
                           {% endif %}
                           <div class="modelBtns">
                             <!--<button class="correct">
@@ -260,6 +256,7 @@
                         </div>
                       </div>
                     </div>
+                    
                     </div>
                     <!-- [ ROW 1 ] start -->
                     <!-- [ Main Content ] end -->

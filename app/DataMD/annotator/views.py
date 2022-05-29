@@ -251,6 +251,7 @@ def canvas(request, project_id):
     possible_labels = []
     images_available = True
     canvas_page = ''
+    prediction = []
 
     # retrive all images that the user is assigned to 
     try:
@@ -312,9 +313,10 @@ def canvas(request, project_id):
             
     
     global current_model
+   
     # LOAD MODEL FILE OBJECT
     hasModel = True if project.machine_learning_model else False
-
+    
     if(hasModel):
         with project.machine_learning_model.open() as f:
             print('Pred ------ making h5py file object')
@@ -354,7 +356,7 @@ def canvas(request, project_id):
     'username': request.user.username,
     'images_available': images_available,
     'hasModel': hasModel,
-    'pred': pred
+    'prediction': prediction
     } # all the variables you want to pass to context
     # --- --- ---
 
@@ -756,7 +758,8 @@ def pred(model_path,img_path):
     else:     
         img = cv2.resize(img,(300,300),3)
         img = img.reshape(1,300,300,3)
-        return model.predict(img)
+        prediction = model.predict(img)
+        return prediction
 
 # def pred(model_path,img): 
 #     #print('Pred ------ Reading Image')  
