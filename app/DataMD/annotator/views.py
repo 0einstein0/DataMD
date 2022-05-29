@@ -457,6 +457,10 @@ def manage_project(request, project_id):
                 # TODO: assign each image to an annotator
                 annotators = project.annotators.all()
 
+                if not annotators:
+                    error_messages.append("Please add annotators first, so that they can be assigned.")
+                    break
+
                 counts = {}
                 for annotator in annotators:
                     counts[annotator] = 0

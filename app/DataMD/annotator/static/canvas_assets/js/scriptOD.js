@@ -96,10 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
       h: bbox[2] + bbox[0],
     };
     renderAnnotation(val);
-    setTimeout(function () {
-      jQuery("#predicting").text("Model Prediction: " + r);
-      pressButtonOfLabel(r[0]);
-    }, 5000);
+    jQuery("#predicting").text("Model Prediction: " + r);
+    pressButtonOfLabel(r[0]);
   }
 
   ///////////////////
@@ -114,19 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "dodgerblue",
   ];
   var keyArray = ["a", "s", "d", "j", "g"];
-
-  //////// First Image
-  setTimeout(function () {
-    jQuery("#predicting").text("Prediction: 90.1% white_blood_cell");
-    renderAnnotation({
-      label: 'white_blood_cell',
-      h: "50.001304626464844",
-      w: "40.00103759765625",
-      x: "108.00282287597656",
-      y: "99.00084686279297",
-    });
-  }, 5000);
-  /////////
 
   function updateDatabaseLabel() {
     jQuery.ajax({

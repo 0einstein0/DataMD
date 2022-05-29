@@ -7,6 +7,7 @@ class AnnotatorConfig(AppConfig):
 
     def ready(self):
         from django.contrib.auth.models import Group
+        from .models import AnnotationType
 
         user_groups = [
             'manager_user_group',
@@ -21,7 +22,26 @@ class AnnotatorConfig(AppConfig):
                 print(group_name, ' created.')
             else:
                 print(group_name, ' exists.')
+        
+        annotation_types = [
+            'CF',
+            'BB'
+        ]
 
-                
+        for type_name in annotation_types:
+            if (not AnnotationType.objects.filter(name=type_name).exists()):
+                AnnotationType.objects.create(
+                    name = type_name
+                )
+                print(type_name, ' created.')
+            else:
+                print(type_name, ' exists.')
+        
+
+
+
+
+
+
 
 
