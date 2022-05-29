@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
   var currentImage = 0;
   var currentLabel = -1;
-
+  if (prediction < 0.6) {
+    pred = possible_labels[0];
+  } else {
+    pred = possible_labels[1];
+  }
   if (hasModel) {
     setTimeout(function () {
-      jQuery("#predicting").text("Prediction: 95.3% not_fractured");
-      pressButtonOfLabel('not_fractured');
-  }, 5000);
+      jQuery("#predicting").text("Model Prediction: " + pred);
+      pressButtonOfLabel(pred);
+    }, 5000);
   }
 
   ///////////
@@ -34,18 +38,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-
   function fetchPrediction() {
     return jQuery.ajax({
       type: "GET",
       url: "/ajax/fetch/predictions/classification",
       data: {
         image_url: images[currentImage],
-        project_id: project_id
+        project_id: project_id,
       },
-      success: function(prediction) {
-        console.log(prediction.prediction)
-      }
+      success: function (prediction) {
+        console.log(prediction.prediction);
+      },
     });
   }
   ////////////////
@@ -92,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         currentLabel = -1;
         document.getElementById("activeImg").src = images[currentImage];
-        
       },
     });
   }
